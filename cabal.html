@@ -1,0 +1,2186 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6VQN64SEKQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6VQN64SEKQ');
+</script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta property="og:type" content="website" />
+<title>Crypto Cabal Scanner Tool | $TOO</title>
+<meta name="keywords" content="crypto cabal, crypto cabal scanner, $too, too many, too many meme, meme coin, anti-cabal token, crypto, ethereum" />
+<meta name="description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://toomany.wtf/cabal.html" />
+<meta property="og:title" content="Crypto Cabal Scanner Tool | $TOO/>
+<meta property="og:description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
+<meta property="og:image" content="https://toomany.wtf/images/banner.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Too Many | $TOO" />
+<meta name="twitter:description" content="Too Many meme coin. Tired of KOLs, rugs and scams? Join the rebellion." />
+<meta name="twitter:image" content="https://toomany.wtf/images/banner.png" />
+
+  <!-- Tailwind -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+  />
+
+  <!-- Pazly Colors -->
+  <link rel="stylesheet" href="https://pazly.dev/colors/gradients.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/backgrounds.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/text.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/border.css" />
+
+  <style>
+    body {
+      background: #f3e7d3;
+      overflow-x: hidden;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.25 !important;
+    }
+
+    .font-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace !important;
+    }
+  </style>
+</head>
+
+<body>
+<script>
+(function() {
+  const isDev =
+    window.location.hostname === "127.0.0.1" ||
+    window.location.hostname === "localhost" ||
+    window.location.protocol === "file:";
+
+  if (isDev) {
+    const ribbon = document.createElement("div");
+    ribbon.textContent = "🚧 DEV MODE — Local Environment";
+    ribbon.style.position = "fixed";
+    ribbon.style.top = "0";
+    ribbon.style.left = "0";
+    ribbon.style.width = "100%";
+    ribbon.style.padding = "6px 12px";
+    ribbon.style.background = "#ff5555";
+    ribbon.style.color = "white";
+    ribbon.style.fontSize = "14px";
+    ribbon.style.fontFamily = "'Inter', sans-serif";
+    ribbon.style.zIndex = "999999";
+    ribbon.style.textAlign = "center";
+    ribbon.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+    document.body.appendChild(ribbon);
+
+    document.body.style.paddingTop = "36px";
+  }
+})();
+</script>
+<!-- NAVBAR -->
+<header class="w-full border-b border-gray-200" style="background: rgb(255, 255, 255);">
+  <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-3 md:py-4">
+    <a href="/" class="flex items-center space-x-2">
+      <img src="images/transparentlogo.png" class="h-10 md:h-12" alt="Too Many logo" /></a>
+
+    <nav class="flex flex-wrap items-center text-center justify-center space-x-4 md:space-x-6 mt-3 md:mt-0">
+      <a href="https://toomany.wtf" class="underline font-mono">Home</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline font-mono">X</a>
+      <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
+         target="_blank"
+         class="px-4 py-2 rounded-lg bg-black text-white font-mono shadow hover:bg-gray-900">
+        Buy on Uniswap
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO HEADER -->
+<section class="text-gray-800" style="background:#F3E7D3;">
+  <div class="container mx-auto px-5 py-8 md:py-10 flex flex-col md:flex-row items-center">
+
+    <div class="w-full md:w-7/12 lg:w-1/2 px-3 mb-10 md:mb-0">
+      <div class="inline-flex items-center rounded-full bg-white px-3 py-1 text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600">
+        <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+        Anti-cabal · Rug-proof · No tax
+      </div>
+
+      <h1 class="font-mono font-bold text-3xl md:text-5xl mt-4 mb-6 text-gray-900">
+        <span class="bg-black text-white px-2">Expose</span> the <span class="bg-black text-white px-2">Cabal</span> - Scan Your Coin Below
+      </h1>
+
+      <p class="text-gray-800 text-lg md:text-2xl font-light font-mono">
+        Find out who really controls your token now!
+      </p>
+
+   <!-- CTA ROW -->
+      <div class="flex flex-wrap items-center gap-3 mt-6">
+        <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
+           target="_blank"
+           class="px-6 py-3 rounded-lg bg-black text-white font-mono uppercase tracking-wide">
+          buy on uniswap
+        </a>
+        <a href="https://x.com/toomanywtf"
+           target="_blank"
+           class="underline font-mono px-4 py-3">
+          follow on X
+        </a>
+      </div>
+
+      <div class="mt-6">
+        <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
+          0x95C1CFD6Ed4155b263698E2873814c128eD219b0
+        </code>
+      </div>
+    </div>
+
+   <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
+  <img src="images/transparentlogo.png"
+       class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
+       alt="TOO Logo" />
+</div>
+
+  </div>
+</section>
+
+<!-- WHITEPAPER BODY WITH SIDEBAR -->
+<section class="w-full bg-white text-gray-900 border-t border-gray-300">
+  <div class="container mx-auto px-5 py-16 md:py-20 flex">
+
+    <!-- MAIN TEXT -->
+    <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto">
+
+      <!-- FORMATTED WHITEPAPER TEXT -->
+      <div class="not-prose bg-white rounded-2xl shadow-xl border border-gray-200 p-5 md:p-7 space-y-8">
+        <!-- Scan row -->
+        <div class="space-y-2">
+          <label for="tokenInput" class="block text-xs md:text-sm tracking-wide uppercase text-gray-600">
+            Scan any token contract on supported chains
+          </label>
+          <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
+            <input
+              id="tokenInput"
+              type="text"
+              spellcheck="false"
+              placeholder="0x… contract address"
+              class="flex-1 w-full px-4 py-2.5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black text-sm md:text-base"
+            />
+            <select
+              id="chainSelect"
+              class="inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-gray-300 bg-white text-xs md:text-sm font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+            >
+              <option value="eth">Ethereum</option>
+              <option value="sol">Solana</option>
+              <option value="base">Base</option>
+              <option value="bsc">BNB Chain</option>
+              <option value="polygon">Polygon</option>
+              <option value="avalanche">Avalanche</option>
+              <option value="arbitrum">Arbitrum</option>
+              <option value="optimism">Optimism</option>
+            </select>
+            <button
+              id="scanBtn"
+              type="button"
+              class="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-black text-white text-xs md:text-sm font-mono uppercase tracking-wide shadow-lg hover:bg-gray-900 disabled:opacity-60 disabled:cursor-default"
+            >
+              <span>Scan token</span>
+            </button>
+          </div>
+		   <p id="statusLine" class="text-xs mt-1"></p>
+          <p class="text-[10px] md:text-xs tracking-wide uppercase text-gray-500">
+            About
+          </p>
+          <p class="text-xs text-gray-500">
+            Cabal Scanner analyzes a coins/tokens supply, where it's held and how much each entity holds. Lower Cabal scores equals better supply distribution.
+          </p>
+        </div>
+
+        <!-- Score + clusters (stacked vertically on all screen sizes) -->
+        <div class="grid grid-cols-1 gap-5">
+          <!-- Score card -->
+          <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
+            <div class="leading-tight">
+              <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">Cabal score</p>
+              <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">Lower is better</p>
+            </div>
+            <div class="flex items-baseline justify-between space-x-3">
+              <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">–</p>
+              <div id="scorePill" class="inline-flex items-center px-3 py-1 rounded-full border border-gray-300 bg-white text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-600">
+                <span id="scorePillDot" class="inline-block w-2 h-2 rounded-full bg-gray-400 mr-2"></span>
+                <span id="scorePillLabel">Scan a token</span>
+              </div>
+            </div>
+            <div class="font-mono text-sm md:text-base text-gray-800">
+              <span id="scoreRating"></span>
+              <span id="scoreSummary">Scan a token to see how concentrated its holder base is.</span>
+            </div>
+            <p id="scanChainLine" class="text-xs text-gray-500 mt-1"></p>
+            <div class="flex flex-wrap gap-2 mt-1 justify-start items-start">
+              <span id="legend-excellent" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
+                <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
+                Excellent
+              </span>
+              <span id="legend-good" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
+                <span class="w-2 h-2 rounded-full bg-blue-400 mr-1.5"></span>
+                Good
+              </span>
+              <span id="legend-caution" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
+                <span class="w-2 h-2 rounded-full bg-yellow-400 mr-1.5"></span>
+                Caution
+              </span>
+              <span id="legend-warning" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
+                <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
+                Warning
+              </span>
+            </div>
+          </div>
+
+          <!-- Supply snapshot -->
+          <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <p class="text-xs tracking-wide uppercase text-gray-500">Snapshot of supply</p>
+            </div>
+            <p id="scoreExplanation" class="mt-1 text-xs text-gray-500 leading-snug">
+              Percent of total supply held by each wallet category based on the top holders we can see on-chain.
+            </p>
+            <div class="mt-2 space-y-2">
+              <div class="border border-gray-200 rounded-lg bg-white px-3 py-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 text-sm md:text-base">Community</span>
+                  <span id="snapCommunity" class="font-mono text-right text-sm md:text-base">–</span>
+                </div>
+              </div>
+              <div class="border border-gray-200 rounded-lg bg-white px-3 py-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 text-sm md:text-base">Whales</span>
+                  <span id="snapWhale" class="font-mono text-right text-sm md:text-base">–</span>
+                </div>
+              </div>
+              <div class="border border-gray-200 rounded-lg bg-white px-3 py-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 text-sm md:text-base">CEX Custody</span>
+                  <span id="snapCex" class="font-mono text-right text-sm md:text-base">–</span>
+                </div>
+              </div>
+              <div class="border border-gray-200 rounded-lg bg-white px-3 py-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 text-sm md:text-base">Bridge Custody</span>
+                  <span id="snapBridge" class="font-mono text-right text-sm md:text-base">–</span>
+                </div>
+              </div>
+              <div class="border border-gray-200 rounded-lg bg-white px-3 py-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 text-sm md:text-base">DEX / LP</span>
+                  <span id="snapDex" class="font-mono text-right text-sm md:text-base">–</span>
+                </div>
+              </div>
+              <div class="border border-gray-200 rounded-lg bg-white px-3 py-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 text-sm md:text-base">Project / Treasury</span>
+                  <span id="snapProject" class="font-mono text-right text-sm md:text-base">–</span>
+                </div>
+              </div>
+              <div class="border border-gray-200 rounded-lg bg-white px-3 py-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-500 text-sm md:text-base">Burned</span>
+                  <span id="snapBurn" class="font-mono text-right text-sm md:text-base">–</span>
+                </div>
+              </div>
+            </div>
+            <button
+              id="snapshotAdvancedToggle"
+              type="button"
+              class="mt-2 text-gray-500 text-sm md:text-base underline"
+            >
+              Address type details ▾
+            </button>
+            <div id="snapshotAdvanced" class="mt-1 space-y-1">
+              <p id="eoaContractLine" class="font-mono text-sm md:text-base text-gray-600">
+                Among the top holders, <span id="eoaContractText">–</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Clusters card -->
+          <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <p class="text-xs tracking-wide uppercase text-gray-500">Custody clusters</p>
+            </div>
+            <p class="text-xs text-gray-600">
+              Large shared wallets (CEX, LP, bridge, multisigs) can hide concentrated power. We group them to show how much they jointly hold.
+            </p>
+            <div id="clustersList" class="space-y-2">
+              <p class="text-xs text-gray-500">
+                Scan a token to see if any clustered holdings show up (CEX, LPs, bridges, project multisigs).
+              </p>
+            </div>
+            <button
+              id="clustersAdvancedToggle"
+              type="button"
+              class="mt-1 text-gray-500 text-sm md:text-base underline"
+            >
+              Infrastructure details ▾
+            </button>
+            <div id="clustersAdvanced" class="mt-1 space-y-1">
+              <p id="infraCountsLine" class="font-mono text-sm md:text-base text-gray-600">
+                Infrastructure wallets in the top set: <span id="infraCountsText">–</span>
+              </p>
+            </div>
+          </div>
+<div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <p class="text-xs tracking-wide uppercase text-gray-500">Top holders</p>
+            </div>
+            <p class="text-xs text-gray-600">
+              Snapshot of the largest wallets we can see on-chain. Burn wallets are excluded from the Cabal Scrore. Whale wallets are non-infrastructure, non-exchange holders with >5% of the supply.
+            </p>
+            <div id="topHoldersCards" class="space-y-2">
+              <p class="text-xs text-gray-500">
+                Scan a token to see a breakdown of the largest holder buckets (top 10, top 20, whales).
+              </p>
+            </div>
+            <button
+              id="topAdvancedToggle"
+              type="button"
+              class="mt-2 text-gray-500 text-sm md:text-base underline"
+            >
+              Advanced breakdown ▾
+            </button>
+            <div id="topAdvanced" class="mt-1 space-y-1">
+              <p id="topConcentrationLine" class="font-mono text-sm md:text-base text-gray-600">
+                Largest wallet, top 3, top 5 and adjusted top 10 share will appear here after a scan.
+              </p>
+              <p id="usdConcentrationLine" class="font-mono text-sm md:text-base text-gray-600">
+                USD concentration for the top holder set will appear here after a scan.
+              </p>
+              <p id="topCoverageLine" class="font-mono text-sm md:text-base text-gray-600">
+                Analysis coverage (how many top holders were scanned) will appear here after a scan.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- Top holders summary -->
+        <div class="space-y-3 mt-4">
+                    <!-- Whales summary + toggle above table -->
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mt-2">
+            <div class="flex items-center justify-between w-full">
+              <button
+                type="button"
+                class="text-gray-500 text-sm md:text-base underline share-btn"
+              >
+                Share on X
+              </button>
+              <div class="flex items-center space-x-2">
+                <span class="uppercase tracking-wide text-gray-500 text-xs">View whales</span>
+                <button
+                  id="viewWhalesBtn"
+                  type="button"
+                  aria-pressed="false"
+                  class="relative inline-flex items-center w-9 h-5 rounded-full border border-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-black text-xs"
+                >
+                  <span class="absolute inset-0 rounded-full bg-gray-100"></span>
+                  <span class="relative inline-block w-4 h-4 rounded-full bg-gray-400 transform translate-x-0 transition-transform"></span>
+                </button>
+
+                <div class="relative inline-block text-left ml-3">
+                <button
+                  id="filtersToggle"
+                  type="button"
+                  class="inline-flex justify-center w-full rounded-md border border-gray-300 bg-white px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  Filters ⌄
+                </button>
+                <div
+                  id="filtersMenu"
+                  class="hidden absolute right-0 mt-1 w-40 rounded-md bg-white shadow-lg border border-gray-200 z-20"
+                >
+                  <div class="py-1 text-xs">
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="whale">Whales
+                    </label>
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="cex">CEX
+                    </label>
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="dex">DEX / LP
+                    </label>
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="project">Project
+                    </label>
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="bridge">Bridges
+                    </label>
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="burn">Burn
+                    </label>
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="excluded">Excluded
+                    </label>
+                    <label class="flex items-center px-3 py-1">
+                      <input type="checkbox" class="mr-2 tag-filter" value="contract">Contract
+                    </label>
+                    <div class="border-t border-gray-200 mt-1 pt-1">
+                      <button
+                        id="doneFiltersBtn"
+                        type="button"
+                        class="w-full text-left px-3 py-1 text-[11px] text-gray-600 hover:bg-gray-50"
+                      >
+                        Done
+                      </button>
+                    </div>
+                    <div class="border-t border-gray-200 mt-1 pt-1">
+                      <button
+                        id="clearFiltersBtn"
+                        type="button"
+                        class="w-full text-left px-3 py-1 text-[11px] text-gray-600 hover:bg-gray-50"
+                      >
+                        Clear all filters
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Holders table -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden bg-white">
+          <div class="overflow-x-auto">
+            <table id="holdersTable" class="min-w-full text-xs md:text-sm">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-3 py-2 text-left uppercase tracking-wide text-[10px] text-gray-500">#</th>
+                  <th class="px-3 py-2 text-left uppercase tracking-wide text-[10px] text-gray-500">Wallet</th>
+                  <th class="px-3 py-2 text-left uppercase tracking-wide text-[10px] text-gray-500">Entity</th>
+                  <th class="px-3 py-2 text-left uppercase tracking-wide text-[10px] text-gray-500">Tags</th>
+                  <th class="px-3 py-2 text-left uppercase tracking-wide text-[10px] text-gray-500">Supply</th>
+                  <th class="px-3 py-2 text-left uppercase tracking-wide text-[10px] text-gray-500">Value</th>
+                </tr>
+              </thead>
+              <tbody id="holdersBody">
+                <tr>
+                  <td colspan="6" class="px-3 py-4 text-center text-xs text-gray-500">
+                    Scan a token to see its top holders.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        
+        <!-- Scanner activity lists -->
+        <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-4 mt-4">
+          <div class="flex items-center justify-between">
+            <p class="text-xs tracking-wide uppercase text-gray-500">Scanner activity</p>
+          </div>
+          <div class="space-y-4">
+            <!-- Best Cabal Scores -->
+            <div class="space-y-2">
+              <p class="text-gray-500 text-sm md:text-base">Best Cabal Scores</p>
+              <div id="bestScoresContainer" class="space-y-2">
+                <p class="text-xs text-gray-500">
+                  No scans recorded yet. Run a scan to see top scores here.
+                </p>
+              </div>
+            </div>
+
+            <!-- Recent Scans -->
+            <div class="space-y-2">
+              <p class="text-gray-500 text-sm md:text-base">Recent Scans</p>
+              <div id="recentScansContainer" class="space-y-2">
+                <p class="text-xs text-gray-500">
+                  Run a scan to start building a feed of recently checked contracts.
+                </p>
+              </div>
+            </div>
+
+            <!-- Most Scanned Contracts -->
+            <div class="space-y-2">
+              <p class="text-gray-500 text-sm md:text-base">Most Scanned Contracts</p>
+              <div id="mostScannedContainer" class="space-y-2">
+                <p class="text-xs text-gray-500">
+                  No scans recorded yet. Run a scan to see popular contracts here.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<!-- Bottom CTAs -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs text-gray-600">
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              id="buyTooBtn"
+              type="button"
+              class="inline-flex items-center px-4 py-2 rounded-full border border-gray-800 bg-black text-white font-mono uppercase tracking-wide text-[11px] shadow-md hover:bg-gray-900"
+            >
+              <span class="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
+              Buy $TOO
+            </button>
+            <button
+              id="shareBtn"
+              type="button"
+              class="inline-flex items-center px-4 py-2 rounded-full border border-gray-300 bg-white font-mono uppercase tracking-wide text-[11px] text-gray-800 hover:bg-gray-50 share-btn"
+            >
+              Share on X
+            </button>
+            <button
+              id="copyLinkBtn"
+              type="button"
+              class="inline-flex items-center px-4 py-2 rounded-full border border-gray-300 bg-white font-mono uppercase tracking-wide text-[11px] text-gray-800 hover:bg-gray-50"
+            >
+              Copy share link
+            </button>
+          </div>
+          <p id="footerNote" class="max-w-xl">
+            Data is based on the most recent snapshot of top holders from the Cabal Expo backend. Always cross-check
+            on Etherscan. Created by <a href="https://toomany.wtf" target="_blank" rel="noopener noreferrer" class="underline">toomany.wtf</a>.
+          </p>
+        </div>
+      </div>
+
+    </article>
+
+  </div>
+</section>
+<div style="text-align:center;">
+    <center><img src="images/transparentlogo.png" alt="Too Many Rugs Meme" width="400"></center>
+</div>
+
+<!-- FOOTER -->
+<footer class="w-full bg-gray-800">
+  <div class="container mx-auto flex justify-center text-center py-4 px-4">
+    <h1 class="font-mono text-white text-base md:text-xl">
+      toomany.wtf | toomanywtf (at) gmail
+    </h1>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const API_BASE = "https://toomany.wtf/api";
+  const PUBLIC_API_KEY = "hfkdEJODJEOFKoekdoekl8763djEwrangler";
+  const TOO_SWAP_URL =
+    "https://app.uniswap.org/swap?outputCurrency=0x95C1CFD6Ed4155b263698E2873814c128eD219b0&chain=ethereum";
+
+  let lastScanData = null;
+  let whaleRowAddressSet = new Set();
+  let viewWhalesActive = false;
+
+  // Cached DOM references
+  const tokenInput = document.getElementById("tokenInput");
+  const chainSelect = document.getElementById("chainSelect");
+  const scanBtn = document.getElementById("scanBtn");
+  const statusLine = document.getElementById("statusLine");
+  const scanChainLine = document.getElementById("scanChainLine");
+
+  const scoreMain = document.getElementById("scoreMain");
+  const scorePill = document.getElementById("scorePill");
+  const scorePillLabel = document.getElementById("scorePillLabel");
+  const scorePillDot = document.getElementById("scorePillDot");
+  const scoreRatingEl = document.getElementById("scoreRating");
+  const scoreSummaryEl = document.getElementById("scoreSummary");
+  const scoreExplanationEl = document.getElementById("scoreExplanation");
+
+  const legendExcellent = document.getElementById("legend-excellent");
+  const legendGood = document.getElementById("legend-good");
+  const legendCaution = document.getElementById("legend-caution");
+  const legendWarning = document.getElementById("legend-warning");
+
+  const clustersList = document.getElementById("clustersList");
+  const topHoldersCards = document.getElementById("topHoldersCards");
+
+
+  const whaleCountEl = document.getElementById("whaleCount");
+  const whalePercentEl = document.getElementById("whalePercent");
+  const top10PercentEl = document.getElementById("top10Percent");
+  const top20PercentEl = document.getElementById("top20Percent");
+  const snapCommunityEl = document.getElementById("snapCommunity");
+  const snapWhaleEl = document.getElementById("snapWhale");
+  const snapCexEl = document.getElementById("snapCex");
+  const snapBridgeEl = document.getElementById("snapBridge");
+  const snapDexEl = document.getElementById("snapDex");
+  const snapProjectEl = document.getElementById("snapProject");
+  const snapBurnEl = document.getElementById("snapBurn");
+
+  const eoaContractLine = document.getElementById("eoaContractLine");
+  const eoaContractText = document.getElementById("eoaContractText");
+  const infraCountsLine = document.getElementById("infraCountsLine");
+  const infraCountsText = document.getElementById("infraCountsText");
+  const topConcentrationLine = document.getElementById("topConcentrationLine");
+  const usdConcentrationLine = document.getElementById("usdConcentrationLine");
+  const topCoverageLine = document.getElementById("topCoverageLine");
+
+  const holdersTable = document.getElementById("holdersTable");
+  const holdersBody = document.getElementById("holdersBody");
+  const viewWhalesBtn = document.getElementById("viewWhalesBtn");
+
+  const snapshotAdvancedToggle = document.getElementById("snapshotAdvancedToggle");
+  const snapshotAdvanced = document.getElementById("snapshotAdvanced");
+  const clustersAdvancedToggle = document.getElementById("clustersAdvancedToggle");
+  const clustersAdvanced = document.getElementById("clustersAdvanced");
+  const topAdvancedToggle = document.getElementById("topAdvancedToggle");
+  const topAdvanced = document.getElementById("topAdvanced");
+
+  const buyTooBtn = document.getElementById("buyTooBtn");
+  const shareButtons = document.querySelectorAll(".share-btn");
+  const copyLinkBtn = document.getElementById("copyLinkBtn");
+  const footerNote = document.getElementById("footerNote");
+
+  function setStatus(message, type) {
+    if (!statusLine) return;
+    statusLine.textContent = message || "";
+    statusLine.className = "text-xs mt-1";
+    if (type === "error") {
+      statusLine.className += " text-red-600";
+    } else if (type === "ok") {
+      statusLine.className += " text-green-600";
+    } else {
+      statusLine.className += " text-gray-600";
+    }
+  }
+
+  function isValidEthAddress(value) {
+    if (!value) return false;
+    const v = value.trim();
+    return /^0x[a-fA-F0-9]{40}$/.test(v);
+  }
+
+  function isValidSolAddress(value) {
+    if (!value) return false;
+    const v = value.trim();
+    // Basic Solana base58 check
+    return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(v);
+  }
+
+  function isValidAddressForChain(chain, value) {
+    if (chain === "sol") {
+      return isValidSolAddress(value);
+    }
+    return isValidEthAddress(value);
+  }
+
+  function formatPercent(v) {
+    if (v == null || isNaN(v)) return "–";
+    if (Math.abs(v) < 0.01) return v === 0 ? "0%" : "<0.01%";
+    return v.toFixed(2) + "%";
+  }
+
+  function formatUsd(v) {
+    if (v == null || isNaN(v)) return "–";
+    if (v >= 1000000000) return "$" + (v / 1000000000).toFixed(2) + "B";
+    if (v >= 1000000) return "$" + (v / 1000000).toFixed(2) + "M";
+    if (v >= 10000) return "$" + (v / 1000).toFixed(1) + "k";
+    return "$" + v.toFixed(2);
+  }
+
+  function shortenAddress(addr) {
+    if (!addr || typeof addr !== "string") return addr || "";
+    const v = addr.trim();
+    // Truncate both EVM and Solana addresses: first 6 chars … last 4 chars
+    // Leave short strings as-is so labels don't get mangled.
+    if (v.length <= 12) return v;
+    return v.slice(0, 6) + "…" + v.slice(-4);
+  }
+
+  function classifyScore(score) {
+    if (score == null || isNaN(score)) {
+      return { bucket: "none", label: "", pill: "Scan a token" };
+    }
+    const s = Number(score);
+
+    // Lower is better: 0 is pure community, 100 is full cabal.
+    if (s <= 10) {
+      return { bucket: "excellent", label: "Excellent", pill: "Pure community" };
+    }
+    if (s <= 30) {
+      return { bucket: "good", label: "Good", pill: "Low cabal risk" };
+    }
+    if (s <= 70) {
+      return { bucket: "caution", label: "Caution", pill: "Watch concentration" };
+    }
+    return { bucket: "warning", label: "Warning", pill: "High cabal risk" };
+  }
+
+  function clearLegend() {
+    [legendExcellent, legendGood, legendCaution, legendWarning].forEach((el) => {
+      if (!el) return;
+      el.classList.remove("border-gray-400", "bg-white");
+      el.classList.add("border-transparent");
+    });
+  }
+
+  function setLegend(bucket) {
+    clearLegend();
+    let el = null;
+    if (bucket === "excellent") el = legendExcellent;
+    else if (bucket === "good") el = legendGood;
+    else if (bucket === "caution") el = legendCaution;
+    else if (bucket === "warning") el = legendWarning;
+    if (el) {
+      el.classList.remove("border-transparent");
+      el.classList.add("border-gray-400", "bg-white");
+    }
+  }
+
+  function setScorePillDot(bucket) {
+    if (!scorePillDot) return;
+    const base = "inline-block w-2 h-2 rounded-full mr-2 ";
+    let colorClass = "bg-gray-400";
+    if (bucket === "excellent") colorClass = "bg-green-500";
+    else if (bucket === "good") colorClass = "bg-blue-400";
+    else if (bucket === "caution") colorClass = "bg-yellow-400";
+    else if (bucket === "warning") colorClass = "bg-red-500";
+    scorePillDot.className = base + colorClass;
+  }
+
+  function sanitizeSummary(text) {
+    if (!text) return "";
+    return text
+      .replace(/for 0x[a-fA-F0-9]{40}/i, "")
+      // Remove middle fragment like "· Cabal score : 34/100 – "
+      .replace(/·?\s*Cabal score\s*:\s*\d+\/\d+\s*–\s*/i, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  
+  const TAG_STYLES = {
+    whale: "bg-red-50 text-red-700 border-red-300",
+    burn: "bg-gray-900 text-white border-gray-700",
+    cex: "bg-blue-50 text-blue-700 border-blue-300",
+    dex: "bg-blue-50 text-blue-700 border-blue-300",
+    project: "bg-green-50 text-green-700 border-green-300",
+    bridge: "bg-indigo-50 text-indigo-700 border-indigo-300",
+    contract: "bg-gray-50 text-gray-700 border-gray-300",
+    excluded: "bg-transparent text-gray-500 border-gray-400 border-dashed"
+  };
+
+  function createTagPill(tag) {
+    const key = tag.key || "contract";
+    const label = getDefaultTagLabel(key);
+    const span = document.createElement("span");
+    span.className =
+      "inline-flex items-center px-2 py-0.5 mr-1 mb-1 rounded-full border text-[10px] uppercase tracking-wide " +
+      (TAG_STYLES[key] || "text-gray-600 border-gray-300 bg-white");
+    span.style.fontSize = "10px";
+    span.style.lineHeight = "1.25";
+    span.style.fontFamily =
+      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+    span.textContent = label;
+    return span;
+  }
+
+
+  function getDefaultTagLabel(key) {
+    switch (key) {
+      case "whale":
+        return "Whale";
+      case "burn":
+        return "Burn";
+      case "cex":
+        return "CEX";
+      case "dex":
+        return "DEX/LP";
+      case "project":
+        return "Project";
+      case "bridge":
+        return "Bridge";
+      case "contract":
+        return "Contract";
+      case "excluded":
+        return "Excluded";
+      default:
+        return (key || "").toUpperCase();
+    }
+  }
+
+
+  function getChainLabel(chain) {
+    switch (chain) {
+      case "eth":
+        return "Ethereum";
+      case "base":
+        return "Base";
+      case "bsc":
+        return "BNB Chain";
+      case "polygon":
+        return "Polygon";
+      case "avalanche":
+        return "Avalanche";
+      case "arbitrum":
+        return "Arbitrum";
+      case "optimism":
+        return "Optimism";
+      case "sol":
+        return "Solana";
+      default:
+        return chain || "Unknown chain";
+    }
+  }
+
+  
+  // Fetch and render activity lists for the bottom panel
+  async function fetchRecentScans() {
+    try {
+      const res = await fetch(API_BASE + "/api/stats/recent");
+      if (!res.ok) return;
+      const data = await res.json();
+      const items = data && data.items ? data.items : [];
+      const bestCabals = data && data.bestCabals ? data.bestCabals : [];
+      const mostScanned = data && data.mostScanned ? data.mostScanned : [];
+      renderRecentScans(items);
+      renderBestScores(bestCabals);
+      renderMostScanned(mostScanned);
+    } catch (err) {
+      console.error("Failed to load recent scans:", err);
+    }
+  }
+
+  function renderRecentScans(items) {
+    const container = document.getElementById("recentScansContainer");
+    if (!container) return;
+
+    if (!items || !items.length) {
+      container.innerHTML = `
+        <p class="text-xs text-gray-500">
+          No scans recorded yet. Run a scan to see recent contracts here.
+        </p>`;
+      return;
+    }
+
+    const sorted = (items || []).slice().sort(function (a, b) {
+      const ac = typeof a.scanCount === "number" ? a.scanCount : 0;
+      const bc = typeof b.scanCount === "number" ? b.scanCount : 0;
+      // Descending: highest number of scans first
+      return bc - ac;
+    });
+
+    const rows = sorted.slice(0, 5).map(function (item) {
+      const shortToken = item.token
+        ? shortenAddress(item.token)
+        : "Unknown token";
+      const scorePart =
+        typeof item.cabalScore === "number"
+          ? item.cabalScore + "/100"
+          : "Score unknown";
+      const label = item.alertCategory || "";
+      const chainLabel = (item.chain || "eth").toUpperCase();
+      const rawTicker = item.symbol || item.ticker;
+      const ticker = rawTicker ? rawTicker : null;
+
+      const linkUrl =
+        "cabal.html?chain=" +
+        encodeURIComponent(item.chain || "eth") +
+        "&token=" +
+        encodeURIComponent(item.token || "");
+
+      const timeStr = formatRelativeTime(item.ts);
+
+      return `
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
+          onclick="window.location.href='${linkUrl}'"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base text-gray-900">
+              ${shortToken}
+            </span>
+            <span class="font-mono text-sm md:text-base text-gray-800">
+              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
+            </span>
+          </div>
+          <span class="font-mono text-xs md:text-sm text-gray-400">
+            ${timeStr}
+          </span>
+        </button>
+      `;
+    });
+
+    container.innerHTML = rows.join("");
+  }
+
+
+  function renderBestScores(items) {
+    const container = document.getElementById("bestScoresContainer");
+    if (!container) return;
+
+    if (!items || !items.length) {
+      container.innerHTML = `
+        <p class="text-xs text-gray-500">
+          No scans recorded yet. Run a scan to see top scores here.
+        </p>`;
+      return;
+    }
+
+    const sorted = (items || []).slice().sort(function (a, b) {
+      const as = typeof a.bestScore === "number" ? a.bestScore : 0;
+      const bs = typeof b.bestScore === "number" ? b.bestScore : 0;
+      // Ascending: lowest score first
+      return as - bs;
+    });
+
+    const rows = sorted.slice(0, 5).map(function (item) {
+      const shortToken = item.token
+        ? shortenAddress(item.token)
+        : "Unknown token";
+      const scorePart =
+        typeof item.bestScore === "number"
+          ? item.bestScore + "/100"
+          : "Score unknown";
+      const label = item.bestAlertCategory || "";
+      const chainLabel = (item.chain || "eth").toUpperCase();
+      const rawTicker = item.symbol || item.ticker;
+      const ticker = rawTicker ? rawTicker : null;
+      const scansLabel =
+        (item.scanCount || 1) +
+        ((item.scanCount || 1) === 1 ? " scan" : " scans");
+
+      const linkUrl =
+        "cabal.html?chain=" +
+        encodeURIComponent(item.chain || "eth") +
+        "&token=" +
+        encodeURIComponent(item.token || "");
+
+      return `
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
+          onclick="window.location.href='${linkUrl}'"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base text-gray-900">
+              ${shortToken}
+            </span>
+            <span class="font-mono text-sm md:text-base text-gray-800">
+              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
+            </span>
+          </div>
+          <span class="font-mono text-xs md:text-sm text-gray-400">
+            ${scansLabel}
+          </span>
+        </button>
+      `;
+    });
+
+    container.innerHTML = rows.join("");
+  }
+
+
+  function renderMostScanned(items) {
+    const container = document.getElementById("mostScannedContainer");
+    if (!container) return;
+
+    if (!items || !items.length) {
+      container.innerHTML = `
+        <p class="text-xs text-gray-500">
+          No scans recorded yet. Run a scan to see popular contracts here.
+        </p>`;
+      return;
+    }
+
+    const sorted = (items || []).slice().sort(function (a, b) {
+      const ac = typeof a.scanCount === "number" ? a.scanCount : 0;
+      const bc = typeof b.scanCount === "number" ? b.scanCount : 0;
+      // Descending: highest number of scans first
+      return bc - ac;
+    });
+
+    const rows = sorted.slice(0, 5).map(function (item) {
+      const shortToken = item.token
+        ? shortenAddress(item.token)
+        : "Unknown token";
+      const scorePart =
+        typeof item.bestScore === "number"
+          ? item.bestScore + "/100"
+          : "Score unknown";
+      const label = item.bestAlertCategory || "";
+      const chainLabel = (item.chain || "eth").toUpperCase();
+      const rawTicker = item.symbol || item.ticker;
+      const ticker = rawTicker ? rawTicker : null;
+      const scansLabel =
+        (item.scanCount || 1) +
+        ((item.scanCount || 1) === 1 ? " scan" : " scans");
+
+      const linkUrl =
+        "cabal.html?chain=" +
+        encodeURIComponent(item.chain || "eth") +
+        "&token=" +
+        encodeURIComponent(item.token || "");
+
+      return `
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
+          onclick="window.location.href='${linkUrl}'"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base text-gray-900">
+              ${shortToken}
+            </span>
+            <span class="font-mono text-sm md:text-base text-gray-800">
+              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
+            </span>
+          </div>
+          <span class="font-mono text-xs md:text-sm text-gray-400">
+            ${scansLabel}
+          </span>
+        </button>
+      `;
+    });
+
+    container.innerHTML = rows.join("");
+  }
+function formatRelativeTime(ts) {
+    if (!ts) return "";
+    try {
+      const now = Date.now();
+      const diffMs = now - ts;
+      const diffSec = Math.floor(diffMs / 1000);
+      if (diffSec < 60) return diffSec + "s ago";
+      const diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return diffMin + "m ago";
+      const diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return diffHr + "h ago";
+      const diffDay = Math.floor(diffHr / 24);
+      return diffDay + "d ago";
+    } catch (e) {
+      return "";
+    }
+  }
+
+function buildShareUrl() {
+    const token = lastScanData && lastScanData.token;
+    const chain =
+      lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
+    const baseUrl = "https://toomany.wtf/cabal.html";
+
+    if (!token) return baseUrl;
+
+    return (
+      baseUrl +
+      "?chain=" +
+      encodeURIComponent(chain) +
+      "&token=" +
+      encodeURIComponent(token)
+    );
+  }
+
+function buildShareText() {
+    const token = lastScanData && lastScanData.token;
+    const score =
+      lastScanData && typeof lastScanData.cabalScore === "number"
+        ? lastScanData.cabalScore
+        : null;
+    const baseUrl = "https://toomany.wtf/cabal.html";
+    const chain =
+      lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
+
+    if (token) {
+      const toolUrl =
+        baseUrl +
+        "?chain=" +
+        encodeURIComponent(chain) +
+        "&token=" +
+        encodeURIComponent(token);
+      if (score != null && !isNaN(score)) {
+        const bucketInfo = classifyScore(score);
+        const label = bucketInfo && bucketInfo.label ? bucketInfo.label : "";
+        return (
+          "Just scanned " +
+          token +
+          " – Cabal score " +
+          score +
+          "/100 (" +
+          label +
+          "). " +
+          "Check the full breakdown here: " +
+          toolUrl
+        );
+      }
+      return (
+        "Just scanned " +
+        token +
+        " with the Cabal Exposure Tool – " +
+        toolUrl
+      );
+    }
+
+    return "Just scanned a token with the Cabal Exposure Tool.";
+  }
+
+  
+  
+function renderClusters(data) {
+    if (!clustersList) return;
+    const clusters =
+      data && Array.isArray(data.custodyClusters) ? data.custodyClusters : [];
+
+    clustersList.innerHTML = "";
+
+    if (!clusters.length) {
+      const p = document.createElement("p");
+      p.className = "text-xs text-gray-500";
+      p.textContent =
+        "No large custody clusters detected (CEX, LPs, bridges, multisigs).";
+      clustersList.appendChild(p);
+      return;
+    }
+
+    clusters.forEach((cluster) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "border border-gray-200 rounded-lg bg-white px-3 py-2";
+
+      const row = document.createElement("div");
+      row.className = "w-full";
+      row.style.display = "grid";
+      row.style.gridTemplateColumns = "minmax(0, 1fr) auto auto auto";
+      row.style.alignItems = "center";
+      row.style.columnGap = "1.5rem";
+
+      const nameSpan = document.createElement("span");
+      nameSpan.className =
+        "text-gray-500 text-sm md:text-base font-normal";
+      nameSpan.textContent = cluster.label || "Custody cluster";
+
+      // Tag pill based on custody type (CEX, DEX, project, bridge)
+      let pillSpan = null;
+      let pillKey = null;
+      const type = (cluster.type || "");
+      if (type === "cex_custody") pillKey = "cex";
+      else if (type === "dex_liquidity") pillKey = "dex";
+      else if (type === "project_custody") pillKey = "project";
+      else if (type === "bridge_custody") pillKey = "bridge";
+
+      if (pillKey) {
+        pillSpan = createTagPill({ key: pillKey });
+      } else {
+        pillSpan = document.createElement("span");
+        pillSpan.textContent = "";
+      }
+
+      let walletSpan = null;
+      const walletCount =
+        typeof cluster.walletCount === "number" ? cluster.walletCount : null;
+      if (walletCount != null) {
+        walletSpan = document.createElement("span");
+        walletSpan.className =
+          "font-mono text-sm md:text-base text-gray-800";
+        walletSpan.textContent =
+          walletCount + (walletCount === 1 ? " wallet" : " wallets");
+      } else {
+        walletSpan = document.createElement("span");
+        walletSpan.textContent = "";
+      }
+
+      let pctSpan = null;
+      if (
+        typeof cluster.totalPercent === "number" &&
+        !isNaN(cluster.totalPercent)
+      ) {
+        pctSpan = document.createElement("span");
+        pctSpan.className =
+          "font-mono text-sm md:text-base text-gray-800";
+        pctSpan.textContent = formatPercent(cluster.totalPercent);
+      } else {
+        pctSpan = document.createElement("span");
+        pctSpan.className =
+          "font-mono text-sm md:text-base text-gray-800";
+        pctSpan.textContent = "–";
+      }
+
+      row.appendChild(nameSpan);
+      row.appendChild(pillSpan);
+      row.appendChild(walletSpan);
+      row.appendChild(pctSpan);
+
+      wrapper.appendChild(row);
+      clustersList.appendChild(wrapper);
+    });
+  }
+
+
+
+function renderTopHolderSummaryCards(data) {
+    if (!topHoldersCards) return;
+
+    const wi = data && data.walletInsights ? data.walletInsights : {};
+
+    topHoldersCards.innerHTML = "";
+
+    function addCard(opts) {
+      const { label, pillKey, walletCount, percent } = opts;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "border border-gray-200 rounded-lg bg-white px-3 py-2";
+
+      const row = document.createElement("div");
+      row.className = "w-full";
+      row.style.display = "grid";
+      row.style.gridTemplateColumns = "minmax(0, 1fr) auto auto auto";
+      row.style.alignItems = "center";
+      row.style.columnGap = "1.5rem";
+
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "text-gray-500 text-sm md:text-base font-normal";
+      nameSpan.textContent = label;
+
+      let pillSpan = null;
+      if (pillKey) {
+        pillSpan = createTagPill({ key: pillKey });
+      } else {
+        pillSpan = document.createElement("span");
+        pillSpan.textContent = "";
+      }
+
+      let walletSpan = null;
+      if (walletCount != null) {
+        walletSpan = document.createElement("span");
+        walletSpan.className = "font-mono text-sm md:text-base text-gray-800";
+        walletSpan.textContent =
+          walletCount + (walletCount === 1 ? " wallet" : " wallets");
+      } else {
+        walletSpan = document.createElement("span");
+        walletSpan.textContent = "";
+      }
+
+      let pctSpan = null;
+      if (percent != null && !isNaN(percent)) {
+        pctSpan = document.createElement("span");
+        pctSpan.className = "font-mono text-sm md:text-base text-gray-800";
+        pctSpan.textContent = formatPercent(percent);
+      } else {
+        pctSpan = document.createElement("span");
+        pctSpan.className = "font-mono text-sm md:text-base text-gray-800";
+        pctSpan.textContent = "–";
+      }
+
+      row.appendChild(nameSpan);
+      row.appendChild(pillSpan);
+      row.appendChild(walletSpan);
+      row.appendChild(pctSpan);
+
+      wrapper.appendChild(row);
+      topHoldersCards.appendChild(wrapper);
+    }
+
+    const top10Percent =
+      typeof wi.top10Percent === "number" ? wi.top10Percent : null;
+    const top20Percent =
+      typeof wi.top20Percent === "number" ? wi.top20Percent : null;
+    const top50Percent =
+      typeof wi.top50Percent === "number" ? wi.top50Percent : null;
+    const whaleCount =
+      typeof wi.whaleCount === "number" ? wi.whaleCount : null;
+    const whalePercent =
+      typeof wi.whalePercent === "number" ? wi.whalePercent : null;
+
+    if (top10Percent != null) {
+      addCard({
+        label: "Top 10 Holders",
+        pillKey: null,
+        walletCount: 10,
+        percent: top10Percent
+      });
+    }
+
+    if (top20Percent != null) {
+      addCard({
+        label: "Top 20 Holders",
+        pillKey: null,
+        walletCount: 20,
+        percent: top20Percent
+      });
+    }
+
+    if (top50Percent != null) {
+      addCard({
+        label: "Top 50 Holders",
+        pillKey: null,
+        walletCount: 50,
+        percent: top50Percent
+      });
+    }
+
+    if (whaleCount != null || whalePercent != null) {
+      addCard({
+        label: "Whale Wallets",
+        pillKey: "whale",
+        walletCount: whaleCount,
+        percent: whalePercent
+      });
+    }
+
+    if (!topHoldersCards.children.length) {
+      const p = document.createElement("p");
+      p.className = "text-xs text-gray-500";
+      p.textContent =
+        "No top holder summary was available for this token.";
+      topHoldersCards.appendChild(p);
+    }
+  }
+
+function detectTags(holder, isWhale) {
+    const tags = [];
+    if (!holder) return tags;
+
+    const label = (holder.label || "");
+    const entity = (holder.entity || "");
+    const lower = (label + " " + entity).trim();
+
+    // whale tag
+    if (isWhale) {
+      tags.push({
+        key: "whale",
+        label: "Whale"
+      });
+    }
+
+    const isBurn =
+      holder.isBurn ||
+      holder.excludedReason === "burn" ||
+      lower.includes("burn");
+
+    const isCex =
+      lower.includes("binance") ||
+      lower.includes("coinbase") ||
+      lower.includes("kraken") ||
+      lower.includes("kucoin") ||
+      lower.includes("bitfinex") ||
+      lower.includes("bitget") ||
+      lower.includes("mexc") ||
+      lower.includes("gate") ||
+      lower.includes("okx") ||
+      lower.includes("huobi") ||
+      lower.includes("bybit") ||
+      lower.includes("crypto.com") ||
+      lower.includes("bithumb") ||
+      lower.includes("gemini") ||
+      lower.includes("htx");
+
+    const isDex =
+      lower.includes("uniswap") ||
+      lower.includes("pancakeswap") ||
+      lower.includes("sushiswap") ||
+      lower.includes("balancer") ||
+      lower.includes("curve");
+
+    const isProject =
+      lower.includes("treasury") ||
+      lower.includes("foundation") ||
+      lower.includes("team") ||
+      lower.includes("vesting") ||
+      lower.includes("multisig") ||
+      lower.includes("dao");
+
+    const isBridge =
+      lower.includes("bridge") ||
+      lower.includes("gateway") ||
+      lower.includes("wormhole") ||
+      lower.includes("layerzero") ||
+      lower.includes("portal") ||
+      lower.includes("cbridge");
+
+    if (isBurn) {
+      tags.push({
+        key: "burn",
+        label: "Burn"
+      });
+    }
+    if (isCex) {
+      tags.push({
+        key: "cex",
+        label: "CEX"
+      });
+    }
+    if (isDex) {
+      tags.push({
+        key: "dex",
+        label: "DEX/LP"
+      });
+    }
+    if (isProject) {
+      tags.push({
+        key: "project",
+        label: "Project"
+      });
+    }
+    if (isBridge) {
+      tags.push({
+        key: "bridge",
+        label: "Bridge"
+      });
+    }
+    if (holder.isContract) {
+      tags.push({
+        key: "contract",
+        label: "Contract"
+      });
+    }
+    if (holder.excluded && !isBurn) {
+      tags.push({
+        key: "excluded",
+        label: "Excluded"
+      });
+    }
+
+    return tags;
+  }
+
+function renderHolders(data) {
+  if (!holdersBody || !holdersTable) return;
+  holdersBody.innerHTML = "";
+
+  const holders = Array.isArray(data && data.holders) ? data.holders : [];
+
+  whaleRowAddressSet = new Set();
+  const whaleAddresses = new Set();
+
+  if (Array.isArray(data && data.whaleAddressSet)) {
+    data.whaleAddressSet.forEach((addr) => {
+      if (typeof addr === "string") {
+        whaleAddresses.add(addr);
+      }
+    });
+  } else if (Array.isArray(data && data.whales)) {
+    data.whales.forEach((w) => {
+      if (w && typeof w.address === "string") {
+        whaleAddresses.add(w.address);
+      }
+    });
+  }
+
+  // Determine chain so we can send users to the correct block explorer
+  const chain =
+    (data && data.chain) ||
+    (lastScanData && lastScanData.chain) ||
+    "eth";
+
+  let explorerBase = "https://etherscan.io";
+  if (chain === "base") explorerBase = "https://basescan.org";
+  else if (chain === "bsc") explorerBase = "https://bscscan.com";
+  else if (chain === "polygon") explorerBase = "https://polygonscan.com";
+  else if (chain === "avalanche") explorerBase = "https://snowtrace.io";
+  else if (chain === "arbitrum") explorerBase = "https://arbiscan.io";
+  else if (chain === "optimism")
+    explorerBase = "https://optimistic.etherscan.io";
+  else if (chain === "sol")
+    explorerBase = "https://solscan.io";
+
+  if (!holders.length) {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 6;
+    td.className = "px-3 py-4 text-center text-xs text-gray-500";
+    td.textContent = "No holder data was returned for this token.";
+    tr.appendChild(td);
+    holdersBody.appendChild(tr);
+    if (viewWhalesBtn) viewWhalesBtn.disabled = true;
+    return;
+  }
+
+  holders.forEach((holder, index) => {
+    const tr = document.createElement("tr");
+    tr.className = "border-b border-gray-100 data-row";
+
+    const isWhale = whaleAddresses.has((holder.address || ""));
+    if (isWhale) {
+      tr.classList.add("whale-row");
+      whaleRowAddressSet.add((holder.address || ""));
+    }
+
+    const rankTd = document.createElement("td");
+    rankTd.className = "px-3 py-2 text-xs text-gray-500";
+    rankTd.textContent = index + 1;
+
+    const addrTd = document.createElement("td");
+    addrTd.className = "px-3 py-2 whitespace-nowrap";
+    const addrWrap = document.createElement("div");
+    addrWrap.className = "flex items-center space-x-2";
+    const addrSpan = document.createElement("span");
+    addrSpan.className = "font-mono text-xs";
+    addrSpan.textContent = shortenAddress(holder.address);
+    const etherscanLink = document.createElement("a");
+    const accountPath = chain === "sol" ? "/account/" : "/address/";
+    etherscanLink.href = holder.address
+      ? explorerBase + accountPath + holder.address
+      : "#";
+    etherscanLink.target = "_blank";
+    etherscanLink.rel = "noopener noreferrer";
+    etherscanLink.className = "text-[11px] text-gray-600 underline";
+    etherscanLink.textContent = "View";
+    addrWrap.appendChild(addrSpan);
+    addrWrap.appendChild(etherscanLink);
+    addrTd.appendChild(addrWrap);
+
+    const entityTd = document.createElement("td");
+    entityTd.className = "px-3 py-2 text-xs text-gray-700";
+    entityTd.textContent = holder.label || holder.entity || "";
+
+    const tagsTd = document.createElement("td");
+    tagsTd.className = "px-3 py-2";
+    const tags = detectTags(holder, isWhale);
+    const tagKeys = tags.map((t) => t.key);
+    tr.setAttribute("data-tags", tagKeys.join(","));
+    if (!tags.length) {
+      const span = document.createElement("span");
+      span.className = "text-[11px] text-gray-400";
+      span.textContent = "–";
+      tagsTd.appendChild(span);
+    } else {
+      tags.forEach((tag) => {
+        const pill = createTagPill(tag);
+        tagsTd.appendChild(pill);
+      });
+    }
+
+    const pctTd = document.createElement("td");
+    pctTd.className = "px-3 py-2 text-xs text-gray-800 whitespace-nowrap";
+    const pct =
+      typeof holder.percentage === "number" ? holder.percentage : null;
+    pctTd.textContent =
+      pct != null && !isNaN(pct) ? formatPercent(pct) : "–";
+
+    const usdTd = document.createElement("td");
+    usdTd.className = "px-3 py-2 text-xs text-gray-800 whitespace-nowrap";
+    const usdVal =
+      holder.usdValue != null && !isNaN(holder.usdValue)
+        ? holder.usdValue
+        : null;
+    usdTd.textContent = usdVal != null ? formatUsd(usdVal) : "–";
+
+    tr.appendChild(rankTd);
+    tr.appendChild(addrTd);
+    tr.appendChild(entityTd);
+    tr.appendChild(tagsTd);
+    tr.appendChild(pctTd);
+    tr.appendChild(usdTd);
+
+    holdersBody.appendChild(tr);
+  });
+
+  viewWhalesActive = false;
+  if (viewWhalesBtn) {
+    viewWhalesBtn.setAttribute("aria-pressed", "false");
+    viewWhalesBtn.disabled = whaleRowAddressSet.size === 0;
+    const knob = viewWhalesBtn.querySelector("span.relative");
+    if (knob) {
+      knob.style.transform = "translateX(0)";
+    }
+  }
+
+  const rows = holdersTable.querySelectorAll("tbody tr.data-row");
+  rows.forEach((row) => {
+    row.style.display = "";
+  });
+}
+
+
+  function renderWalletInsights(data) {
+    const wi = data && data.walletInsights ? data.walletInsights : {};
+
+    const whaleCount =
+      typeof wi.whaleCount === "number" ? wi.whaleCount : 0;
+    const whalePercent =
+      typeof wi.whalePercent === "number" ? wi.whalePercent : 0;
+    const top10 =
+      typeof wi.top10Percent === "number" ? wi.top10Percent : null;
+    const top20 =
+      typeof wi.top20Percent === "number" ? wi.top20Percent : null;
+
+    if (whaleCountEl) whaleCountEl.textContent = String(whaleCount);
+    if (whalePercentEl) whalePercentEl.textContent = formatPercent(whalePercent);
+    if (top10PercentEl)
+      top10PercentEl.textContent = top10 != null ? formatPercent(top10) : "–";
+    if (top20PercentEl)
+      top20PercentEl.textContent = top20 != null ? formatPercent(top20) : "–";
+
+    // Snapshot of supply rows
+    if (snapCommunityEl) {
+      snapCommunityEl.textContent =
+        typeof wi.communityPercent === "number"
+          ? formatPercent(wi.communityPercent)
+          : "–";
+    }
+    if (snapWhaleEl) {
+      snapWhaleEl.textContent =
+        typeof wi.whalePercent === "number"
+          ? formatPercent(wi.whalePercent)
+          : "–";
+    }
+    if (snapCexEl) {
+      snapCexEl.textContent =
+        typeof wi.cexPercent === "number"
+          ? formatPercent(wi.cexPercent)
+          : "–";
+    }
+    if (snapBridgeEl) {
+      snapBridgeEl.textContent =
+        typeof wi.bridgePercent === "number"
+          ? formatPercent(wi.bridgePercent)
+          : "–";
+    }
+    if (snapDexEl) {
+      snapDexEl.textContent =
+        typeof wi.dexPercent === "number"
+          ? formatPercent(wi.dexPercent)
+          : "–";
+    }
+    if (snapProjectEl) {
+      snapProjectEl.textContent =
+        typeof wi.projectPercent === "number"
+          ? formatPercent(wi.projectPercent)
+          : "–";
+    }
+    if (snapBurnEl) {
+      snapBurnEl.textContent =
+        typeof wi.burnPercent === "number"
+          ? formatPercent(wi.burnPercent)
+          : "–";
+    }
+
+
+    // EOA vs Contract distribution text
+    if (eoaContractLine && eoaContractText) {
+      const eoaCount =
+        typeof wi.eoaWalletCount === "number" ? wi.eoaWalletCount : null;
+      const contractCount =
+        typeof wi.contractWalletCount === "number"
+          ? wi.contractWalletCount
+          : null;
+      const eoaPct =
+        typeof wi.eoaPercent === "number" ? wi.eoaPercent : null;
+      const contractPct =
+        typeof wi.contractPercent === "number" ? wi.contractPercent : null;
+
+      if (
+        (eoaCount != null || contractCount != null) ||
+        (eoaPct != null || contractPct != null)
+      ) {
+        const parts = [];
+        if (eoaCount != null) {
+          const pctText =
+            eoaPct != null && !isNaN(eoaPct)
+              ? " (" + formatPercent(eoaPct) + ")"
+              : "";
+          parts.push(
+            eoaCount + (eoaCount === 1 ? " EOA" : " EOAs") + pctText
+          );
+        }
+        if (contractCount != null) {
+          const pctText =
+            contractPct != null && !isNaN(contractPct)
+              ? " (" + formatPercent(contractPct) + ")"
+              : "";
+          parts.push(
+            contractCount +
+              (contractCount === 1 ? " contract" : " contracts") +
+              pctText
+          );
+        }
+        eoaContractText.textContent = parts.join(" · ");
+        eoaContractLine.style.display = "";
+      } else {
+        eoaContractText.textContent = "–";
+        eoaContractLine.style.display = "none";
+      }
+    }
+
+    // Infra wallet counts by type
+    if (infraCountsLine && infraCountsText) {
+      const cexCount =
+        typeof wi.cexWalletCount === "number" ? wi.cexWalletCount : null;
+      const dexCount =
+        typeof wi.dexWalletCount === "number" ? wi.dexWalletCount : null;
+      const projectCount =
+        typeof wi.projectWalletCount === "number"
+          ? wi.projectWalletCount
+          : null;
+      const bridgeCount =
+        typeof wi.bridgeWalletCount === "number" ? wi.bridgeWalletCount : null;
+
+      const parts = [];
+      if (cexCount != null) {
+        parts.push(cexCount + (cexCount === 1 ? " CEX" : " CEXes"));
+      }
+      if (dexCount != null) {
+        parts.push(dexCount + (dexCount === 1 ? " DEX/LP" : " DEX/LPs"));
+      }
+      if (projectCount != null) {
+        parts.push(
+          projectCount + (projectCount === 1 ? " Project" : " Project wallets")
+        );
+      }
+      if (bridgeCount != null) {
+        parts.push(
+          bridgeCount + (bridgeCount === 1 ? " Bridge" : " Bridge wallets")
+        );
+      }
+
+      if (parts.length) {
+        infraCountsText.textContent = parts.join(" · ");
+        infraCountsLine.style.display = "";
+      } else {
+        infraCountsText.textContent = "–";
+        infraCountsLine.style.display = "none";
+      }
+    }
+
+    // Top holders concentration & coverage & USD metrics
+    if (topConcentrationLine || usdConcentrationLine || topCoverageLine) {
+      const top1Pct =
+        typeof wi.top1Percent === "number" ? wi.top1Percent : null;
+      const top3Pct =
+        typeof wi.top3Percent === "number" ? wi.top3Percent : null;
+      const top5Pct =
+        typeof wi.top5Percent === "number" ? wi.top5Percent : null;
+      const top10Adj =
+        typeof wi.top10AdjustedPercent === "number"
+          ? wi.top10AdjustedPercent
+          : null;
+
+      if (topConcentrationLine) {
+        // Hide the Top 1 / Top 3 / Top 5 / Adj. Top 10 line for now.
+        topConcentrationLine.textContent = "";
+        topConcentrationLine.style.display = "none";
+      }
+
+      if (usdConcentrationLine) {
+        const top1Usd =
+          typeof wi.top1Usd === "number" ? wi.top1Usd : null;
+        const totalUsd =
+          typeof wi.totalUsdTopHolders === "number"
+            ? wi.totalUsdTopHolders
+            : null;
+        const avgUsd =
+          typeof wi.averageUsdTopHolders === "number"
+            ? wi.averageUsdTopHolders
+            : null;
+
+        const parts = [];
+        if (totalUsd != null)
+          parts.push("Total value: " + formatUsd(totalUsd));
+        if (top1Usd != null) parts.push("Largest wallet: " + formatUsd(top1Usd));
+        if (avgUsd != null)
+          parts.push("Wallet avg.: " + formatUsd(avgUsd));
+
+        if (parts.length) {
+          usdConcentrationLine.textContent = parts.join(" · ");
+          usdConcentrationLine.style.display = "";
+        } else {
+          usdConcentrationLine.textContent =
+            "USD concentration for the top holder set will appear here after a scan.";
+          usdConcentrationLine.style.display = "";
+        }
+      }
+
+      if (topCoverageLine) {
+        const holderCountTop =
+          typeof wi.holderCountTop === "number" ? wi.holderCountTop : null;
+        if (holderCountTop != null) {
+          topCoverageLine.textContent =
+            "Analysis is based on the top " +
+            holderCountTop +
+            " holders returned by the API.";
+          topCoverageLine.style.display = "";
+        } else {
+          topCoverageLine.textContent =
+            "Analysis coverage (how many top holders were scanned) will appear here after a scan.";
+          topCoverageLine.style.display = "";
+        }
+      }
+    }
+  }
+
+
+  function renderScore(data) {
+    const score =
+      typeof data.cabalScore === "number" ? data.cabalScore : null;
+    if (scoreMain) {
+      scoreMain.textContent = score != null ? score + "/100" : "–";
+    }
+
+    const { bucket, label, pill } = classifyScore(score);
+
+    if (scorePillLabel) {
+      scorePillLabel.textContent = pill;
+    }
+    if (scoreRatingEl) {
+      scoreRatingEl.textContent = label ? label + " · " : "";
+    }
+    if (scoreSummaryEl) {
+      const rawSummary =
+        data.summary ||
+        "Scan a token to see how concentrated its holder base is.";
+      scoreSummaryEl.textContent = sanitizeSummary(rawSummary);
+    }
+
+    setLegend(bucket);
+    setScorePillDot(bucket);
+  }
+
+  function updatePromo(data) {
+    data = data || {};
+    if (!buyTooBtn || !shareButtons.length || !footerNote) return;
+
+    buyTooBtn.onclick = function () {
+      window.open(TOO_SWAP_URL, "_blank", "noopener,noreferrer");
+    };
+
+    shareButtons.forEach(function (btn) {
+      btn.onclick = function () {
+        const text = buildShareText();
+        const tweetUrl =
+          "https://twitter.com/intent/tweet?text=" +
+          encodeURIComponent(text);
+        window.open(tweetUrl, "_blank", "noopener,noreferrer");
+      };
+    });
+
+    if (copyLinkBtn) {
+      copyLinkBtn.onclick = function () {
+        const url = buildShareUrl();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(url)
+            .then(function () {
+              setStatus("Share link copied.", "ok");
+            })
+            .catch(function () {
+              setStatus(
+                "Copy failed. You can copy the link from your browser bar.",
+                "error"
+              );
+            });
+        } else {
+          try {
+            const temp = document.createElement("textarea");
+            temp.value = url;
+            temp.style.position = "fixed";
+            temp.style.top = "-9999px";
+            document.body.appendChild(temp);
+            temp.focus();
+            temp.select();
+            const succeeded = document.execCommand("copy");
+            document.body.removeChild(temp);
+            if (succeeded) {
+              setStatus("Share link copied.", "ok");
+            } else {
+              setStatus(
+                "Copy failed. You can copy the link from your browser bar.",
+                "error"
+              );
+            }
+          } catch (e) {
+            setStatus(
+              "Copy failed. You can copy the link from your browser bar.",
+              "error"
+            );
+          }
+        }
+      };
+    }
+  }
+
+
+  function setupAdvancedToggle(button, panel, baseLabel) {
+    if (!button || !panel) return;
+    let open = false;
+
+    function update() {
+      panel.classList.toggle("hidden", !open);
+      if (baseLabel) {
+        button.textContent = baseLabel + (open ? " ▴" : " ▾");
+      }
+    }
+
+    // start closed
+    open = false;
+    update();
+
+    button.addEventListener("click", function () {
+      open = !open;
+      update();
+    });
+  }
+
+  function initAdvancedSections() {
+    setupAdvancedToggle(snapshotAdvancedToggle, snapshotAdvanced, "Address type details");
+    setupAdvancedToggle(clustersAdvancedToggle, clustersAdvanced, "Infrastructure details");
+    setupAdvancedToggle(topAdvancedToggle, topAdvanced, "Advanced breakdown");
+  }
+  async function runScan() {
+    const rawValue = tokenInput ? tokenInput.value.trim() : "";
+    if (!rawValue) {
+      setStatus("Paste a token contract address first.", "error");
+      return;
+    }
+
+    const chain =
+      chainSelect && chainSelect.value ? chainSelect.value : "eth";
+
+    if (!isValidAddressForChain(chain, rawValue)) {
+      const msg =
+        chain === "sol"
+          ? "That doesn't look like a valid Solana token address."
+          : "That doesn't look like a valid contract address (0x…).";
+      setStatus(msg, "error");
+      return;
+    }
+
+    setStatus("Scanning token…", "info");
+    if (scanBtn) scanBtn.disabled = true;
+
+    try {
+      const url =
+        API_BASE +
+        "/api/scan?token=" +
+        encodeURIComponent(rawValue) +
+        "&chain=" +
+        encodeURIComponent(chain) +
+        "&key=" +
+        encodeURIComponent(PUBLIC_API_KEY);
+
+      const res = await fetch(url, { method: "GET" });
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(
+          "Scan failed (" + res.status + "): " + text
+        );
+      }
+
+      const data = await res.json();
+
+      if (data.error && data.error === "unsupported_token") {
+        const msg =
+          data.message ||
+          `No holders found for this contract on ${data.chain || chain}. Make sure you’re using the contract address for that chain.`;
+        setStatus(msg, "error");
+        return;
+      }
+
+      if (data.error) {
+        setStatus(
+          data.message || "Scan failed with error: " + data.error,
+          "error"
+        );
+        return;
+      }
+
+      lastScanData = {
+        token: data.token,
+        cabalScore: data.cabalScore,
+        chain: data.chain || chain,
+      };
+
+      // Refresh recent scans panel (fire and forget)
+      fetchRecentScans();
+
+      if (scanChainLine && lastScanData && lastScanData.chain) {
+        const label = getChainLabel(lastScanData.chain);
+        scanChainLine.textContent = "Scanned on: " + label;
+        scanChainLine.style.display = "";
+      }
+
+
+      renderScore(data);
+      renderWalletInsights(data);
+      renderClusters(data);
+      renderHolders(data);
+      renderTopHolderSummaryCards(data);
+      updatePromo(data);
+
+      setStatus("Scan complete.", "ok");
+    } catch (err) {
+      console.error(err);
+      setStatus(
+        "Scan failed: " +
+          (err && err.message ? err.message : "Unknown error"),
+        "error"
+      );
+    } finally {
+      if (scanBtn) scanBtn.disabled = false;
+    }
+  }
+
+  function initScanControls() {
+    if (scanBtn) {
+      scanBtn.addEventListener("click", function () {
+        runScan();
+      });
+    }
+
+    if (tokenInput) {
+      tokenInput.addEventListener("keydown", function (evt) {
+        if (evt.key === "Enter") {
+          evt.preventDefault();
+          runScan();
+        }
+      });
+    }
+  }
+
+  function initWhaleToggle() {
+    if (!viewWhalesBtn || !holdersTable) return;
+
+    viewWhalesBtn.addEventListener("click", function () {
+      if (!whaleRowAddressSet.size) return;
+
+      viewWhalesActive = !viewWhalesActive;
+      viewWhalesBtn.setAttribute(
+        "aria-pressed",
+        viewWhalesActive ? "true" : "false"
+      );
+
+      const knob = viewWhalesBtn.querySelector("span.relative");
+      if (knob) {
+        knob.style.transform = viewWhalesActive
+          ? "translateX(14px)"
+          : "translateX(0)";
+      }
+
+      const rows = holdersTable.querySelectorAll("tbody tr.data-row");
+      rows.forEach((row) => {
+        const isWhale = row.classList.contains("whale-row");
+        if (viewWhalesActive) {
+          row.style.display = isWhale ? "" : "none";
+        } else {
+          row.style.display = "";
+        }
+      });
+    });
+  }
+
+  function initFilters() {
+    const filtersToggle = document.getElementById("filtersToggle");
+    const filtersMenu = document.getElementById("filtersMenu");
+    const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+    const doneFiltersBtn = document.getElementById("doneFiltersBtn");
+    const tagCheckboxes = document.querySelectorAll(".tag-filter");
+
+    if (filtersToggle && filtersMenu) {
+      filtersToggle.addEventListener("click", () => {
+        filtersMenu.classList.toggle("hidden");
+      });
+    }
+
+    function applyTagFilters() {
+      const active = Array.from(tagCheckboxes)
+        .filter((cb) => cb.checked)
+        .map((cb) => cb.value);
+      const rows = document.querySelectorAll("#holdersBody tr.data-row");
+
+      if (!active.length) {
+        rows.forEach((row) => {
+          row.style.display = "";
+        });
+        return;
+      }
+
+      rows.forEach((row) => {
+        const tags = row.getAttribute("data-tags") || "";
+        const show = active.some((tag) => tags.includes(tag));
+        row.style.display = show ? "" : "none";
+      });
+    }
+
+    tagCheckboxes.forEach((cb) => {
+      cb.addEventListener("change", applyTagFilters);
+    });
+
+    if (clearFiltersBtn) {
+      clearFiltersBtn.addEventListener("click", () => {
+        tagCheckboxes.forEach((cb) => {
+          cb.checked = false;
+        });
+        const rows = document.querySelectorAll("#holdersBody tr.data-row");
+        rows.forEach((row) => {
+          row.style.display = "";
+        });
+      });
+    }
+
+    if (doneFiltersBtn && filtersMenu) {
+      doneFiltersBtn.addEventListener("click", () => {
+        filtersMenu.classList.add("hidden");
+      });
+    }
+  }
+
+
+  function initFromUrl() {
+    try {
+      const params = new URLSearchParams(window.location.search || "");
+      const tokenParam = (params.get("token") || "").trim();
+      const chainParam = (params.get("chain") || "").trim();
+
+      // If we have a chain in the URL, apply it first
+      if (chainSelect && chainParam) {
+        const allowedChains = [
+          "eth",
+          "sol",
+          "base",
+          "bsc",
+          "polygon",
+          "avalanche",
+          "arbitrum",
+          "optimism",
+        ];
+        if (allowedChains.indexOf(chainParam) !== -1) {
+          chainSelect.value = chainParam;
+        }
+      }
+
+      // Prefill token input directly from URL (runScan will validate)
+      if (tokenInput && tokenParam) {
+        tokenInput.value = tokenParam;
+      }
+
+      const activeChain =
+        chainSelect && chainSelect.value ? chainSelect.value : chainParam || "eth";
+
+      // Auto-run scan if we have both params; runScan will handle validation/errors
+      if (tokenInput && tokenInput.value) {
+        runScan();
+      }
+    } catch (err) {
+      console.error("Failed to init from URL params:", err);
+    }
+  }
+
+
+  // Init everything
+  initScanControls();
+  initWhaleToggle();
+  initFilters();
+  initAdvancedSections();
+  updatePromo();
+  initFromUrl();
+  fetchRecentScans();
+})();
+</script>
+</body>
+</html>

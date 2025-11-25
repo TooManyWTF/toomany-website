@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6VQN64SEKQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6VQN64SEKQ');
+</script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Too Many | Whitepaper | $TOO</title>
+
+  <!-- Tailwind -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+  />
+
+  <!-- Pazly Colors -->
+  <link rel="stylesheet" href="https://pazly.dev/colors/gradients.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/backgrounds.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/text.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/border.css" />
+
+  <style>
+    body {
+      background: #f3e7d3;
+      overflow-x: hidden;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    h1, h2, h3 { line-height: 1.25 !important; }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+    }
+    .toc-link {
+      display: block;
+      padding: 6px 0;
+      color: #444;
+    }
+    .toc-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="w-full bg-white border-b border-gray-200">
+  <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-3 md:py-4">
+    <a href="/" class="flex items-center space-x-2">
+      <img src="images/transparentlogo.png" class="h-10 md:h-12" alt="Too Many logo" /></a>
+
+    <nav class="flex flex-wrap items-center text-center justify-center space-x-4 md:space-x-6 mt-3 md:mt-0">
+	  <a href="https://toomany.wtf" class="underline font-mono">Home</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline font-mono">X</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO HEADER -->
+<section class="text-gray-800" style="background:#F3E7D3;">
+  <div class="container mx-auto px-5 py-8 md:py-10 flex flex-col md:flex-row items-center">
+    <div class="w-full md:w-7/12 lg:w-1/2 px-3 mb-10 md:mb-0">
+      <div class="inline-flex items-center rounded-full bg-white px-3 py-1 text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600">
+        <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+        Anti-cabal • Rug-proof • No tax
+      </div>
+
+     <h1 class="font-mono font-bold text-3xl md:text-5xl mt-4 mb-6 text-gray-900">
+  $TOO <span class="bg-black text-white px-2">Whitepaper</span>
+</h1>
+
+      <p class="text-gray-800 text-lg md:text-2xl font-light font-mono">
+        The philosophy, mission, and mechanics behind the rebellion.
+      </p>
+
+      <!-- CTA ROW -->
+      <div class="flex flex-wrap items-center gap-3 mt-6">
+        <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
+           target="_blank"
+           class="px-6 py-3 rounded-lg bg-black text-white font-mono uppercase tracking-wide">
+          buy on uniswap
+        </a>
+        <a href="https://x.com/toomanywtf"
+           target="_blank"
+           class="underline font-mono px-4 py-3">
+          follow on X
+        </a>
+      </div>
+
+      <div class="mt-6">
+        <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
+          0x95C1CFD6Ed4155b263698E2873814c128eD219b0
+        </code>
+      </div>
+    </div>
+
+   <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
+  <img src="images/transparentlogo.png"
+       class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
+       alt="TOO Logo" />
+</div>
+  </div>
+</section>
+
+<!-- WHITEPAPER BODY WITH SIDEBAR -->
+<section class="w-full bg-white text-gray-900 border-t border-gray-300">
+  <div class="container mx-auto px-5 py-16 md:py-20 flex">
+
+    <!-- SIDEBAR -->
+    <aside class="hidden md:block w-1/4 pr-8 sidebar font-mono text-sm text-gray-700">
+      <h3 class="font-bold mb-3">Contents</h3>
+      <a class="toc-link" href="#identity">Identity & Contract</a>
+      <a class="toc-link" href="#fiscal">Fiscal Policy</a>
+      <a class="toc-link" href="#supply">Supply & Distribution</a>
+      <a class="toc-link" href="#distribution">Distribution Breakdown</a>
+      <a class="toc-link" href="#liquidity">Liquidity & Locks</a>
+      <a class="toc-link" href="#growth">Growth Fund & Vesting</a>
+      <a class="toc-link" href="#governance">Governance & Community</a>
+      <a class="toc-link" href="#security">Security & Audits</a>
+      <a class="toc-link" href="#risks">Risks & Disclaimers</a>
+      <a class="toc-link" href="#usecases">Use Cases</a>
+      <a class="toc-link" href="#closing">Closing / Ethos</a>
+    </aside>
+
+    <!-- MAIN TEXT -->
+    <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4">
+
+      <h2 class="font-mono text-2xl md:text-3xl mb-6">Whitepaper</h2>
+
+      <!-- FORMATTED WHITEPAPER TEXT -->
+      <p>
+$too many is a community-owned meme created as a sardonic reaction to the endless parade of coins, influencers, and “we swear we’re not a rug” promises. the project emphasizes anti-cabals, transparency, minimalism, and community control: no dev stash, no tax, renounced contract, and a large burn.
+      </p>
+
+      <h3 id="identity" class="text-xl font-bold mt-10 mb-3">Identity & Contract</h3>
+      <p>
+name: too many<br>
+ticker: $too<br>
+ca: 0x95c1cfd6ed4155b263698e2873814c128ed219b0
+      </p>
+
+      <h3 id="fiscal" class="text-xl font-bold mt-10 mb-3">Fiscal Policy & Anti-Cabality Rules</h3>
+      <p>
+no tax on transfers – trading isn’t taxed by the contract itself.<br><br>
+no dev stash / no team allocation – zero dev allocation.<br><br>
+contract renounced – ownership renounced on-chain so there’s no privileged private key for unilateral changes.
+      </p>
+
+      <h3 id="supply" class="text-xl font-bold mt-10 mb-3">Supply & Distribution</h3>
+      <p>
+total supply: 1,000,000,000<br>
+circulating: 50,000,000<br><br>
+burned: 90% (900,000,000 burned).
+      </p>
+
+      <h3 id="distribution" class="text-xl font-bold mt-10 mb-3">Distribution Breakdown</h3>
+      <p>
+liquidity pool (lp): 5% → 50,000,000 (locked via uncx)<br><br>
+growth fund (vesting): 5% → 50,000,000 locked with scheduled releases.
+      </p>
+
+      <h3 id="liquidity" class="text-xl font-bold mt-10 mb-3">Liquidity & Locks</h3>
+      <p>
+lp locked: 50,000,000 (5% of supply) locked by uncx – reduces rug risk and signals long-term trading availability.
+      </p>
+
+      <h3 id="growth" class="text-xl font-bold mt-10 mb-3">Growth Fund & Vesting</h3>
+      <p>
+growth fund: 50,000,000 (5% of total) locked with 10% released every two months. burned if not used.
+      </p>
+
+      <h3 id="governance" class="text-xl font-bold mt-10 mb-3">Governance & Community Control</h3>
+      <p>
+decentralized culture: domain, website, email, and growth fund may be relinquished to the community if desired.
+      </p>
+
+      <h3 id="security" class="text-xl font-bold mt-10 mb-3">Security & Audits</h3>
+      <p>
+contracts verified, renounced and locked.
+      </p>
+
+      <h3 id="risks" class="text-xl font-bold mt-10 mb-3">Risks & Disclaimers</h3>
+      <p>
+memes are speculative and volatile. $too many makes no claims of intrinsic value or financial return. no team. no roadmap. entertainment only.
+      </p>
+
+      <h3 id="usecases" class="text-xl font-bold mt-10 mb-3">Use Cases & Incentives</h3>
+      <p>
+primary: memetic store of value and identity — a protest coin against influencer/cabal fatigue.
+      </p>
+
+      <h3 id="closing" class="text-xl font-bold mt-10 mb-3">Closing / Ethos</h3>
+      <p>
+$too many is a meme and a mirror held up to crypto’s excesses. on-chain decisions (burn, locked lp, renounced contract) align incentives with holders and meme culture.
+      </p>
+
+    </article>
+
+  </div>
+</section>
+
+<div style="text-align:center;">
+    <center><img src="images/transparentlogo.png" alt="Too Many Rugs Meme" width="400"></center>
+</div>
+
+<!-- FOOTER -->
+<footer class="w-full bg-gray-800">
+  <div class="container mx-auto flex justify-center text-center py-4 px-4">
+    <h1 class="font-mono text-white text-base md:text-xl">
+      toomany.wtf | toomanywtf (at) gmail
+    </h1>
+  </div>
+</footer>
+
+</body>
+</html>
