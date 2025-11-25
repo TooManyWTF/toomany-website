@@ -1,8 +1,0 @@
-# --- FIX IMAGES ---
-/images/*     /images/:splat      200
-
-# --- FORCE KEEPING .HTML ---
-/*.html       /:splat.html        200
-
-# --- DEFAULT FALLBACK ---
-/*            /index.html         200
