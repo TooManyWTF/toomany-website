@@ -1,15 +1,20 @@
 <script>
 // Auto-detect environment (local vs deployed)
+// Return just the origin/base URL, NOT including /api.
+// The rest of the code always appends "/api/..." on top of this.
 function getApiBase() {
   const host = window.location.hostname;
 
+  // Local dev via `wrangler dev`
   if (host === "127.0.0.1" || host === "localhost") {
-    return "http://127.0.0.1:8787/api";
+    return "http://127.0.0.1:8787";
   }
+  // If opened directly from the filesystem, assume local dev worker
   if (window.location.protocol === "file:") {
-    return "http://127.0.0.1:8787/api";
+    return "http://127.0.0.1:8787";
   }
-  return "/api";
+  // In production, use same origin
+  return "";
 }
 const API_BASE = getApiBase();
 </script>
@@ -594,7 +599,6 @@ const API_BASE = getApiBase();
 
 <script>
 (function () {
-  const API_BASE = "http://127.0.0.1:8787";
   const PUBLIC_API_KEY = "hfkdEJODJEOFKoekdoekl8763djEwrangler";
   const TOO_SWAP_URL =
     "https://app.uniswap.org/swap?outputCurrency=0x95C1CFD6Ed4155b263698E2873814c128eD219b0&chain=ethereum";
