@@ -1,4 +1,18 @@
+<script>
+// Auto-detect environment (local vs deployed)
+function getApiBase() {
+  const host = window.location.hostname;
 
+  if (host === "127.0.0.1" || host === "localhost") {
+    return "http://127.0.0.1:8787/api";
+  }
+  if (window.location.protocol === "file:") {
+    return "http://127.0.0.1:8787/api";
+  }
+  return "/api";
+}
+const API_BASE = getApiBase();
+</script>
 <!doctype html>
 <html lang="en">
 <head>
@@ -22,7 +36,7 @@
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://toomany.wtf/cabal" />
+<meta property="og:url" content="https://toomany.wtf/cabal.html" />
 <meta property="og:title" content="Crypto Cabal Scanner Tool | $TOO/>
 <meta property="og:description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
 <meta property="og:image" content="https://toomany.wtf/images/banner.png" />
@@ -580,7 +594,7 @@
 
 <script>
 (function () {
-  const API_BASE = "https://toomany.wtf/api";
+  const API_BASE = "http://127.0.0.1:8787";
   const PUBLIC_API_KEY = "hfkdEJODJEOFKoekdoekl8763djEwrangler";
   const TOO_SWAP_URL =
     "https://app.uniswap.org/swap?outputCurrency=0x95C1CFD6Ed4155b263698E2873814c128eD219b0&chain=ethereum";
@@ -892,7 +906,7 @@
       const ticker = rawTicker ? rawTicker : null;
 
       const linkUrl =
-        "/cabal?chain=" +
+        "cabal.html?chain=" +
         encodeURIComponent(item.chain || "eth") +
         "&token=" +
         encodeURIComponent(item.token || "");
@@ -960,7 +974,7 @@
         ((item.scanCount || 1) === 1 ? " scan" : " scans");
 
       const linkUrl =
-        "/cabal?chain=" +
+        "cabal.html?chain=" +
         encodeURIComponent(item.chain || "eth") +
         "&token=" +
         encodeURIComponent(item.token || "");
@@ -1026,7 +1040,7 @@
         ((item.scanCount || 1) === 1 ? " scan" : " scans");
 
       const linkUrl =
-        "/cabal?chain=" +
+        "cabal.html?chain=" +
         encodeURIComponent(item.chain || "eth") +
         "&token=" +
         encodeURIComponent(item.token || "");
@@ -1076,7 +1090,7 @@ function buildShareUrl() {
     const token = lastScanData && lastScanData.token;
     const chain =
       lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
-    const baseUrl = "https://toomany.wtf/cabal";
+    const baseUrl = "https://toomany.wtf/cabal.html";
 
     if (!token) return baseUrl;
 
@@ -1095,7 +1109,7 @@ function buildShareText() {
       lastScanData && typeof lastScanData.cabalScore === "number"
         ? lastScanData.cabalScore
         : null;
-    const baseUrl = "https://toomany.wtf/cabal";
+    const baseUrl = "https://toomany.wtf/cabal.html";
     const chain =
       lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
 
