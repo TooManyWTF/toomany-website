@@ -22,7 +22,7 @@
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://toomany.wtf/cabal.html" />
+<meta property="og:url" content="https://toomany.wtf/cabal" />
 <meta property="og:title" content="Crypto Cabal Scanner Tool | $TOO/>
 <meta property="og:description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
 <meta property="og:image" content="https://toomany.wtf/images/banner.png" />
@@ -892,7 +892,7 @@
       const ticker = rawTicker ? rawTicker : null;
 
       const linkUrl =
-        "cabal.html?chain=" +
+        "/cabal?chain=" +
         encodeURIComponent(item.chain || "eth") +
         "&token=" +
         encodeURIComponent(item.token || "");
@@ -960,7 +960,7 @@
         ((item.scanCount || 1) === 1 ? " scan" : " scans");
 
       const linkUrl =
-        "cabal.html?chain=" +
+        "/cabal?chain=" +
         encodeURIComponent(item.chain || "eth") +
         "&token=" +
         encodeURIComponent(item.token || "");
@@ -1026,7 +1026,7 @@
         ((item.scanCount || 1) === 1 ? " scan" : " scans");
 
       const linkUrl =
-        "cabal.html?chain=" +
+        "/cabal?chain=" +
         encodeURIComponent(item.chain || "eth") +
         "&token=" +
         encodeURIComponent(item.token || "");
@@ -1076,7 +1076,7 @@ function buildShareUrl() {
     const token = lastScanData && lastScanData.token;
     const chain =
       lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
-    const baseUrl = "https://toomany.wtf/cabal.html";
+    const baseUrl = "https://toomany.wtf/cabal";
 
     if (!token) return baseUrl;
 
@@ -1095,7 +1095,7 @@ function buildShareText() {
       lastScanData && typeof lastScanData.cabalScore === "number"
         ? lastScanData.cabalScore
         : null;
-    const baseUrl = "https://toomany.wtf/cabal.html";
+    const baseUrl = "https://toomany.wtf/cabal";
     const chain =
       lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
 
