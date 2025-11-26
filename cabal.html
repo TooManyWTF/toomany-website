@@ -1050,6 +1050,7 @@ const API_BASE = getApiBase();
   }
 
 
+  
   function renderBestScores(items) {
     const container = document.getElementById("bestScoresContainer");
     if (!container) return;
@@ -1065,7 +1066,7 @@ const API_BASE = getApiBase();
     const sorted = (items || []).slice().sort(function (a, b) {
       const as = typeof a.bestScore === "number" ? a.bestScore : 0;
       const bs = typeof b.bestScore === "number" ? b.bestScore : 0;
-      // Ascending: lowest score first
+      // Ascending: lowest score (cleanest) first
       return as - bs;
     });
 
@@ -1113,6 +1114,7 @@ const API_BASE = getApiBase();
     });
 
     container.innerHTML = rows.join("");
+  }
 
   function renderWorstScores(items) {
     const container = document.getElementById("worstScoresContainer");
@@ -1129,7 +1131,8 @@ const API_BASE = getApiBase();
     const sorted = (items || []).slice().sort(function (a, b) {
       const as = typeof a.cabalScore === "number" ? a.cabalScore : -Infinity;
       const bs = typeof b.cabalScore === "number" ? b.cabalScore : -Infinity;
-      return bs - as; // highest score first
+      // Descending: highest cabal score (worst) first
+      return bs - as;
     });
 
     const rows = sorted.slice(0, 5).map(function (item) {
@@ -1175,8 +1178,6 @@ const API_BASE = getApiBase();
     });
 
     container.innerHTML = rows.join("");
-  }
-
   }
 
 
