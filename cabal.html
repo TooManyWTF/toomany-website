@@ -34,14 +34,14 @@ const API_BASE = getApiBase();
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Expose the Cabal! | Crypto Cabal Scanner Tool | $TOO</title>
+<title>Crypto Cabal Scanner Tool | Expose the Cabal! |  $TOO</title>
 <meta name="keywords" content="crypto cabal, crypto cabal scanner, $too, too many, too many meme, meme coin, anti-cabal token, crypto, ethereum" />
 <meta name="description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://toomany.wtf/cabal/" />
-<meta property="og:title" content="Expose the Cabal! | Crypto Cabal Scanner Tool | $TOO" />
+<meta property="og:url" content="https://toomany.wtf/cabal" />
+<meta property="og:title" content="Crypto Cabal Scanner Tool | Expose the Cabal! |  $TOO" />
 <meta property="og:description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
 <meta property="og:image" content="https://toomany.wtf/images/ogbanner.png" />
 <meta property="og:image:width" content="1200" />
@@ -49,7 +49,7 @@ const API_BASE = getApiBase();
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Expose the Cabal! | Crypto Cabal Scanner Tool | $TOO" />
+<meta name="twitter:title" content="Crypto Cabal Scanner Tool | Expose the Cabal! |  $TOO" />
 <meta name="twitter:description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
 <meta name="twitter:image" content="https://toomany.wtf/images/ogbanner.png" />
 
@@ -152,28 +152,33 @@ const API_BASE = getApiBase();
       </h1>
 
       <p class="text-gray-800 text-lg md:text-2xl font-light font-mono">
-        Find out who really controls your token now!
+        Find out who really controls your token now!<br /> <br />
       </p>
 
    <!-- CTA ROW -->
-      <div class="flex flex-wrap items-center gap-3 mt-6">
-        <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
-           target="_blank"
-           class="px-6 py-3 rounded-lg bg-black text-white font-mono uppercase tracking-wide">
-          buy on uniswap
-        </a>
-        <a href="https://x.com/toomanywtf"
-           target="_blank"
-           class="underline font-mono px-4 py-3">
-          follow on X
-        </a>
-      </div>
+<div class="flex flex-wrap items-center gap-3 mb-6">
+            <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
+              0x95C1CFD6Ed4155b263698E2873814c128eD219b0
+            </code>
+          </div>
 
-      <div class="mt-6">
-        <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
-          0x95C1CFD6Ed4155b263698E2873814c128eD219b0
-        </code>
-      </div>
+          <!-- CT-friendly CTA row -->
+          <div class="flex flex-wrap items-center gap-3">
+            <a
+              href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0?inputCurrency=NATIVE"
+              target="_blank"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-black text-white font-mono text-sm md:text-base uppercase tracking-wide"
+            >
+              buy on uniswap
+            </a>
+            <a
+              href="https://x.com/toomanywtf"
+              target="_blank"
+              class="inline-flex items-center justify-center px-4 py-3 rounded-lg font-mono text-sm md:text-base underline"
+            >
+              follow on X
+            </a>
+          </div>
     </div>
 
    <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
@@ -233,7 +238,7 @@ const API_BASE = getApiBase();
             About
           </p>
           <p class="text-xs text-gray-500">
-            Cabal Scanner analyzes a coins/tokens supply, where it's held and how much each entity holds. Lower Cabal scores equals better supply distribution.
+            Cabal Scanner analyzes token supply, where it's held and how much each entity holds. Lower Cabal scores equals better supply distribution.
           </p>
         </div>
 
@@ -242,7 +247,29 @@ const API_BASE = getApiBase();
           <!-- Score card -->
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="leading-tight">
-              <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">Cabal score</p>
+              <div class="flex items-center gap-1">
+                <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">Cabal score</p>
+                <div class="relative inline-flex items-center">
+  <button
+    type="button"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    data-tooltip-id="tooltip-cabal-score"
+    aria-label="What is the Cabal score?"
+  >
+    ?
+  </button>
+  <div
+    id="tooltip-cabal-score"
+    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
+    role="tooltip"
+  >
+    <p class="font-semibold mb-1">Cabal score</p>
+    <p>
+      0 means pure community. 100 means the supply looks heavily controlled by a small cabal of wallets, CEXes, or bridges.
+    </p>
+  </div>
+</div>
+              </div>
               <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">Lower is better</p>
             </div>
             <div class="flex items-baseline justify-between space-x-3">
@@ -255,6 +282,17 @@ const API_BASE = getApiBase();
             <div class="font-mono text-sm md:text-base text-gray-800">
               <span id="scoreRating"></span>
               <span id="scoreSummary">Scan a token to see how concentrated its holder base is.</span>
+            </div>
+            <div
+              id="tooExplainer"
+              class="mt-2 text-xs text-gray-600 bg-white border border-gray-200 rounded-lg px-3 py-2 hidden"
+            >
+              <p class="font-semibold mb-1">$TOO’s 0/100 Cabal score</p>
+              <ul class="list-disc list-inside space-y-1">
+                <li>No obvious cabal wallets among the top holders we track.</li>
+                <li>No large CEX custody dominating the circulating supply.</li>
+                <li>Whale wallets stay below our cabal risk thresholds.</li>
+              </ul>
             </div>
             <p id="scanChainLine" class="text-xs text-gray-500 mt-1"></p>
             <div class="flex flex-wrap gap-2 mt-1 justify-start items-start">
@@ -280,7 +318,29 @@ const API_BASE = getApiBase();
           <!-- Supply snapshot -->
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="flex items-center justify-between">
-              <p class="text-xs tracking-wide uppercase text-gray-500">Snapshot of supply</p>
+              <div class="flex items-center gap-1">
+                <p class="text-xs tracking-wide uppercase text-gray-500">Snapshot of supply</p>
+                <div class="relative inline-flex items-center">
+  <button
+    type="button"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    data-tooltip-id="tooltip-snapshot"
+    aria-label="What is Snapshot of supply?"
+  >
+    ?
+  </button>
+  <div
+    id="tooltip-snapshot"
+    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
+    role="tooltip"
+  >
+    <p class="font-semibold mb-1">Snapshot of supply</p>
+    <p>
+      Shows how much of the visible supply is held by whales, CEXes, bridges, DEX/LP, and burn addresses based on the top holders we can see on-chain.
+    </p>
+  </div>
+</div>
+              </div>
             </div>
             <p id="scoreExplanation" class="mt-1 text-xs text-gray-500 leading-snug">
               Percent of total supply held by each wallet category based on the top holders we can see on-chain.
@@ -410,14 +470,8 @@ const API_BASE = getApiBase();
       type="button"
       class="text-gray-500 text-sm md:text-base underline share-btn"
     >
-      Share on X
+      Share
     </button>
-    <a
-      href="https://x.com/toomanywtf/status/1993546389037457480" target="_blank"
-      class="text-gray-500 text-sm md:text-base underline"
-    >
-      Feedback
-    </a>
   </div>
 
   <!-- Right side: whales toggle + filters -->
@@ -525,12 +579,34 @@ const API_BASE = getApiBase();
         <!-- Scanner activity lists -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-4 mt-4">
           <div class="flex items-center justify-between">
-            <p class="text-xs tracking-wide uppercase text-gray-500">Scanner activity</p>
+            <div class="flex items-center gap-1">
+              <p class="text-xs tracking-wide uppercase text-gray-500">Scanner activity</p>
+              <div class="relative inline-flex items-center">
+  <button
+    type="button"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    data-tooltip-id="tooltip-scanner-activity"
+    aria-label="What is Scanner activity?"
+  >
+    ?
+  </button>
+  <div
+    id="tooltip-scanner-activity"
+    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
+    role="tooltip"
+  >
+    <p class="font-semibold mb-1">Scanner activity</p>
+    <p>
+      Global view of how people use the scanner: the current leaderboard of lowest Cabal scores, most recent scans, and most-scanned contracts across all users.
+    </p>
+  </div>
+</div>
+            </div>
           </div>
           <div class="space-y-4">
-            <!-- Best Cabal Scores -->
+            <!-- Leaderboard -->
             <div class="space-y-2">
-              <p class="text-gray-500 text-sm md:text-base">Best Cabal Scores</p>
+              <p class="text-gray-500 text-sm md:text-base">Leaderboard</p>
               <div id="bestScoresContainer" class="space-y-2">
                 <p class="text-xs text-gray-500">
                   No scans recorded yet. Run a scan to see top scores here.
@@ -874,18 +950,16 @@ const API_BASE = getApiBase();
 
   
   // Fetch and render activity lists for the bottom panel
-  async async function fetchRecentScans() {
+  async function fetchRecentScans() {
     try {
       const res = await fetch(API_BASE + "/api/stats/recent");
       if (!res.ok) return;
       const data = await res.json();
       const items = data && data.items ? data.items : [];
       const bestCabals = data && data.bestCabals ? data.bestCabals : [];
-      const worstCabals = data && data.worstCabals ? data.worstCabals : [];
       const mostScanned = data && data.mostScanned ? data.mostScanned : [];
       renderRecentScans(items);
       renderBestScores(bestCabals);
-      renderWorstScores(worstCabals);
       renderMostScanned(mostScanned);
     } catch (err) {
       console.error("Failed to load recent scans:", err);
@@ -1023,75 +1097,7 @@ const API_BASE = getApiBase();
   }
 
 
-  
-  function renderWorstScores(items) {
-    const container = document.getElementById("worstScoresContainer");
-    if (!container) return;
-
-    if (!items || !items.length) {
-      container.innerHTML = `
-        <p class="text-xs text-gray-500">
-          No scans recorded yet. Run a scan to see the worst offenders here.
-        </p>`;
-      return;
-    }
-
-    const sorted = (items || []).slice().sort(function (a, b) {
-      const as = typeof a.bestScore === "number" ? a.bestScore : 0;
-      const bs = typeof b.bestScore === "number" ? b.bestScore : 0;
-      // Descending: highest (worst) score first
-      return bs - as;
-    });
-
-    const rows = sorted.slice(0, 5).map(function (item) {
-      const shortToken = item.token
-        ? shortenAddress(item.token)
-        : "Unknown token";
-      const scorePart =
-        typeof item.bestScore === "number"
-          ? item.bestScore + "/100"
-          : "Score unknown";
-      const label = item.bestAlertCategory || "";
-      const chainLabel = (item.chain || "eth").toUpperCase();
-      const rawTicker = item.symbol || item.ticker;
-      const ticker = rawTicker ? rawTicker : null;
-      const scansLabel =
-        (item.scanCount || 1) +
-        ((item.scanCount || 1) === 1 ? " scan" : " scans");
-
-      const linkUrl =
-        "/cabal?chain=" +
-        encodeURIComponent(item.chain || "eth") +
-        "&token=" +
-        encodeURIComponent(item.token || "");
-
-      return `
-        <button
-          type="button"
-          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
-          onclick="window.location.href='${linkUrl}'"
-        >
-          <div class="flex flex-col">
-            <span class="text-sm md:text-base text-gray-900">
-              ${shortToken}
-            </span>
-            <span class="font-mono text-sm md:text-base text-gray-800">
-              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
-            </span>
-          </div>
-          <div class="flex flex-col items-end">
-            <span class="font-mono text-xs md:text-sm text-gray-500">
-              ${scansLabel}
-            </span>
-          </div>
-        </button>
-      `;
-    });
-
-    container.innerHTML = rows.join("");
-  }
-
-function renderMostScanned(items) {
+  function renderMostScanned(items) {
     const container = document.getElementById("mostScannedContainer");
     if (!container) return;
 
@@ -1177,7 +1183,7 @@ function buildShareUrl() {
     const token = lastScanData && lastScanData.token;
     const chain =
       lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
-    const baseUrl = "https://toomany.wtf/cabal.html";
+    const baseUrl = "https://toomany.wtf/cabal";
 
     if (!token) return baseUrl;
 
@@ -1191,50 +1197,91 @@ function buildShareUrl() {
   }
 
 function buildShareText() {
+    const baseUrl = "https://toomany.wtf/cabal";
+
     const token = lastScanData && lastScanData.token;
     const score =
       lastScanData && typeof lastScanData.cabalScore === "number"
         ? lastScanData.cabalScore
         : null;
-    const baseUrl = "https://toomany.wtf/cabal.html";
     const chain =
-      lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
+      (lastScanData && lastScanData.chain) || "eth";
+    const symbol =
+      (lastScanData && lastScanData.symbol) || null;
 
-    if (token) {
-      const toolUrl =
-        baseUrl +
+    const toolUrl = token
+      ? baseUrl +
         "?chain=" +
         encodeURIComponent(chain) +
         "&token=" +
-        encodeURIComponent(token);
-      if (score != null && !isNaN(score)) {
-        const bucketInfo = classifyScore(score);
-        const label = bucketInfo && bucketInfo.label ? bucketInfo.label : "";
-        return (
-          "Just scanned " +
-          token +
-          " – Cabal score " +
-          score +
-          "/100 (" +
-          label +
-          "). " +
-          "Check the full breakdown here: " +
-          toolUrl
-        );
-      }
+        encodeURIComponent(token)
+      : baseUrl;
+
+    // No token scanned yet – generic promo for the tool
+    if (!token) {
       return (
-        "Just scanned " +
-        token +
-        " with the Cabal Exposure Tool – " +
+        "Scanning tokens with the Cabal Exposure Tool by @TooManyWTF\n\n" +
+        "Scan any contract on supported chains.\n\n" +
         toolUrl
       );
     }
 
-    return "Just scanned a token with the Cabal Exposure Tool.";
+    const chainLabel = getChainLabel(chain);
+    const rawSymbol = symbol || null;
+    const ticker = rawSymbol
+      ? "$" + String(rawSymbol).replace(/^\$/,"")
+      : null;
+    const displayName = ticker || shortenAddress(token);
+
+    // If we don't have a numeric score, fall back to a neutral message
+    if (score == null || isNaN(score)) {
+      return (
+        "Just scanned " +
+        displayName +
+        " on " +
+        chainLabel +
+        " with the Cabal Exposure Tool by @TooManyWTF\n\n" +
+        "Full report: " +
+        toolUrl
+      );
+    }
+
+    const s = Number(score);
+    let scoreLine = "";
+
+    // Tier 1: 0–20 (clean / low risk)
+    if (s <= 20) {
+      scoreLine =
+        "Cabal score " +
+        s +
+        "/100 (low cabal risk, community-driven distribution).";
+    }
+    // Tier 2: 20–70 (mixed distribution)
+    else if (s <= 70) {
+      scoreLine =
+        "Cabal score " +
+        s +
+        "/100 (mixed holder distribution, watch large wallets).";
+    }
+    // Tier 3: 70+ (high cabal risk / call-out)
+    else {
+      scoreLine =
+        "Cabal score " +
+        s +
+        "/100 (heavily concentrated holders, high cabal risk).";
+    }
+
+    const firstLine =
+      "Just scanned " +
+      displayName +
+      " on " +
+      chainLabel +
+      " with the Cabal Exposure Tool by @TooManyWTF";
+    const thirdLine = "Full report: " + toolUrl;
+
+    return firstLine + "\n\n" + scoreLine + "\n\n" + thirdLine;
   }
 
-  
-  
 function renderClusters(data) {
     if (!clustersList) return;
     const clusters =
@@ -1941,49 +1988,26 @@ function renderHolders(data) {
 
     setLegend(bucket);
     setScorePillDot(bucket);
-    // Tiny history strip under the score
-    if (typeof scoreHistoryLineEl !== "undefined" && scoreHistoryLineEl) {
-      const hist = Array.isArray(data.scanHistory) ? data.scanHistory : [];
-      const scores = hist
-        .map(function (h) {
-          return typeof h.score === "number" ? h.score : null;
-        })
-        .filter(function (s) {
-          return s != null;
-        });
 
-      if (scores.length > 1) {
-        scoreHistoryLineEl.textContent =
-          "Recent scores: " + scores.join(" \u2192 ");
-        scoreHistoryLineEl.classList.remove("hidden");
-      } else if (scores.length === 1) {
-        scoreHistoryLineEl.textContent =
-          "Recent scores: " + scores[0] + "/100";
-        scoreHistoryLineEl.classList.remove("hidden");
+    // Show extra explainer when the scanned token is $TOO
+    const tooExplainer = document.getElementById("tooExplainer");
+    if (tooExplainer) {
+      const lowerPinned = "0x95c1cfd6ed4155b263698e2873814c128ed219b0";
+      const tokenFromMeta =
+        data && data.meta && typeof data.meta.token === "string"
+          ? data.meta.token.toLowerCase()
+          : null;
+
+      const isToo =
+        (data.tooPromo && data.tooPromo.isTooToken) ||
+        tokenFromMeta === lowerPinned;
+
+      if (isToo) {
+        tooExplainer.classList.remove("hidden");
       } else {
-        scoreHistoryLineEl.textContent = "";
-        scoreHistoryLineEl.classList.add("hidden");
+        tooExplainer.classList.add("hidden");
       }
     }
-
-    if (typeof bestScoreLineEl !== "undefined" && bestScoreLineEl) {
-      if (
-        typeof data.bestEverScore === "number" &&
-        data.bestEverScore != null
-      ) {
-        const dateText = formatDateShort(data.bestEverTs);
-        bestScoreLineEl.textContent =
-          "Best ever: " +
-          data.bestEverScore +
-          "/100" +
-          (dateText ? " on " + dateText : "");
-        bestScoreLineEl.classList.remove("hidden");
-      } else {
-        bestScoreLineEl.textContent = "";
-        bestScoreLineEl.classList.add("hidden");
-      }
-    }
-
   }
 
   function updatePromo(data) {
@@ -2138,6 +2162,8 @@ function renderHolders(data) {
         token: data.token,
         cabalScore: data.cabalScore,
         chain: data.chain || chain,
+        symbol: data.symbol || data.ticker || null,
+        alertCategory: data.alertCategory || null,
       };
 
       // Refresh recent scans panel (fire and forget)
@@ -2316,7 +2342,48 @@ function renderHolders(data) {
   }
 
 
-  // Init everything
+  function initTooltips() {
+  try {
+    var toggles = document.querySelectorAll(".js-tooltip-toggle");
+    if (!toggles || !toggles.length) {
+      return;
+    }
+
+    document.addEventListener("click", function (event) {
+      var toggle = event.target.closest(".js-tooltip-toggle");
+      var allTooltips = document.querySelectorAll(".js-tooltip");
+
+      if (!toggle) {
+        // Clicked somewhere else: close all tooltips
+        allTooltips.forEach(function (el) {
+          el.classList.add("hidden");
+        });
+        return;
+      }
+
+      var tooltipId = toggle.getAttribute("data-tooltip-id");
+      if (!tooltipId) return;
+      var tooltipEl = document.getElementById(tooltipId);
+      if (!tooltipEl) return;
+
+      var isHidden = tooltipEl.classList.contains("hidden");
+
+      // Close all tooltips first
+      allTooltips.forEach(function (el) {
+        el.classList.add("hidden");
+      });
+
+      // Toggle the one that was clicked
+      if (isHidden) {
+        tooltipEl.classList.remove("hidden");
+      }
+    });
+  } catch (err) {
+    console.error("Failed to initialize tooltips:", err);
+  }
+}
+
+// Init everything
   initScanControls();
   initWhaleToggle();
   initFilters();
@@ -2324,6 +2391,7 @@ function renderHolders(data) {
   updatePromo();
   initFromUrl();
   fetchRecentScans();
+  initTooltips();
 })();
 </script>
 </body>
