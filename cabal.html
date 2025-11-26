@@ -1367,7 +1367,7 @@ function detectTags(holder, isWhale) {
 
     const label = (holder.label || "");
     const entity = (holder.entity || "");
-    const lower = (label + " " + entity).trim();
+    const lower = (label + " " + entity).toLowerCase().trim();
 
     // whale tag
     if (isWhale) {
@@ -1480,13 +1480,13 @@ function renderHolders(data) {
   if (Array.isArray(data && data.whaleAddressSet)) {
     data.whaleAddressSet.forEach((addr) => {
       if (typeof addr === "string") {
-        whaleAddresses.add(addr);
+        whaleAddresses.add(addr.toLowerCase());
       }
     });
   } else if (Array.isArray(data && data.whales)) {
     data.whales.forEach((w) => {
       if (w && typeof w.address === "string") {
-        whaleAddresses.add(w.address);
+        whaleAddresses.add((w.address || "").toLowerCase());
       }
     });
   }
@@ -1524,7 +1524,7 @@ function renderHolders(data) {
     const tr = document.createElement("tr");
     tr.className = "border-b border-gray-100 data-row";
 
-    const isWhale = whaleAddresses.has((holder.address || ""));
+    const isWhale = whaleAddresses.has((holder.address || "").toLowerCase());
     if (isWhale) {
       tr.classList.add("whale-row");
       whaleRowAddressSet.add((holder.address || ""));
