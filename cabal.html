@@ -1203,46 +1203,92 @@ function buildShareUrl() {
   }
 
 function buildShareText() {
+    const baseUrl = "https://toomany.wtf/cabal";
+
     const token = lastScanData && lastScanData.token;
     const score =
       lastScanData && typeof lastScanData.cabalScore === "number"
         ? lastScanData.cabalScore
         : null;
-    const baseUrl = "https://toomany.wtf/cabal";
     const chain =
-      lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
+      (lastScanData && lastScanData.chain) || "eth";
+    const symbol =
+      (lastScanData && lastScanData.symbol) || null;
 
-    if (token) {
-      const toolUrl =
-        baseUrl +
+    const toolUrl = token
+      ? baseUrl +
         "?chain=" +
         encodeURIComponent(chain) +
         "&token=" +
-        encodeURIComponent(token);
-      if (score != null && !isNaN(score)) {
-        const bucketInfo = classifyScore(score);
-        const label = bucketInfo && bucketInfo.label ? bucketInfo.label : "";
-        return (
-          "Just scanned " +
-          token +
-          " – Cabal score " +
-          score +
-          "/100 (" +
-          label +
-          "). " +
-          "Check the full breakdown here: " +
-          toolUrl
-        );
-      }
+        encodeURIComponent(token)
+      : baseUrl;
+
+    // No token scanned yet – generic promo for the tool
+    if (!token) {
       return (
-        "Just scanned " +
-        token +
-        " with the Cabal Exposure Tool – " +
+        "Scanning tokens with the Cabal Exposure Tool by @TooManyWTF — " +
+        "check it out here: " +
         toolUrl
       );
     }
 
-    return "Just scanned a token with the Cabal Exposure Tool.";
+    const chainLabel = getChainLabel(chain);
+    const displayName = symbol || shortenAddress(token);
+
+    // If we don't have a numeric score, fall back to a neutral message
+    if (score == null || isNaN(score)) {
+      return (
+        "Just scanned " +
+        displayName +
+        " on " +
+        chainLabel +
+        " with the Cabal Exposure Tool by @TooManyWTF. " +
+        "Full report: " +
+        toolUrl
+      );
+    }
+
+    const s = Number(score);
+    let textPrefix = "";
+
+    // Tier 1: 0–20 (clean / low risk)
+    if (s <= 20) {
+      textPrefix =
+        "Just scanned " +
+        displayName +
+        " on " +
+        chainLabel +
+        " with the Cabal Exposure Tool by @TooManyWTF — " +
+        "Cabal score " +
+        s +
+        "/100 (low cabal risk, community-driven distribution). ";
+    }
+    // Tier 2: 20–70 (mixed distribution)
+    else if (s <= 70) {
+      textPrefix =
+        "Just scanned " +
+        displayName +
+        " on " +
+        chainLabel +
+        " with the Cabal Exposure Tool by @TooManyWTF — " +
+        "Cabal score " +
+        s +
+        "/100 (mixed holder distribution, watch large wallets). ";
+    }
+    // Tier 3: 70+ (high cabal risk / call-out)
+    else {
+      textPrefix =
+        "Red flag on " +
+        displayName +
+        " on " +
+        chainLabel +
+        " — Cabal score " +
+        s +
+        "/100 on the Cabal Exposure Tool by @TooManyWTF " +
+        "(heavily concentrated holders). ";
+    }
+
+    return textPrefix + "Full report: " + toolUrl;
   }
 
   
@@ -2127,6 +2173,8 @@ function renderHolders(data) {
         token: data.token,
         cabalScore: data.cabalScore,
         chain: data.chain || chain,
+        symbol: data.symbol || data.ticker || null,
+        alertCategory: data.alertCategory || null,
       };
 
       // Refresh recent scans panel (fire and forget)
