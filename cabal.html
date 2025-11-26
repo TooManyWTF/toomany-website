@@ -152,28 +152,33 @@ const API_BASE = getApiBase();
       </h1>
 
       <p class="text-gray-800 text-lg md:text-2xl font-light font-mono">
-        Find out who really controls your token now!
+        Find out who really controls your token now!<br /><br />
       </p>
 
-   <!-- CTA ROW -->
-      <div class="flex flex-wrap items-center gap-3 mt-6">
-        <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
-           target="_blank"
-           class="px-6 py-3 rounded-lg bg-black text-white font-mono uppercase tracking-wide">
-          buy on uniswap
-        </a>
-        <a href="https://x.com/toomanywtf"
-           target="_blank"
-           class="underline font-mono px-4 py-3">
-          follow on X
-        </a>
-      </div>
+  <!-- Quick meta row -->
+          <div class="flex flex-wrap items-center gap-3 mb-6">
+            <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
+              0x95C1CFD6Ed4155b263698E2873814c128eD219b0
+            </code>
+          </div>
 
-      <div class="mt-6">
-        <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
-          0x95C1CFD6Ed4155b263698E2873814c128eD219b0
-        </code>
-      </div>
+          <!-- CT-friendly CTA row -->
+          <div class="flex flex-wrap items-center gap-3">
+            <a
+              href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0?inputCurrency=NATIVE"
+              target="_blank"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-black text-white font-mono text-sm md:text-base uppercase tracking-wide"
+            >
+              buy on uniswap
+            </a>
+            <a
+              href="https://x.com/toomanywtf"
+              target="_blank"
+              class="inline-flex items-center justify-center px-4 py-3 rounded-lg font-mono text-sm md:text-base underline"
+            >
+              follow on X
+            </a>
+          </div>
     </div>
 
    <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
