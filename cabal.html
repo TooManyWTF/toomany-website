@@ -294,6 +294,8 @@ const API_BASE = getApiBase();
                 <li>Whale wallets stay below our cabal risk thresholds.</li>
               </ul>
             </div>
+            <p id="scoreHistoryLine" class="text-xs text-gray-600 mt-1 hidden"></p>
+            <p id="bestScoreLine" class="text-xs text-gray-500 hidden"></p>
             <p id="scanChainLine" class="text-xs text-gray-500 mt-1"></p>
             <div class="flex flex-wrap gap-2 mt-1 justify-start items-start">
               <span id="legend-excellent" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
@@ -614,6 +616,16 @@ const API_BASE = getApiBase();
               </div>
             </div>
 
+            <!-- Hall of Shame -->
+            <div class="space-y-2">
+              <p class="text-gray-500 text-sm md:text-base">Hall of Shame</p>
+              <div id="worstScoresContainer" class="space-y-2">
+                <p class="text-xs text-gray-500">
+                  No scans recorded yet. Run a scan to see the most cabal-heavy contracts here.
+                </p>
+              </div>
+            </div>
+
             <!-- Recent Scans -->
             <div class="space-y-2">
               <p class="text-gray-500 text-sm md:text-base">Recent Scans</p>
@@ -693,6 +705,7 @@ const API_BASE = getApiBase();
     "https://app.uniswap.org/swap?outputCurrency=0x95C1CFD6Ed4155b263698E2873814c128eD219b0&chain=ethereum";
 
   let lastScanData = null;
+  let recentScansItems = [];
   let whaleRowAddressSet = new Set();
   let viewWhalesActive = false;
 
@@ -710,6 +723,9 @@ const API_BASE = getApiBase();
   const scoreRatingEl = document.getElementById("scoreRating");
   const scoreSummaryEl = document.getElementById("scoreSummary");
   const scoreExplanationEl = document.getElementById("scoreExplanation");
+
+  const scoreHistoryLineEl = document.getElementById("scoreHistoryLine");
+  const bestScoreLineEl = document.getElementById("bestScoreLine");
 
   const legendExcellent = document.getElementById("legend-excellent");
   const legendGood = document.getElementById("legend-good");
@@ -956,11 +972,14 @@ const API_BASE = getApiBase();
       if (!res.ok) return;
       const data = await res.json();
       const items = data && data.items ? data.items : [];
+      recentScansItems = items.slice();
       const bestCabals = data && data.bestCabals ? data.bestCabals : [];
       const mostScanned = data && data.mostScanned ? data.mostScanned : [];
       renderRecentScans(items);
       renderBestScores(bestCabals);
       renderMostScanned(mostScanned);
+      renderWorstScores(items);
+      updateScoreHistoryFromRecent();
     } catch (err) {
       console.error("Failed to load recent scans:", err);
     }
@@ -1094,6 +1113,70 @@ const API_BASE = getApiBase();
     });
 
     container.innerHTML = rows.join("");
+
+  function renderWorstScores(items) {
+    const container = document.getElementById("worstScoresContainer");
+    if (!container) return;
+
+    if (!items || !items.length) {
+      container.innerHTML = `
+        <p class="text-xs text-gray-500">
+          No scans recorded yet. Run a scan to see the most cabal-heavy contracts here.
+        </p>`;
+      return;
+    }
+
+    const sorted = (items || []).slice().sort(function (a, b) {
+      const as = typeof a.cabalScore === "number" ? a.cabalScore : -Infinity;
+      const bs = typeof b.cabalScore === "number" ? b.cabalScore : -Infinity;
+      return bs - as; // highest score first
+    });
+
+    const rows = sorted.slice(0, 5).map(function (item) {
+      const shortToken = item.token
+        ? shortenAddress(item.token)
+        : "Unknown token";
+      const scorePart =
+        typeof item.cabalScore === "number"
+          ? item.cabalScore + "/100"
+          : "Score unknown";
+      const label = item.alertCategory || "";
+      const chainLabel = (item.chain || "eth").toUpperCase();
+      const rawTicker = item.symbol || item.ticker;
+      const ticker = rawTicker ? rawTicker : null;
+
+      const linkUrl =
+        "/cabal?chain=" +
+        encodeURIComponent(item.chain || "eth") +
+        "&token=" +
+        encodeURIComponent(item.token || "");
+
+      const timeStr = formatRelativeTime(item.ts);
+
+      return `
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
+          onclick="window.location.href='${linkUrl}'"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base text-gray-900">
+              ${shortToken}
+            </span>
+            <span class="font-mono text-sm md:text-base text-gray-800">
+              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
+            </span>
+          </div>
+          <span class="font-mono text-xs md:text-sm text-gray-400">
+            ${timeStr}
+          </span>
+        </button>
+      `;
+    });
+
+    container.innerHTML = rows.join("");
+  }
+
   }
 
 
@@ -1174,6 +1257,21 @@ function formatRelativeTime(ts) {
       if (diffHr < 24) return diffHr + "h ago";
       const diffDay = Math.floor(diffHr / 24);
       return diffDay + "d ago";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function formatDateShort(ts) {
+    if (!ts) return "";
+    try {
+      const d = new Date(ts);
+      if (Number.isNaN(d.getTime())) return "";
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const m = months[d.getMonth()] || "";
+      const day = d.getDate();
+      const year = d.getFullYear();
+      return m + " " + day + ", " + year;
     } catch (e) {
       return "";
     }
@@ -1964,6 +2062,109 @@ function renderHolders(data) {
   }
 
 
+
+  function updateScoreHistoryFromRecent() {
+    if (!scoreHistoryLineEl && !bestScoreLineEl) return;
+    if (!lastScanData || !lastScanData.token) {
+      if (scoreHistoryLineEl) {
+        scoreHistoryLineEl.textContent = "";
+        scoreHistoryLineEl.classList.add("hidden");
+      }
+      if (bestScoreLineEl) {
+        bestScoreLineEl.textContent = "";
+        bestScoreLineEl.classList.add("hidden");
+      }
+      return;
+    }
+
+    const token = (lastScanData.token || "").toLowerCase();
+    const chain = (lastScanData.chain || "eth").toLowerCase();
+    const items = Array.isArray(recentScansItems) ? recentScansItems : [];
+
+    const matching = items.filter(function (item) {
+      if (!item || !item.token) return false;
+      const t = String(item.token).toLowerCase();
+      const c = String(item.chain || "eth").toLowerCase();
+      return t === token && c === chain;
+    });
+
+    if (!matching.length) {
+      if (scoreHistoryLineEl) {
+        scoreHistoryLineEl.textContent = "";
+        scoreHistoryLineEl.classList.add("hidden");
+      }
+      if (bestScoreLineEl) {
+        bestScoreLineEl.textContent = "";
+        bestScoreLineEl.classList.add("hidden");
+      }
+      return;
+    }
+
+    matching.sort(function (a, b) {
+      const at = typeof a.ts === "number" ? a.ts : 0;
+      const bt = typeof b.ts === "number" ? b.ts : 0;
+      return at - bt;
+    });
+
+    const scores = matching
+      .map(function (item) {
+        return typeof item.cabalScore === "number"
+          ? item.cabalScore
+          : null;
+      })
+      .filter(function (v) {
+        return v != null && !Number.isNaN(v);
+      });
+
+    if (!scores.length) {
+      if (scoreHistoryLineEl) {
+        scoreHistoryLineEl.textContent = "";
+        scoreHistoryLineEl.classList.add("hidden");
+      }
+      if (bestScoreLineEl) {
+        bestScoreLineEl.textContent = "";
+        bestScoreLineEl.classList.add("hidden");
+      }
+      return;
+    }
+
+    const lastScores = scores.slice(-5);
+    if (scoreHistoryLineEl) {
+      if (lastScores.length === 1) {
+        scoreHistoryLineEl.textContent =
+          "Recent scores: " + lastScores[0] + "/100";
+      } else {
+        scoreHistoryLineEl.textContent =
+          "Recent scores: " + lastScores.join(" → ");
+      }
+      scoreHistoryLineEl.classList.remove("hidden");
+    }
+
+    const bestScore = Math.min.apply(null, scores);
+    let bestTs = null;
+    matching.forEach(function (item) {
+      if (
+        typeof item.cabalScore === "number" &&
+        item.cabalScore === bestScore &&
+        typeof item.ts === "number"
+      ) {
+        if (bestTs == null || item.ts < bestTs) {
+          bestTs = item.ts;
+        }
+      }
+    });
+
+    if (bestScoreLineEl) {
+      const dateStr = bestTs ? formatDateShort(bestTs) : "";
+      bestScoreLineEl.textContent =
+        "Best ever: " +
+        bestScore +
+        "/100" +
+        (dateStr ? " on " + dateStr : "");
+      bestScoreLineEl.classList.remove("hidden");
+    }
+  }
+
   function renderScore(data) {
     const score =
       typeof data.cabalScore === "number" ? data.cabalScore : null;
@@ -2168,6 +2369,7 @@ function renderHolders(data) {
 
       // Refresh recent scans panel (fire and forget)
       fetchRecentScans();
+      updateScoreHistoryFromRecent();
 
       if (scanChainLine && lastScanData && lastScanData.chain) {
         const label = getChainLabel(lastScanData.chain);
