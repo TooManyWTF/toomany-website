@@ -247,7 +247,7 @@ const API_BASE = getApiBase();
                 <div class="relative inline-flex items-center">
   <button
     type="button"
-    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
     data-tooltip-id="tooltip-cabal-score"
     aria-label="What is the Cabal score?"
   >
@@ -318,7 +318,7 @@ const API_BASE = getApiBase();
                 <div class="relative inline-flex items-center">
   <button
     type="button"
-    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
     data-tooltip-id="tooltip-snapshot"
     aria-label="What is Snapshot of supply?"
   >
@@ -585,7 +585,7 @@ const API_BASE = getApiBase();
               <div class="relative inline-flex items-center">
   <button
     type="button"
-    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
     data-tooltip-id="tooltip-scanner-activity"
     aria-label="What is Scanner activity?"
   >
@@ -1184,7 +1184,7 @@ function buildShareUrl() {
     const token = lastScanData && lastScanData.token;
     const chain =
       lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
-    const baseUrl = "https://toomany.wtf/cabal.html";
+    const baseUrl = "https://toomany.wtf/cabal";
 
     if (!token) return baseUrl;
 
@@ -1203,7 +1203,7 @@ function buildShareText() {
       lastScanData && typeof lastScanData.cabalScore === "number"
         ? lastScanData.cabalScore
         : null;
-    const baseUrl = "https://toomany.wtf/cabal.html";
+    const baseUrl = "https://toomany.wtf/cabal";
     const chain =
       lastScanData && lastScanData.chain ? lastScanData.chain : "eth";
 
