@@ -1226,14 +1226,18 @@ function buildShareText() {
     // No token scanned yet – generic promo for the tool
     if (!token) {
       return (
-        "Scanning tokens with the Cabal Exposure Tool by @TooManyWTF — " +
-        "check it out here: " +
+        "Scanning tokens with the Cabal Exposure Tool by @TooManyWTF\n\n" +
+        "Scan any contract on supported chains.\n\n" +
         toolUrl
       );
     }
 
     const chainLabel = getChainLabel(chain);
-    const displayName = symbol || shortenAddress(token);
+    const rawSymbol = symbol || null;
+    const ticker = rawSymbol
+      ? "$" + String(rawSymbol).replace(/^\$/,"")
+      : null;
+    const displayName = ticker || shortenAddress(token);
 
     // If we don't have a numeric score, fall back to a neutral message
     if (score == null || isNaN(score)) {
@@ -1242,57 +1246,48 @@ function buildShareText() {
         displayName +
         " on " +
         chainLabel +
-        " with the Cabal Exposure Tool by @TooManyWTF. " +
+        " with the Cabal Exposure Tool by @TooManyWTF\n\n" +
         "Full report: " +
         toolUrl
       );
     }
 
     const s = Number(score);
-    let textPrefix = "";
+    let scoreLine = "";
 
     // Tier 1: 0–20 (clean / low risk)
     if (s <= 20) {
-      textPrefix =
-        "Just scanned " +
-        displayName +
-        " on " +
-        chainLabel +
-        " with the Cabal Exposure Tool by @TooManyWTF — " +
+      scoreLine =
         "Cabal score " +
         s +
-        "/100 (low cabal risk, community-driven distribution). ";
+        "/100 (low cabal risk, community-driven distribution).";
     }
     // Tier 2: 20–70 (mixed distribution)
     else if (s <= 70) {
-      textPrefix =
-        "Just scanned " +
-        displayName +
-        " on " +
-        chainLabel +
-        " with the Cabal Exposure Tool by @TooManyWTF — " +
+      scoreLine =
         "Cabal score " +
         s +
-        "/100 (mixed holder distribution, watch large wallets). ";
+        "/100 (mixed holder distribution, watch large wallets).";
     }
     // Tier 3: 70+ (high cabal risk / call-out)
     else {
-      textPrefix =
-        "Red flag on " +
-        displayName +
-        " on " +
-        chainLabel +
-        " — Cabal score " +
+      scoreLine =
+        "Cabal score " +
         s +
-        "/100 on the Cabal Exposure Tool by @TooManyWTF " +
-        "(heavily concentrated holders). ";
+        "/100 (heavily concentrated holders, high cabal risk).";
     }
 
-    return textPrefix + "Full report: " + toolUrl;
+    const firstLine =
+      "Just scanned " +
+      displayName +
+      " on " +
+      chainLabel +
+      " with the Cabal Exposure Tool by @TooManyWTF";
+    const thirdLine = "Full report: " + toolUrl;
+
+    return firstLine + "\n\n" + scoreLine + "\n\n" + thirdLine;
   }
 
-  
-  
 function renderClusters(data) {
     if (!clustersList) return;
     const clusters =
