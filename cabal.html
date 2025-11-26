@@ -173,9 +173,9 @@ const API_BASE = getApiBase();
     </div>
 
    <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
-  <img src="images/transparentlogo.png"
+  <img src="images/exposethem.png"
        class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
-       alt="TOO Logo" />
+       alt="Expose Them!" />
 </div>
 
   </div>
@@ -183,7 +183,7 @@ const API_BASE = getApiBase();
 
 <!-- WHITEPAPER BODY WITH SIDEBAR -->
 <section class="w-full bg-white text-gray-900 border-t border-gray-300">
-  <div class="container mx-auto px-5 py-16 md:py-20 flex">
+  <div class="container mx-auto px-5 py-8 md:py-10 flex">
 
     <!-- MAIN TEXT -->
     <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto">
@@ -229,7 +229,7 @@ const API_BASE = getApiBase();
             About
           </p>
           <p class="text-xs text-gray-500">
-            Cabal Scanner analyzes a coins/tokens supply, where it's held and how much each entity holds. Lower Cabal scores equals better supply distribution.
+            Cabal Scanner analyzes tokens supply, who holds it and how much. Lower Cabal scores equals better supply distribution.
           </p>
         </div>
 
@@ -398,8 +398,10 @@ const API_BASE = getApiBase();
           </div>
         </div>
         <!-- Top holders summary -->
-        <div class="space-y-3 mt-2">
-       <div class="flex items-center justify-between w-full">
+        <div class="space-y-3 mt-4">
+                    <!-- Whales summary + toggle above table -->
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mt-2">
+            <div class="flex items-center justify-between w-full">
   <!-- Left side: Share + Feedback links -->
   <div class="flex items-center space-x-4">
     <button
@@ -409,7 +411,7 @@ const API_BASE = getApiBase();
       Share on X
     </button>
     <a
-      href="https://x.com/toomanywtf/status/1993522762699194558" target="_blank"
+      href="mailto:toomanywtf@gmail.com"
       class="text-gray-500 text-sm md:text-base underline"
     >
       Feedback
