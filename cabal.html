@@ -35,24 +35,24 @@ const API_BASE = getApiBase();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <meta property="og:type" content="website" />
-<title>Expose the Cabal! | Crypto Cabal Scanner Tool | $TOO</title>
+<title>Crypto Cabal Scanner Tool | $TOO</title>
 <meta name="keywords" content="crypto cabal, crypto cabal scanner, $too, too many, too many meme, meme coin, anti-cabal token, crypto, ethereum" />
 <meta name="description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://toomany.wtf/cabal/" />
+<meta property="og:url" content="https://toomany.wtf/cabal.html" />
 <meta property="og:title" content="Crypto Cabal Scanner Tool | $TOO/>
 <meta property="og:description" content="Use the Crypto Cabal tool to determine who holds your coin and how much they hold. Use this information to determine if your token has safe supply distribution." />
-<meta property="og:image" content="https://toomany.wtf/images/ogbanner.png" />
+<meta property="og:image" content="https://toomany.wtf/images/banner.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Expose the Cabal! | Crypto Cabal Scanner Tool />
+<meta name="twitter:title" content="Too Many | $TOO" />
 <meta name="twitter:description" content="Too Many meme coin. Tired of KOLs, rugs and scams? Join the rebellion." />
-<meta name="twitter:image" content="https://toomany.wtf/images/ogbanner.png" />
+<meta name="twitter:image" content="https://toomany.wtf/images/banner.png" />
 
   <!-- Tailwind -->
   <link
@@ -173,9 +173,9 @@ const API_BASE = getApiBase();
     </div>
 
    <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
-  <img src="images/exposethem.png"
+  <img src="images/transparentlogo.png"
        class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
-       alt="Expose Them!" />
+       alt="TOO Logo" />
 </div>
 
   </div>
@@ -183,7 +183,7 @@ const API_BASE = getApiBase();
 
 <!-- WHITEPAPER BODY WITH SIDEBAR -->
 <section class="w-full bg-white text-gray-900 border-t border-gray-300">
-  <div class="container mx-auto px-5 py-8 md:py-10 flex">
+  <div class="container mx-auto px-5 py-16 md:py-20 flex">
 
     <!-- MAIN TEXT -->
     <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto">
@@ -229,7 +229,7 @@ const API_BASE = getApiBase();
             About
           </p>
           <p class="text-xs text-gray-500">
-            Cabal Scanner analyzes tokens supply, who holds it and how much. Lower Cabal scores equals better supply distribution.
+            Cabal Scanner analyzes a coins/tokens supply, where it's held and how much each entity holds. Lower Cabal scores equals better supply distribution.
           </p>
         </div>
 
@@ -398,17 +398,26 @@ const API_BASE = getApiBase();
           </div>
         </div>
         <!-- Top holders summary -->
-        <div class="space-y-3 mt-4">
-                    <!-- Whales summary + toggle above table -->
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mt-2">
-            <div class="flex items-center justify-between w-full">
-              <button
-                type="button"
-                class="text-gray-500 text-sm md:text-base underline share-btn"
-              >
-                Share on X
-              </button>
-              <div class="flex items-center space-x-2">
+        <div class="space-y-3 mt-2">
+       <div class="flex items-center justify-between w-full">
+  <!-- Left side: Share + Feedback links -->
+  <div class="flex items-center space-x-4">
+    <button
+      type="button"
+      class="text-gray-500 text-sm md:text-base underline share-btn"
+    >
+      Share on X
+    </button>
+    <a
+      href="https://x.com/toomanywtf/status/1993522762699194558" target="_blank"
+      class="text-gray-500 text-sm md:text-base underline"
+    >
+      Feedback
+    </a>
+  </div>
+
+  <!-- Right side: whales toggle + filters -->
+  <div class="flex items-center space-x-2">
                 <span class="uppercase tracking-wide text-gray-500 text-xs">View whales</span>
                 <button
                   id="viewWhalesBtn"
