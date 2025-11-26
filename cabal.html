@@ -294,6 +294,8 @@ const API_BASE = getApiBase();
                 <li>Whale wallets stay below our cabal risk thresholds.</li>
               </ul>
             </div>
+            <p id="scoreHistoryLine" class="text-xs text-gray-600 mt-1"></p>
+            <p id="bestScoreLine" class="text-xs text-gray-500"></p>
             <p id="scanChainLine" class="text-xs text-gray-500 mt-1"></p>
             <div class="flex flex-wrap gap-2 mt-1 justify-start items-start">
               <span id="legend-excellent" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
@@ -614,6 +616,16 @@ const API_BASE = getApiBase();
               </div>
             </div>
 
+            <!-- Hall of Shame -->
+            <div class="space-y-2">
+              <p class="text-gray-500 text-sm md:text-base">Hall of Shame</p>
+              <div id="worstScoresContainer" class="space-y-2">
+                <p class="text-xs text-gray-500">
+                  No scans recorded yet. Run a scan to see the most cabal-heavy contracts here.
+                </p>
+              </div>
+            </div>
+
             <!-- Recent Scans -->
             <div class="space-y-2">
               <p class="text-gray-500 text-sm md:text-base">Recent Scans</p>
@@ -710,6 +722,8 @@ const API_BASE = getApiBase();
   const scoreRatingEl = document.getElementById("scoreRating");
   const scoreSummaryEl = document.getElementById("scoreSummary");
   const scoreExplanationEl = document.getElementById("scoreExplanation");
+  const scoreHistoryLineEl = document.getElementById("scoreHistoryLine");
+  const bestScoreLineEl = document.getElementById("bestScoreLine");
 
   const legendExcellent = document.getElementById("legend-excellent");
   const legendGood = document.getElementById("legend-good");
@@ -1094,6 +1108,70 @@ const API_BASE = getApiBase();
     });
 
     container.innerHTML = rows.join("");
+
+  function renderWorstScores(items) {
+    const container = document.getElementById("worstScoresContainer");
+    if (!container) return;
+
+    if (!items || !items.length) {
+      container.innerHTML = `
+        <p class="text-xs text-gray-500">
+          No scans recorded yet. Run a scan to see the most cabal-heavy contracts here.
+        </p>`;
+      return;
+    }
+
+    const sorted = (items || []).slice().sort(function (a, b) {
+      const as = typeof a.cabalScore === "number" ? a.cabalScore : -Infinity;
+      const bs = typeof b.cabalScore === "number" ? b.cabalScore : -Infinity;
+      return bs - as; // highest score first
+    });
+
+    const rows = sorted.slice(0, 5).map(function (item) {
+      const shortToken = item.token
+        ? shortenAddress(item.token)
+        : "Unknown token";
+      const scorePart =
+        typeof item.cabalScore === "number"
+          ? item.cabalScore + "/100"
+          : "Score unknown";
+      const label = item.alertCategory || "";
+      const chainLabel = (item.chain || "eth").toUpperCase();
+      const rawTicker = item.symbol || item.ticker;
+      const ticker = rawTicker ? rawTicker : null;
+
+      const linkUrl =
+        "/cabal?chain=" +
+        encodeURIComponent(item.chain || "eth") +
+        "&token=" +
+        encodeURIComponent(item.token || "");
+
+      const timeStr = formatRelativeTime(item.ts);
+
+      return `
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
+          onclick="window.location.href='${linkUrl}'"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base text-gray-900">
+              ${shortToken}
+            </span>
+            <span class="font-mono text-sm md:text-base text-gray-800">
+              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
+            </span>
+          </div>
+          <span class="font-mono text-xs md:text-sm text-gray-400">
+            ${timeStr}
+          </span>
+        </button>
+      `;
+    });
+
+    container.innerHTML = rows.join("");
+  }
+
   }
 
 
@@ -1174,6 +1252,21 @@ function formatRelativeTime(ts) {
       if (diffHr < 24) return diffHr + "h ago";
       const diffDay = Math.floor(diffHr / 24);
       return diffDay + "d ago";
+    } catch (e) {
+      return "";
+    }
+  }
+
+function formatDateShort(ts) {
+    if (!ts) return "";
+    try {
+      const d = new Date(ts);
+      if (Number.isNaN(d.getTime())) return "";
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const m = months[d.getMonth()] || "";
+      const day = d.getDate();
+      const year = d.getFullYear();
+      return m + " " + day + ", " + year;
     } catch (e) {
       return "";
     }
