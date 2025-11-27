@@ -2199,14 +2199,33 @@ function renderHolders(data) {
     if (scorePillLabel) {
       scorePillLabel.textContent = pill;
     }
+
+    // Build combined line: "Ticker · Good · Mild cabal risk"
+    const rawTicker =
+      (data && (data.symbol || data.ticker)) ? String(data.symbol || data.ticker).trim() : "";
+    const ticker =
+      rawTicker && rawTicker.length ? "$" + rawTicker.replace(/^\$/,"") : "";
+
     if (scoreRatingEl) {
-      scoreRatingEl.textContent = label ? label + " · " : "";
+      // We no longer show a separate rating prefix; everything goes into scoreSummaryEl
+      scoreRatingEl.textContent = "";
     }
     if (scoreSummaryEl) {
       const rawSummary =
         data.summary ||
         "Scan a token to see how concentrated its holder base is.";
-      scoreSummaryEl.textContent = sanitizeSummary(rawSummary);
+      const cleanedSummary = sanitizeSummary(rawSummary).replace(/[\.。]+$/g, "");
+      const parts = [];
+
+      if (ticker) parts.push(ticker);
+      if (label) parts.push(label);
+      if (cleanedSummary) parts.push(cleanedSummary);
+
+      // Fallback if we somehow have no parts
+      scoreSummaryEl.textContent =
+        parts.length > 0
+          ? parts.join(" · ")
+          : "Scan a token to see how concentrated its holder base is.";
     }
 
     setLegend(bucket);
