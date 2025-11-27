@@ -1693,6 +1693,7 @@ function renderHolders(data) {
   else if (chain === "arbitrum") explorerBase = "https://arbiscan.io";
   else if (chain === "optimism")
     explorerBase = "https://optimistic.etherscan.io";
+  else if (chain === "monad") explorerBase = "https://monadscan.com";
   else if (chain === "sol")
     explorerBase = "https://solscan.io";
 
@@ -2137,30 +2138,14 @@ function renderHolders(data) {
     if (scorePillLabel) {
       scorePillLabel.textContent = pill;
     }
-
-    const rawSummary =
-      data.summary ||
-      "Scan a token to see how concentrated its holder base is.";
-    const cleanSummary = sanitizeSummary(rawSummary).replace(/\.\s*$/, "");
-
-    const rawTicker =
-      data.symbol ||
-      (data.meta && (data.meta.symbol || data.meta.ticker)) ||
-      (lastScanData && lastScanData.symbol) ||
-      null;
-    const ticker = rawTicker
-      ? "$" + String(rawTicker).replace(/^\$/,"").toUpperCase()
-      : null;
-
     if (scoreRatingEl) {
-      const parts = [];
-      if (ticker) parts.push(ticker);
-      if (label) parts.push(label);
-      scoreRatingEl.textContent =
-        parts.length && cleanSummary ? parts.join(" · ") + " · " : parts.join(" · ");
+      scoreRatingEl.textContent = label ? label + " · " : "";
     }
     if (scoreSummaryEl) {
-      scoreSummaryEl.textContent = cleanSummary;
+      const rawSummary =
+        data.summary ||
+        "Scan a token to see how concentrated its holder base is.";
+      scoreSummaryEl.textContent = sanitizeSummary(rawSummary);
     }
 
     setLegend(bucket);
