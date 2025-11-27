@@ -254,30 +254,10 @@ const API_BASE = getApiBase();
             <div class="leading-tight">
               <div class="flex items-center gap-1">
                 <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">Cabal score</p>
-                <div class="relative inline-flex items-center">
-  <button
-    type="button"
-    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
-    data-tooltip-id="tooltip-cabal-score"
-    aria-label="What is the Cabal score?"
-  >
-    ?
-  </button>
-  <div
-    id="tooltip-cabal-score"
-    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
-    role="tooltip"
-  >
-    <p class="font-semibold mb-1">Cabal score</p>
-    <p>
-      0 means pure community. 100 means the supply looks heavily controlled by a small cabal of wallets, CEXes, or bridges.
-    </p>
-  </div>
-</div>
               </div>
               <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">Lower is better</p>
             </div>
-            <div class="flex items-baseline justify-between space-x-3">
+            <div class="flex items-center justify-between space-x-3">
               <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">–</p>
               <div id="scorePill" class="inline-flex items-center px-3 py-1 rounded-full border border-gray-300 bg-white text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-600">
                 <span id="scorePillDot" class="inline-block w-2 h-2 rounded-full bg-gray-400 mr-2"></span>
@@ -327,26 +307,6 @@ const API_BASE = getApiBase();
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1">
                 <p class="text-xs tracking-wide uppercase text-gray-500">Snapshot of supply</p>
-                <div class="relative inline-flex items-center">
-  <button
-    type="button"
-    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
-    data-tooltip-id="tooltip-snapshot"
-    aria-label="What is Snapshot of supply?"
-  >
-    ?
-  </button>
-  <div
-    id="tooltip-snapshot"
-    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
-    role="tooltip"
-  >
-    <p class="font-semibold mb-1">Snapshot of supply</p>
-    <p>
-      Shows how much of the visible supply is held by whales, CEXes, bridges, DEX/LP, and burn addresses based on the top holders we can see on-chain.
-    </p>
-  </div>
-</div>
               </div>
             </div>
             <p id="scoreExplanation" class="mt-1 text-xs text-gray-500 leading-snug">
@@ -588,26 +548,6 @@ const API_BASE = getApiBase();
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
               <p class="text-xs tracking-wide uppercase text-gray-500">Scanner activity</p>
-              <div class="relative inline-flex items-center">
-  <button
-    type="button"
-    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
-    data-tooltip-id="tooltip-scanner-activity"
-    aria-label="What is Scanner activity?"
-  >
-    ?
-  </button>
-  <div
-    id="tooltip-scanner-activity"
-    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
-    role="tooltip"
-  >
-    <p class="font-semibold mb-1">Scanner activity</p>
-    <p>
-      Global view of how people use the scanner: the current leaderboard of lowest Cabal scores, most recent scans, and most-scanned contracts across all users.
-    </p>
-  </div>
-</div>
             </div>
           </div>
           <div class="space-y-4">
@@ -2549,14 +2489,6 @@ function renderHolders(data) {
     }
   }
 
-
-  function initTooltips() {
-  try {
-    var toggles = document.querySelectorAll(".js-tooltip-toggle");
-    if (!toggles || !toggles.length) {
-      return;
-    }
-
     document.addEventListener("click", function (event) {
       var toggle = event.target.closest(".js-tooltip-toggle");
       var allTooltips = document.querySelectorAll(".js-tooltip");
@@ -2599,7 +2531,6 @@ function renderHolders(data) {
   updatePromo();
   initFromUrl();
   fetchRecentScans();
-  initTooltips();
 })();
 </script>
 </body>
