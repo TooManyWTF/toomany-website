@@ -87,21 +87,6 @@ const API_BASE = getApiBase();
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace !important;
     }
-    @media (max-width: 768px) and (orientation: portrait) {
-      .cabal-shell {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-      .cabal-article {
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-      }
-      .cabal-card {
-        border-radius: 0 !important;
-        box-shadow: none !important;
-      }
-    }
   </style>
 </head>
 
@@ -212,13 +197,13 @@ const API_BASE = getApiBase();
 
 <!-- WHITEPAPER BODY WITH SIDEBAR -->
 <section class="w-full bg-white text-gray-900 border-t border-gray-300">
-  <div class="container mx-auto px-5 py-8 md:py-10 flex cabal-shell">
+  <div class="container mx-auto px-5 py-8 md:py-10 flex">
 
     <!-- MAIN TEXT -->
-    <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto cabal-article">
+    <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto">
 
       <!-- FORMATTED WHITEPAPER TEXT -->
-      <div class="not-prose bg-white rounded-2xl shadow-xl border border-gray-200 p-5 md:p-7 space-y-8 cabal-card">
+      <div class="not-prose bg-white rounded-2xl shadow-xl border border-gray-200 p-5 md:p-7 space-y-8">
         <!-- Scan row -->
         <div class="space-y-2">
           <label for="tokenInput" class="block text-xs md:text-sm tracking-wide uppercase text-gray-600">
@@ -269,12 +254,32 @@ const API_BASE = getApiBase();
             <div class="leading-tight">
               <div class="flex items-center gap-1">
                 <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">Cabal score</p>
+                <div class="relative inline-flex items-center">
+  <button
+    type="button"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    data-tooltip-id="tooltip-cabal-score"
+    aria-label="What is the Cabal score?"
+  >
+    ?
+  </button>
+  <div
+    id="tooltip-cabal-score"
+    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
+    role="tooltip"
+  >
+    <p class="font-semibold mb-1">Cabal score</p>
+    <p>
+      0 means pure community. 100 means the supply looks heavily controlled by a small cabal of wallets, CEXes, or bridges.
+    </p>
+  </div>
+</div>
               </div>
               <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">Lower is better</p>
             </div>
-            <div class="flex items-center justify-between space-x-3">
+            <div class="flex items-baseline justify-between space-x-3">
               <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">–</p>
-              <div id="scorePill" class="inline-flex items-center px-2.5 py-1 rounded-full border border-gray-300 bg-white text-sm md:text-base uppercase tracking-wide text-gray-600">
+              <div id="scorePill" class="inline-flex items-center px-3 py-1 rounded-full border border-gray-300 bg-white text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-600">
                 <span id="scorePillDot" class="inline-block w-2 h-2 rounded-full bg-gray-400 mr-2"></span>
                 <span id="scorePillLabel">Scan a token</span>
               </div>
@@ -322,6 +327,26 @@ const API_BASE = getApiBase();
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1">
                 <p class="text-xs tracking-wide uppercase text-gray-500">Snapshot of supply</p>
+                <div class="relative inline-flex items-center">
+  <button
+    type="button"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    data-tooltip-id="tooltip-snapshot"
+    aria-label="What is Snapshot of supply?"
+  >
+    ?
+  </button>
+  <div
+    id="tooltip-snapshot"
+    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
+    role="tooltip"
+  >
+    <p class="font-semibold mb-1">Snapshot of supply</p>
+    <p>
+      Shows how much of the visible supply is held by whales, CEXes, bridges, DEX/LP, and burn addresses based on the top holders we can see on-chain.
+    </p>
+  </div>
+</div>
               </div>
             </div>
             <p id="scoreExplanation" class="mt-1 text-xs text-gray-500 leading-snug">
@@ -416,7 +441,7 @@ const API_BASE = getApiBase();
               <p class="text-xs tracking-wide uppercase text-gray-500">Top holders</p>
             </div>
             <p class="text-xs text-gray-600">
-              Snapshot of the largest wallets we can see on-chain. Burn wallets are excluded from the Cabal Scrore. Whale wallets are non-infrastructure, non-exchange holders with >5% of the supply.
+              Snapshot of the largest wallets on-chain. Burn wallets excluded from Cabal Score. Whale wallets are non-infrastructure, non-exchange holders with >5% of the supply.
             </p>
             <div id="topHoldersCards" class="space-y-2">
               <p class="text-xs text-gray-500">
@@ -563,6 +588,26 @@ const API_BASE = getApiBase();
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
               <p class="text-xs tracking-wide uppercase text-gray-500">Scanner activity</p>
+              <div class="relative inline-flex items-center">
+  <button
+    type="button"
+    class="ml-1 flex h-4 w-4 items-center justify-center rounded-full border text-[10px] font-semibold text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 js-tooltip-toggle"
+    data-tooltip-id="tooltip-scanner-activity"
+    aria-label="What is Scanner activity?"
+  >
+    ?
+  </button>
+  <div
+    id="tooltip-scanner-activity"
+    class="absolute left-0 mt-2 hidden w-72 max-w-xs flex-col rounded-md bg-gray-900 px-3 py-2 text-xs leading-snug text-white shadow-lg z-20 js-tooltip"
+    role="tooltip"
+  >
+    <p class="font-semibold mb-1">Scanner activity</p>
+    <p>
+      Global view of how people use the scanner: the current leaderboard of lowest Cabal scores, most recent scans, and most-scanned contracts across all users.
+    </p>
+  </div>
+</div>
             </div>
           </div>
           <div class="space-y-4">
@@ -2138,33 +2183,14 @@ function renderHolders(data) {
     if (scorePillLabel) {
       scorePillLabel.textContent = pill;
     }
-
-    // Build combined line: "Ticker · Good · Mild cabal risk"
-    const rawTicker =
-      (data && (data.symbol || data.ticker)) ? String(data.symbol || data.ticker).trim() : "";
-    const ticker =
-      rawTicker && rawTicker.length ? "$" + rawTicker.replace(/^\$/,"") : "";
-
     if (scoreRatingEl) {
-      // We no longer show a separate rating prefix; everything goes into scoreSummaryEl
-      scoreRatingEl.textContent = "";
+      scoreRatingEl.textContent = label ? label + " · " : "";
     }
     if (scoreSummaryEl) {
       const rawSummary =
         data.summary ||
         "Scan a token to see how concentrated its holder base is.";
-      const cleanedSummary = sanitizeSummary(rawSummary).replace(/[\.。]+$/g, "");
-      const parts = [];
-
-      if (ticker) parts.push(ticker);
-      if (label) parts.push(label);
-      if (cleanedSummary) parts.push(cleanedSummary);
-
-      // Fallback if we somehow have no parts
-      scoreSummaryEl.textContent =
-        parts.length > 0
-          ? parts.join(" · ")
-          : "Scan a token to see how concentrated its holder base is.";
+      scoreSummaryEl.textContent = sanitizeSummary(rawSummary);
     }
 
     setLegend(bucket);
@@ -2524,6 +2550,47 @@ function renderHolders(data) {
   }
 
 
+  function initTooltips() {
+  try {
+    var toggles = document.querySelectorAll(".js-tooltip-toggle");
+    if (!toggles || !toggles.length) {
+      return;
+    }
+
+    document.addEventListener("click", function (event) {
+      var toggle = event.target.closest(".js-tooltip-toggle");
+      var allTooltips = document.querySelectorAll(".js-tooltip");
+
+      if (!toggle) {
+        // Clicked somewhere else: close all tooltips
+        allTooltips.forEach(function (el) {
+          el.classList.add("hidden");
+        });
+        return;
+      }
+
+      var tooltipId = toggle.getAttribute("data-tooltip-id");
+      if (!tooltipId) return;
+      var tooltipEl = document.getElementById(tooltipId);
+      if (!tooltipEl) return;
+
+      var isHidden = tooltipEl.classList.contains("hidden");
+
+      // Close all tooltips first
+      allTooltips.forEach(function (el) {
+        el.classList.add("hidden");
+      });
+
+      // Toggle the one that was clicked
+      if (isHidden) {
+        tooltipEl.classList.remove("hidden");
+      }
+    });
+  } catch (err) {
+    console.error("Failed to initialize tooltips:", err);
+  }
+}
+
 // Init everything
   initScanControls();
   initWhaleToggle();
@@ -2532,6 +2599,7 @@ function renderHolders(data) {
   updatePromo();
   initFromUrl();
   fetchRecentScans();
+  initTooltips();
 })();
 </script>
 </body>
