@@ -103,7 +103,30 @@ const API_BASE = getApiBase();
       }
     }
 
-  </style>
+  
+    @media (max-width: 768px) {
+      #scorePill {
+        display: inline-flex !important;
+        align-items: center !important;
+        padding: 0.25rem 0.5rem !important; /* approx px-2 py-1 */
+        border-radius: 9999px !important;    /* rounded-full */
+        border-width: 1px !important;
+        border-style: solid !important;
+        border-color: #d1d5db !important;    /* gray-300 */
+        background-color: #ffffff !important;
+        font-family: inherit !important;     /* match legend pill font face */
+        font-size: 0.625rem !important;      /* ~10px on mobile */
+        text-transform: uppercase !important;
+        letter-spacing: 0.12em !important;   /* tracking-wide-ish */
+        line-height: 1 !important;
+      }
+      #scorePillDot {
+        width: 0.5rem !important;
+        height: 0.5rem !important;
+        margin-right: 0.375rem !important;   /* mr-1.5 */
+      }
+    }
+</style>
 </head>
 
 <body>
