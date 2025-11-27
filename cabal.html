@@ -252,9 +252,9 @@ const API_BASE = getApiBase();
               </div>
               <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">Lower is better</p>
             </div>
-            <div class="flex items-baseline justify-between space-x-3">
+            <div class="flex items-center justify-between space-x-3">
               <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">–</p>
-              <div id="scorePill" class="inline-flex items-center px-3 py-1 rounded-full border border-gray-300 bg-white text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-600">
+              <div id="scorePill" class="inline-flex items-center px-2.5 py-1 rounded-full border border-gray-300 bg-white text-sm md:text-base uppercase tracking-wide text-gray-600">
                 <span id="scorePillDot" class="inline-block w-2 h-2 rounded-full bg-gray-400 mr-2"></span>
                 <span id="scorePillLabel">Scan a token</span>
               </div>
@@ -396,7 +396,7 @@ const API_BASE = getApiBase();
               <p class="text-xs tracking-wide uppercase text-gray-500">Top holders</p>
             </div>
             <p class="text-xs text-gray-600">
-              Snapshot of the largest wallets we can see on-chain. Burn wallets are excluded from the Cabal Scrore. Whale wallets are non-infrastructure, non-exchange holders with >5% of the supply.
+              Snapshot of the largest wallets on-chain. Burn wallets excluded from Cabal Score. Whale wallets are non-infrastructure, non-exchange holders with >5% of the supply.
             </p>
             <div id="topHoldersCards" class="space-y-2">
               <p class="text-xs text-gray-500">
