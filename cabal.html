@@ -82,6 +82,22 @@ const API_BASE = getApiBase();
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace !important;
     }
+
+    @media (max-width: 768px) and (orientation: portrait) {
+      .cabal-shell {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .cabal-article {
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .cabal-card {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+    }
   </style>
 </head>
 
@@ -192,13 +208,13 @@ const API_BASE = getApiBase();
 
 <!-- WHITEPAPER BODY WITH SIDEBAR -->
 <section class="w-full bg-white text-gray-900 border-t border-gray-300">
-  <div class="container mx-auto px-5 py-8 md:py-10 flex">
+  <div class="container mx-auto px-5 py-8 md:py-10 flex cabal-shell">
 
     <!-- MAIN TEXT -->
-    <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto">
+    <article class="max-w-3xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto cabal-article">
 
       <!-- FORMATTED WHITEPAPER TEXT -->
-      <div class="not-prose bg-white rounded-2xl shadow-xl border border-gray-200 p-5 md:p-7 space-y-8">
+      <div class="not-prose bg-white rounded-2xl shadow-xl border border-gray-200 p-5 md:p-7 space-y-8 cabal-card">
         <!-- Scan row -->
         <div class="space-y-2">
           <label for="tokenInput" class="block text-xs md:text-sm tracking-wide uppercase text-gray-600">
