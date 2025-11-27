@@ -2137,14 +2137,30 @@ function renderHolders(data) {
     if (scorePillLabel) {
       scorePillLabel.textContent = pill;
     }
+
+    const rawSummary =
+      data.summary ||
+      "Scan a token to see how concentrated its holder base is.";
+    const cleanSummary = sanitizeSummary(rawSummary).replace(/\.\s*$/, "");
+
+    const rawTicker =
+      data.symbol ||
+      (data.meta && (data.meta.symbol || data.meta.ticker)) ||
+      (lastScanData && lastScanData.symbol) ||
+      null;
+    const ticker = rawTicker
+      ? "$" + String(rawTicker).replace(/^\$/,"").toUpperCase()
+      : null;
+
     if (scoreRatingEl) {
-      scoreRatingEl.textContent = label ? label + " · " : "";
+      const parts = [];
+      if (ticker) parts.push(ticker);
+      if (label) parts.push(label);
+      scoreRatingEl.textContent =
+        parts.length && cleanSummary ? parts.join(" · ") + " · " : parts.join(" · ");
     }
     if (scoreSummaryEl) {
-      const rawSummary =
-        data.summary ||
-        "Scan a token to see how concentrated its holder base is.";
-      scoreSummaryEl.textContent = sanitizeSummary(rawSummary);
+      scoreSummaryEl.textContent = cleanSummary;
     }
 
     setLegend(bucket);
