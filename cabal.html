@@ -297,106 +297,82 @@ const API_BASE = getApiBase();
 
           <!-- Quick compare (A vs B) -->
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
-            <div class="flex items-center justify-between">
-              <p class="text-xs tracking-wide uppercase text-gray-500">Quick compare (A vs B)</p>
+            <div class="leading-tight">
+              <p class="text-xs md:text-sm font-semibold uppercase tracking-wide text-gray-900">
+                Quick compare (A vs B)
+              </p>
+              <p class="text-xs text-gray-600 mt-1">
+                Compare two tokens using Cabal stats. If we don’t have cached data yet, we’ll run a fresh scan for that side.
+              </p>
             </div>
-            <p class="text-xs text-gray-600">
-              Compare two tokens you’ve already scanned. Uses cached Cabal snapshots so it won’t trigger new holder lookups.
-            </p>
 
             <div class="space-y-3">
               <!-- Token A -->
-              <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
-                <div class="flex-1">
-                  <label for="compareAInput" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
-                    Token A contract
-                  </label>
+              <div class="space-y-1">
+                <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">
+                  Token A
+                </p>
+                <div class="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2 md:space-y-0">
                   <input
                     id="compareAInput"
                     type="text"
-                    spellcheck="false"
-                    placeholder="0x… contract (or SOL mint)"
-                    class="w-full px-4 py-2.5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black bg-white text-xs md:text-sm font-mono"
+                    placeholder="Paste contract or Solana mint"
+                    class="flex-1 rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs md:text-sm font-mono text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                   />
-                </div>
-                <div>
-                  <label for="compareAChain" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
-                    Chain
-                  </label>
                   <select
                     id="compareAChain"
-                    class="inline-flex items-center justify-center px-4 py-2.5 rounded-full border border-gray-300 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                    class="w-full md:w-28 rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs md:text-sm font-mono text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
                   >
-                    <option value="eth">Ethereum</option>
-                    <option value="sol">Solana</option>
-                    <option value="base">Base</option>
-                    <option value="bsc">BNB Chain</option>
-                    <option value="polygon">Polygon</option>
-                    <option value="avalanche">Avalanche</option>
-                    <option value="arbitrum">Arbitrum</option>
-                    <option value="optimism">Optimism</option>
-                    <option value="monad">Monad</option>
+                    <option value="eth">ETH</option>
+                    <option value="sol">SOL</option>
                   </select>
                 </div>
               </div>
 
               <!-- Token B -->
-              <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
-                <div class="flex-1">
-                  <label for="compareBInput" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
-                    Token B contract
-                  </label>
+              <div class="space-y-1">
+                <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">
+                  Token B
+                </p>
+                <div class="flex flex-col md:flex-row md:items-center md:space-x-2 space-y-2 md:space-y-0">
                   <input
                     id="compareBInput"
                     type="text"
-                    spellcheck="false"
-                    placeholder="0x… contract (or SOL mint)"
-                    class="w-full px-4 py-2.5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black bg-white text-xs md:text-sm font-mono"
+                    placeholder="Paste contract or Solana mint"
+                    class="flex-1 rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs md:text-sm font-mono text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                   />
-                </div>
-                <div>
-                  <label for="compareBChain" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
-                    Chain
-                  </label>
                   <select
                     id="compareBChain"
-                    class="inline-flex items-center justify-center px-4 py-2.5 rounded-full border border-gray-300 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                    class="w-full md:w-28 rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs md:text-sm font-mono text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-400"
                   >
-                    <option value="eth">Ethereum</option>
-                    <option value="sol">Solana</option>
-                    <option value="base">Base</option>
-                    <option value="bsc">BNB Chain</option>
-                    <option value="polygon">Polygon</option>
-                    <option value="avalanche">Avalanche</option>
-                    <option value="arbitrum">Arbitrum</option>
-                    <option value="optimism">Optimism</option>
-                    <option value="monad">Monad</option>
+                    <option value="eth">ETH</option>
+                    <option value="sol">SOL</option>
                   </select>
                 </div>
               </div>
-
-              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 pt-1">
-                <button
-                  id="compareBtn"
-                  type="button"
-                  class="inline-flex items-center px-4 py-2 rounded-full bg-black text-white font-mono uppercase tracking-wide text-[11px] shadow-md hover:bg-gray-900 disabled:opacity-60 disabled:cursor-default"
-                >
-                  Compare
-                </button>
-                <p id="compareStatus" class="text-[10px] md:text-xs text-gray-500"></p>
-              </div>
             </div>
 
-            <div id="compareResult" class="mt-3 hidden">
+            <div class="flex items-center justify-between">
+              <button
+                id="compareBtn"
+                type="button"
+                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-[11px] md:text-xs font-semibold uppercase tracking-wide text-gray-800 hover:bg-gray-100"
+              >
+                Compare
+              </button>
+              <p
+                id="compareStatus"
+                class="text-[10px] md:text-xs text-gray-500 text-right"
+              ></p>
+            </div>
+
+            <div
+              id="compareResult"
+              class="mt-2 border border-dashed border-gray-200 rounded-lg p-3 hidden"
+            >
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div
-                  id="compareAResult"
-                  class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"
-                ></div>
-                <div
-                  id="compareBResult"
-                  class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"
-                ></div>
+                <div id="compareAResult"></div>
+                <div id="compareBResult"></div>
               </div>
             </div>
           </div>
@@ -816,7 +792,7 @@ const API_BASE = getApiBase();
   const copyLinkBtn = document.getElementById("copyLinkBtn");
   const footerNote = document.getElementById("footerNote");
 
-    const compareAInput = document.getElementById("compareAInput");
+  const compareAInput = document.getElementById("compareAInput");
   const compareAChain = document.getElementById("compareAChain");
   const compareBInput = document.getElementById("compareBInput");
   const compareBChain = document.getElementById("compareBChain");
@@ -836,19 +812,6 @@ const API_BASE = getApiBase();
       statusLine.className += " text-green-600";
     } else {
       statusLine.className += " text-gray-600";
-    }
-  }
-
-  function setCompareStatus(message, type) {
-    if (!compareStatus) return;
-    compareStatus.textContent = message || "";
-    compareStatus.className = "text-[10px] md:text-xs";
-    if (type === "error") {
-      compareStatus.className += " text-red-600";
-    } else if (type === "ok") {
-      compareStatus.className += " text-green-600";
-    } else {
-      compareStatus.className += " text-gray-500";
     }
   }
 
@@ -1035,207 +998,6 @@ const API_BASE = getApiBase();
 
   
   // Fetch and render activity lists for the bottom panel
-  
-  async function fetchTokenSnapshotForCompare(token, chain) {
-    const url =
-      API_BASE +
-      "/api/stats/tokenSummary?token=" +
-      encodeURIComponent(token) +
-      "&chain=" +
-      encodeURIComponent(chain);
-
-    const res = await fetch(url, { method: "GET" });
-    let data = null;
-    try {
-      data = await res.json();
-    } catch (e) {
-      data = null;
-    }
-
-    if (!res.ok || !data || data.error) {
-      const err = new Error(
-        (data && data.message) ||
-          "Failed to load cached snapshot for this token."
-      );
-      err.code = data && data.error ? data.error : "unknown";
-      err.httpStatus = res.status;
-      throw err;
-    }
-
-    return data;
-  }
-
-  function buildCompareCardHtml(summary, whichLabel) {
-    if (!summary) {
-      return `
-        <p class="text-[11px] md:text-xs text-gray-500">
-          No cached data.
-        </p>
-      `;
-    }
-
-    const metrics = summary.metrics || {};
-    const lastTs =
-      (metrics && metrics.lastUpdatedTs) ||
-      summary.lastScannedTs ||
-      null;
-    const lastRel = lastTs ? formatRelativeTime(lastTs) : "Unknown";
-
-    const bestScore =
-      typeof summary.bestScore === "number"
-        ? summary.bestScore + "/100"
-        : "–";
-    const bestLabel = summary.bestAlertCategory || "–";
-
-    const symbol = summary.symbol;
-    const ticker = symbol
-      ? "$" + String(symbol).replace(/^\$/,"").toUpperCase()
-      : null;
-    const nameLine = ticker
-      ? ticker + " · " + shortenAddress(summary.token)
-      : shortenAddress(summary.token);
-
-    const chainLabel = getChainLabel(summary.chain);
-
-    return `
-      <div class="space-y-1">
-        <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-500">${whichLabel}</p>
-        <p class="font-mono text-sm md:text-base text-gray-900">${nameLine}</p>
-        <p class="font-mono text-[11px] md:text-xs text-gray-600">${chainLabel}</p>
-        <p class="font-mono text-[11px] md:text-xs text-gray-700">
-          Best Cabal Score: ${bestScore}${bestLabel !== "–" ? " · " + bestLabel : ""}
-        </p>
-        <p class="font-mono text-[11px] md:text-xs text-gray-500">
-          Last scan: ${lastRel} · ${summary.scanCount || 0} ${summary.scanCount === 1 ? "scan" : "scans"}
-        </p>
-        <div class="mt-1 space-y-0.5">
-          <p class="font-mono text-[11px] md:text-xs text-gray-700">
-            Community: ${formatPercent(metrics.communityPercent)}
-          </p>
-          <p class="font-mono text-[11px] md:text-xs text-gray-700">
-            Whales: ${formatPercent(metrics.whalePercent)}
-          </p>
-          <p class="font-mono text-[11px] md:text-xs text-gray-700">
-            CEX custody: ${formatPercent(metrics.cexPercent)}
-          </p>
-          <p class="font-mono text-[11px] md:text-xs text-gray-700">
-            Project / treasury: ${formatPercent(metrics.projectPercent)}
-          </p>
-          <p class="font-mono text-[11px] md:text-xs text-gray-700">
-            Bridge custody: ${formatPercent(metrics.bridgePercent)}
-          </p>
-          <p class="font-mono text-[11px] md:text-xs text-gray-700">
-            DEX / LP: ${formatPercent(metrics.dexPercent)}
-          </p>
-          <p class="font-mono text-[11px] md:text-xs text-gray-700">
-            Adj. Top 10 EOAs: ${formatPercent(metrics.top10AdjustedPercent)}
-          </p>
-        </div>
-      </div>
-    `;
-  }
-
-  async function runCompare() {
-    if (!compareAInput || !compareBInput) return;
-
-    const rawA = compareAInput.value.trim();
-    const rawB = compareBInput.value.trim();
-    const chainA =
-      (compareAChain && compareAChain.value) || "eth";
-    const chainB =
-      (compareBChain && compareBChain.value) || "eth";
-
-    if (!rawA || !rawB) {
-      setCompareStatus(
-        "Paste contract addresses for both Token A and Token B first.",
-        "error"
-      );
-      if (compareResult) compareResult.classList.add("hidden");
-      return;
-    }
-
-    if (!isValidAddressForChain(chainA, rawA)) {
-      setCompareStatus(
-        "Token A address doesn’t look valid for the selected chain.",
-        "error"
-      );
-      if (compareResult) compareResult.classList.add("hidden");
-      return;
-    }
-
-    if (!isValidAddressForChain(chainB, rawB)) {
-      setCompareStatus(
-        "Token B address doesn’t look valid for the selected chain.",
-        "error"
-      );
-      if (compareResult) compareResult.classList.add("hidden");
-      return;
-    }
-
-    setCompareStatus(
-      "Loading cached Cabal snapshots from previous scans…",
-      "info"
-    );
-    if (compareBtn) compareBtn.disabled = true;
-
-    try {
-      const [summaryA, summaryB] = await Promise.all([
-        fetchTokenSnapshotForCompare(rawA, chainA),
-        fetchTokenSnapshotForCompare(rawB, chainB),
-      ]);
-
-      if (compareAResult) {
-        compareAResult.innerHTML = buildCompareCardHtml(
-          summaryA,
-          "Token A"
-        );
-      }
-      if (compareBResult) {
-        compareBResult.innerHTML = buildCompareCardHtml(
-          summaryB,
-          "Token B"
-        );
-      }
-      if (compareResult) compareResult.classList.remove("hidden");
-
-      setCompareStatus(
-        "Showing cached snapshots from previous scans. Run a fresh scan above if you need the latest data.",
-        "ok"
-      );
-    } catch (err) {
-      console.error("Compare error", err);
-      let msg =
-        (err && err.message) ||
-        "Could not load comparison data. Make sure both tokens have been scanned at least once.";
-      if (err && err.code === "not_found") {
-        msg =
-          "No cached snapshot for one of these tokens. Run a full scan in the main Cabal Scanner first.";
-      }
-      setCompareStatus(msg, "error");
-      if (compareResult) compareResult.classList.add("hidden");
-    } finally {
-      if (compareBtn) compareBtn.disabled = false;
-    }
-  }
-
-  function initCompareBlock() {
-    if (!compareBtn || !compareAInput || !compareBInput) return;
-
-    compareBtn.addEventListener("click", function () {
-      runCompare();
-    });
-
-    [compareAInput, compareBInput].forEach((input) => {
-      if (!input) return;
-      input.addEventListener("keydown", function (evt) {
-        if (evt.key === "Enter") {
-          evt.preventDefault();
-          runCompare();
-        }
-      });
-    });
-  }
-
   async function fetchRecentScans() {
     try {
       const res = await fetch(API_BASE + "/api/stats/recent");
@@ -2838,7 +2600,309 @@ function renderHolders(data) {
   }
 
 
-  // Init everything
+    // Quick compare (A vs B) helpers
+  function setCompareStatus(message, type) {
+    if (!compareStatus) return;
+    compareStatus.textContent = message || "";
+    compareStatus.className = "text-[10px] md:text-xs text-right";
+    if (type === "error") {
+      compareStatus.className += " text-red-600";
+    } else if (type === "ok") {
+      compareStatus.className += " text-green-600";
+    } else {
+      compareStatus.className += " text-gray-500";
+    }
+  }
+
+  async function fetchTokenSnapshotForCompare(rawToken, chain) {
+    const token = (rawToken || "").trim();
+    const chainSafe = (chain || "eth").toLowerCase();
+
+    const summaryUrl =
+      API_BASE +
+      "/api/stats/tokenSummary?token=" +
+      encodeURIComponent(token) +
+      "&chain=" +
+      encodeURIComponent(chainSafe);
+
+    async function fetchSummaryOrThrow() {
+      const res = await fetch(summaryUrl, { method: "GET" });
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (e) {
+        // ignore JSON parse failure
+      }
+
+      if (!res.ok || (data && data.error)) {
+        const err = new Error(
+          (data && data.message) ||
+            "Failed to load cached stats for comparison."
+        );
+        err.code = data && data.error ? data.error : "http_error";
+        err.httpStatus = res.status;
+        throw err;
+      }
+
+      return data;
+    }
+
+    try {
+      // First try cached stats
+      return await fetchSummaryOrThrow();
+    } catch (err) {
+      const isNotFound =
+        (err && err.code === "not_found") ||
+        (err && err.httpStatus === 404);
+      if (!isNotFound) {
+        // Some other error (rate limit, server error, etc.)
+        throw err;
+      }
+
+      // No cached stats yet – run a background scan to populate KV.
+      const params = new URLSearchParams();
+      params.set("token", token);
+      params.set("chain", chainSafe);
+      if (PUBLIC_API_KEY) {
+        params.set("key", PUBLIC_API_KEY);
+      }
+
+      const scanUrl = API_BASE + "/api/scan?" + params.toString();
+      const resScan = await fetch(scanUrl, { method: "GET" });
+      let dataScan = null;
+      try {
+        dataScan = await resScan.json();
+      } catch (e) {
+        // ignore
+      }
+
+      if (!resScan.ok || (dataScan && dataScan.error)) {
+        const err2 = new Error(
+          (dataScan && dataScan.message) ||
+            "Scan failed while trying to build comparison snapshot."
+        );
+        err2.code = dataScan && dataScan.error ? dataScan.error : "scan_failed";
+        err2.httpStatus = resScan.status;
+        throw err2;
+      }
+
+      // After a successful scan, try the cached summary again.
+      return await fetchSummaryOrThrow();
+    }
+  }
+
+  function buildCompareCardHtml(summary, whichLabel) {
+    if (!summary) {
+      return '<div class="text-xs md:text-sm text-gray-500">No data found for this token.</div>';
+    }
+
+    const chainLabel = getChainLabel(summary.chain || "eth");
+    const metrics = summary.lastScanMetrics || {};
+
+    const score =
+      summary.bestScore != null
+        ? summary.bestScore
+        : metrics.cabalScore != null
+        ? metrics.cabalScore
+        : null;
+
+    const alert =
+      summary.bestAlertCategory ||
+      metrics.alertCategory ||
+      "";
+
+    const symbol =
+      summary.symbol ||
+      shortenAddress(summary.token || "");
+
+    const whalePct = formatPercent(metrics.whalePercent);
+    const cexPct = formatPercent(metrics.cexPercent);
+    const projectPct = formatPercent(metrics.projectPercent);
+    const communityPct = formatPercent(metrics.communityPercent);
+    const bridgePct = formatPercent(metrics.bridgePercent);
+    const top10AdjPct = formatPercent(metrics.top10AdjustedPercent);
+
+    const lastTs = metrics.lastUpdatedTs || summary.lastScannedTs;
+    const lastStr = lastTs ? formatRelativeTime(lastTs) : "never";
+
+    const safeLabel = whichLabel || "Token";
+
+    return (
+      '<div class="border border-gray-200 rounded-lg bg-white px-3 py-2 space-y-1">' +
+        '<div class="flex items-center justify-between">' +
+          '<div class="flex flex-col">' +
+            '<span class="text-[10px] md:text-xs uppercase tracking-wide text-gray-400">' +
+              safeLabel +
+            "</span>" +
+            '<span class="text-xs md:text-sm font-mono text-gray-900">' +
+              symbol +
+            "</span>" +
+            '<span class="text-[10px] md:text-xs text-gray-500">' +
+              chainLabel +
+            "</span>" +
+          "</div>" +
+          '<div class="text-right">' +
+            '<div class="text-lg md:text-xl font-semibold text-gray-900">' +
+              (score != null ? String(score) : "–") +
+            "</div>" +
+            '<div class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">' +
+              (alert || "No alert") +
+            "</div>" +
+          "</div>" +
+        "</div>" +
+        '<div class="mt-2 grid grid-cols-2 gap-1.5 text-[10px] md:text-xs">' +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-gray-500">Whales</span>' +
+            '<span class="font-mono text-gray-900">' +
+              whalePct +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-gray-500">Top 10*</span>' +
+            '<span class="font-mono text-gray-900">' +
+              top10AdjPct +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-gray-500">CEX</span>' +
+            '<span class="font-mono text-gray-900">' +
+              cexPct +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-gray-500">Project</span>' +
+            '<span class="font-mono text-gray-900">' +
+              projectPct +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-gray-500">Community</span>' +
+            '<span class="font-mono text-gray-900">' +
+              communityPct +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-gray-500">Bridge</span>' +
+            '<span class="font-mono text-gray-900">' +
+              bridgePct +
+            "</span>" +
+          "</div>" +
+        "</div>" +
+        '<p class="mt-1 text-[10px] md:text-[11px] text-gray-400 italic">' +
+          "*Top 10 adjusted excludes CEX, bridge, LP and burn wallets where detected." +
+        "</p>" +
+        '<p class="mt-1 text-[10px] md:text-[11px] text-gray-400">' +
+          "Last scanned " +
+          lastStr +
+          "." +
+        "</p>" +
+      "</div>"
+    );
+  }
+
+  async function runCompare() {
+    if (!compareAInput || !compareBInput) return;
+
+    const rawA = compareAInput.value.trim();
+    const rawB = compareBInput.value.trim();
+
+    if (!rawA || !rawB) {
+      setCompareStatus("Paste both Token A and Token B first.", "error");
+      return;
+    }
+
+    const chainA =
+      compareAChain && compareAChain.value ? compareAChain.value : "eth";
+    const chainB =
+      compareBChain && compareBChain.value ? compareBChain.value : "eth";
+
+    if (!isValidAddressForChain(chainA, rawA)) {
+      const msg =
+        chainA === "sol"
+          ? "Token A doesn’t look like a valid Solana token address."
+          : "Token A doesn’t look like a valid contract address (0x…).";
+      setCompareStatus(msg, "error");
+      return;
+    }
+
+    if (!isValidAddressForChain(chainB, rawB)) {
+      const msg =
+        chainB === "sol"
+          ? "Token B doesn’t look like a valid Solana token address."
+          : "Token B doesn’t look like a valid contract address (0x…).";
+      setCompareStatus(msg, "error");
+      return;
+    }
+
+    setCompareStatus("Fetching Cabal snapshots…", "info");
+    if (compareBtn) compareBtn.disabled = true;
+    if (compareResult) {
+      compareResult.classList.add("hidden");
+    }
+
+    try {
+      const [summaryA, summaryB] = await Promise.all([
+        fetchTokenSnapshotForCompare(rawA, chainA),
+        fetchTokenSnapshotForCompare(rawB, chainB),
+      ]);
+
+      if (!summaryA || !summaryB) {
+        setCompareStatus(
+          "No stats found yet for one or both tokens.",
+          "error"
+        );
+        return;
+      }
+
+      if (compareAResult) {
+        compareAResult.innerHTML = buildCompareCardHtml(summaryA, "Token A");
+      }
+      if (compareBResult) {
+        compareBResult.innerHTML = buildCompareCardHtml(summaryB, "Token B");
+      }
+      if (compareResult) {
+        compareResult.classList.remove("hidden");
+      }
+
+      setCompareStatus(
+        "Showing the latest Cabal snapshots for both tokens.",
+        "ok"
+      );
+    } catch (err) {
+      console.error(err);
+      setCompareStatus(
+        "Compare failed: " +
+          (err && err.message ? err.message : "Unknown error"),
+        "error"
+      );
+    } finally {
+      if (compareBtn) compareBtn.disabled = false;
+    }
+  }
+
+  function initCompareBlock() {
+    if (!compareBtn) return;
+
+    compareBtn.addEventListener("click", function () {
+      runCompare();
+    });
+
+    function handleKeydown(evt) {
+      if (evt.key === "Enter") {
+        evt.preventDefault();
+        runCompare();
+      }
+    }
+
+    if (compareAInput) {
+      compareAInput.addEventListener("keydown", handleKeydown);
+    }
+    if (compareBInput) {
+      compareBInput.addEventListener("keydown", handleKeydown);
+    }
+  }
+
+// Init everything
   initScanControls();
   initWhaleToggle();
   initFilters();
