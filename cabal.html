@@ -294,6 +294,113 @@ const API_BASE = getApiBase();
             </div>
           </div>
 
+
+          <!-- Quick compare (A vs B) -->
+          <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <p class="text-xs tracking-wide uppercase text-gray-500">Quick compare (A vs B)</p>
+            </div>
+            <p class="text-xs text-gray-600">
+              Compare two tokens you’ve already scanned. Uses cached Cabal snapshots so it won’t trigger new holder lookups.
+            </p>
+
+            <div class="space-y-3">
+              <!-- Token A -->
+              <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
+                <div class="flex-1">
+                  <label for="compareAInput" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
+                    Token A contract
+                  </label>
+                  <input
+                    id="compareAInput"
+                    type="text"
+                    spellcheck="false"
+                    placeholder="0x… contract (or SOL mint)"
+                    class="w-full px-4 py-2.5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black bg-white text-xs md:text-sm font-mono"
+                  />
+                </div>
+                <div>
+                  <label for="compareAChain" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
+                    Chain
+                  </label>
+                  <select
+                    id="compareAChain"
+                    class="inline-flex items-center justify-center px-4 py-2.5 rounded-full border border-gray-300 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                  >
+                    <option value="eth">Ethereum</option>
+                    <option value="sol">Solana</option>
+                    <option value="base">Base</option>
+                    <option value="bsc">BNB Chain</option>
+                    <option value="polygon">Polygon</option>
+                    <option value="avalanche">Avalanche</option>
+                    <option value="arbitrum">Arbitrum</option>
+                    <option value="optimism">Optimism</option>
+                    <option value="monad">Monad</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Token B -->
+              <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
+                <div class="flex-1">
+                  <label for="compareBInput" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
+                    Token B contract
+                  </label>
+                  <input
+                    id="compareBInput"
+                    type="text"
+                    spellcheck="false"
+                    placeholder="0x… contract (or SOL mint)"
+                    class="w-full px-4 py-2.5 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black focus:border-black bg-white text-xs md:text-sm font-mono"
+                  />
+                </div>
+                <div>
+                  <label for="compareBChain" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">
+                    Chain
+                  </label>
+                  <select
+                    id="compareBChain"
+                    class="inline-flex items-center justify-center px-4 py-2.5 rounded-full border border-gray-300 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                  >
+                    <option value="eth">Ethereum</option>
+                    <option value="sol">Solana</option>
+                    <option value="base">Base</option>
+                    <option value="bsc">BNB Chain</option>
+                    <option value="polygon">Polygon</option>
+                    <option value="avalanche">Avalanche</option>
+                    <option value="arbitrum">Arbitrum</option>
+                    <option value="optimism">Optimism</option>
+                    <option value="monad">Monad</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 pt-1">
+                <button
+                  id="compareBtn"
+                  type="button"
+                  class="inline-flex items-center px-4 py-2 rounded-full bg-black text-white font-mono uppercase tracking-wide text-[11px] shadow-md hover:bg-gray-900 disabled:opacity-60 disabled:cursor-default"
+                >
+                  Compare
+                </button>
+                <p id="compareStatus" class="text-[10px] md:text-xs text-gray-500"></p>
+              </div>
+            </div>
+
+            <div id="compareResult" class="mt-3 hidden">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div
+                  id="compareAResult"
+                  class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"
+                ></div>
+                <div
+                  id="compareBResult"
+                  class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"
+                ></div>
+              </div>
+            </div>
+          </div>
+
           <!-- Supply snapshot -->
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="flex items-center justify-between">
@@ -709,6 +816,16 @@ const API_BASE = getApiBase();
   const copyLinkBtn = document.getElementById("copyLinkBtn");
   const footerNote = document.getElementById("footerNote");
 
+    const compareAInput = document.getElementById("compareAInput");
+  const compareAChain = document.getElementById("compareAChain");
+  const compareBInput = document.getElementById("compareBInput");
+  const compareBChain = document.getElementById("compareBChain");
+  const compareBtn = document.getElementById("compareBtn");
+  const compareStatus = document.getElementById("compareStatus");
+  const compareResult = document.getElementById("compareResult");
+  const compareAResult = document.getElementById("compareAResult");
+  const compareBResult = document.getElementById("compareBResult");
+
   function setStatus(message, type) {
     if (!statusLine) return;
     statusLine.textContent = message || "";
@@ -719,6 +836,19 @@ const API_BASE = getApiBase();
       statusLine.className += " text-green-600";
     } else {
       statusLine.className += " text-gray-600";
+    }
+  }
+
+  function setCompareStatus(message, type) {
+    if (!compareStatus) return;
+    compareStatus.textContent = message || "";
+    compareStatus.className = "text-[10px] md:text-xs";
+    if (type === "error") {
+      compareStatus.className += " text-red-600";
+    } else if (type === "ok") {
+      compareStatus.className += " text-green-600";
+    } else {
+      compareStatus.className += " text-gray-500";
     }
   }
 
@@ -905,6 +1035,207 @@ const API_BASE = getApiBase();
 
   
   // Fetch and render activity lists for the bottom panel
+  
+  async function fetchTokenSnapshotForCompare(token, chain) {
+    const url =
+      API_BASE +
+      "/api/stats/tokenSummary?token=" +
+      encodeURIComponent(token) +
+      "&chain=" +
+      encodeURIComponent(chain);
+
+    const res = await fetch(url, { method: "GET" });
+    let data = null;
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = null;
+    }
+
+    if (!res.ok || !data || data.error) {
+      const err = new Error(
+        (data && data.message) ||
+          "Failed to load cached snapshot for this token."
+      );
+      err.code = data && data.error ? data.error : "unknown";
+      err.httpStatus = res.status;
+      throw err;
+    }
+
+    return data;
+  }
+
+  function buildCompareCardHtml(summary, whichLabel) {
+    if (!summary) {
+      return `
+        <p class="text-[11px] md:text-xs text-gray-500">
+          No cached data.
+        </p>
+      `;
+    }
+
+    const metrics = summary.metrics || {};
+    const lastTs =
+      (metrics && metrics.lastUpdatedTs) ||
+      summary.lastScannedTs ||
+      null;
+    const lastRel = lastTs ? formatRelativeTime(lastTs) : "Unknown";
+
+    const bestScore =
+      typeof summary.bestScore === "number"
+        ? summary.bestScore + "/100"
+        : "–";
+    const bestLabel = summary.bestAlertCategory || "–";
+
+    const symbol = summary.symbol;
+    const ticker = symbol
+      ? "$" + String(symbol).replace(/^\$/,"").toUpperCase()
+      : null;
+    const nameLine = ticker
+      ? ticker + " · " + shortenAddress(summary.token)
+      : shortenAddress(summary.token);
+
+    const chainLabel = getChainLabel(summary.chain);
+
+    return `
+      <div class="space-y-1">
+        <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-500">${whichLabel}</p>
+        <p class="font-mono text-sm md:text-base text-gray-900">${nameLine}</p>
+        <p class="font-mono text-[11px] md:text-xs text-gray-600">${chainLabel}</p>
+        <p class="font-mono text-[11px] md:text-xs text-gray-700">
+          Best Cabal Score: ${bestScore}${bestLabel !== "–" ? " · " + bestLabel : ""}
+        </p>
+        <p class="font-mono text-[11px] md:text-xs text-gray-500">
+          Last scan: ${lastRel} · ${summary.scanCount || 0} ${summary.scanCount === 1 ? "scan" : "scans"}
+        </p>
+        <div class="mt-1 space-y-0.5">
+          <p class="font-mono text-[11px] md:text-xs text-gray-700">
+            Community: ${formatPercent(metrics.communityPercent)}
+          </p>
+          <p class="font-mono text-[11px] md:text-xs text-gray-700">
+            Whales: ${formatPercent(metrics.whalePercent)}
+          </p>
+          <p class="font-mono text-[11px] md:text-xs text-gray-700">
+            CEX custody: ${formatPercent(metrics.cexPercent)}
+          </p>
+          <p class="font-mono text-[11px] md:text-xs text-gray-700">
+            Project / treasury: ${formatPercent(metrics.projectPercent)}
+          </p>
+          <p class="font-mono text-[11px] md:text-xs text-gray-700">
+            Bridge custody: ${formatPercent(metrics.bridgePercent)}
+          </p>
+          <p class="font-mono text-[11px] md:text-xs text-gray-700">
+            DEX / LP: ${formatPercent(metrics.dexPercent)}
+          </p>
+          <p class="font-mono text-[11px] md:text-xs text-gray-700">
+            Adj. Top 10 EOAs: ${formatPercent(metrics.top10AdjustedPercent)}
+          </p>
+        </div>
+      </div>
+    `;
+  }
+
+  async function runCompare() {
+    if (!compareAInput || !compareBInput) return;
+
+    const rawA = compareAInput.value.trim();
+    const rawB = compareBInput.value.trim();
+    const chainA =
+      (compareAChain && compareAChain.value) || "eth";
+    const chainB =
+      (compareBChain && compareBChain.value) || "eth";
+
+    if (!rawA || !rawB) {
+      setCompareStatus(
+        "Paste contract addresses for both Token A and Token B first.",
+        "error"
+      );
+      if (compareResult) compareResult.classList.add("hidden");
+      return;
+    }
+
+    if (!isValidAddressForChain(chainA, rawA)) {
+      setCompareStatus(
+        "Token A address doesn’t look valid for the selected chain.",
+        "error"
+      );
+      if (compareResult) compareResult.classList.add("hidden");
+      return;
+    }
+
+    if (!isValidAddressForChain(chainB, rawB)) {
+      setCompareStatus(
+        "Token B address doesn’t look valid for the selected chain.",
+        "error"
+      );
+      if (compareResult) compareResult.classList.add("hidden");
+      return;
+    }
+
+    setCompareStatus(
+      "Loading cached Cabal snapshots from previous scans…",
+      "info"
+    );
+    if (compareBtn) compareBtn.disabled = true;
+
+    try {
+      const [summaryA, summaryB] = await Promise.all([
+        fetchTokenSnapshotForCompare(rawA, chainA),
+        fetchTokenSnapshotForCompare(rawB, chainB),
+      ]);
+
+      if (compareAResult) {
+        compareAResult.innerHTML = buildCompareCardHtml(
+          summaryA,
+          "Token A"
+        );
+      }
+      if (compareBResult) {
+        compareBResult.innerHTML = buildCompareCardHtml(
+          summaryB,
+          "Token B"
+        );
+      }
+      if (compareResult) compareResult.classList.remove("hidden");
+
+      setCompareStatus(
+        "Showing cached snapshots from previous scans. Run a fresh scan above if you need the latest data.",
+        "ok"
+      );
+    } catch (err) {
+      console.error("Compare error", err);
+      let msg =
+        (err && err.message) ||
+        "Could not load comparison data. Make sure both tokens have been scanned at least once.";
+      if (err && err.code === "not_found") {
+        msg =
+          "No cached snapshot for one of these tokens. Run a full scan in the main Cabal Scanner first.";
+      }
+      setCompareStatus(msg, "error");
+      if (compareResult) compareResult.classList.add("hidden");
+    } finally {
+      if (compareBtn) compareBtn.disabled = false;
+    }
+  }
+
+  function initCompareBlock() {
+    if (!compareBtn || !compareAInput || !compareBInput) return;
+
+    compareBtn.addEventListener("click", function () {
+      runCompare();
+    });
+
+    [compareAInput, compareBInput].forEach((input) => {
+      if (!input) return;
+      input.addEventListener("keydown", function (evt) {
+        if (evt.key === "Enter") {
+          evt.preventDefault();
+          runCompare();
+        }
+      });
+    });
+  }
+
   async function fetchRecentScans() {
     try {
       const res = await fetch(API_BASE + "/api/stats/recent");
@@ -2515,6 +2846,7 @@ function renderHolders(data) {
   updatePromo();
   initFromUrl();
   fetchRecentScans();
+  initCompareBlock();
 })();
 </script>
 </body>
