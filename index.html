@@ -195,6 +195,39 @@
             alt="Too Many Main Logo"
             class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
           />
+
+          <!-- Cabal Scanner teaser under hero image -->
+          <div class="mt-6 w-full max-w-xl mx-auto text-left">
+            <p class="text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 mb-2 text-left">
+              Scan any token contract on supported chains
+            </p>
+            <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+              <input
+                id="home-cabal-token"
+                type="text"
+                inputmode="text"
+                class="flex-1 rounded-full bg-green-50 border border-green-100 px-4 py-3 text-sm md:text-base font-mono placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-300"
+                placeholder="0x... contract address"
+              />
+              <div class="flex items-stretch gap-2 md:gap-3 md:w-auto w-full">
+                <select
+                  id="home-cabal-chain"
+                  class="flex-none rounded-full border border-gray-300 bg-white px-4 py-3 text-xs md:text-sm font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-300 w-1/2 md:w-auto"
+                >
+                  <option value="eth" selected>Ethereum</option>
+                  <option value="sol">Solana</option>
+                  <option value="monad">Monad</option>
+                </select>
+                <button
+                  id="home-cabal-scan"
+                  type="button"
+                  class="flex-1 md:flex-none rounded-full bg-black text-white font-mono text-xs md:text-sm uppercase tracking-wide px-5 py-3 whitespace-nowrap hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-black"
+                >
+                  Scan token
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -577,6 +610,41 @@ And they name it <span class="font-bold">$too many</span>.
       </h1>
     </div>
   </footer>
+
+
+<script>
+  (function () {
+    var input = document.getElementById("home-cabal-token");
+    var chainSelect = document.getElementById("home-cabal-chain");
+    var button = document.getElementById("home-cabal-scan");
+
+    if (!input || !chainSelect || !button) return;
+
+    // Prefill with $TOO contract
+    input.value = "0x95C1CFD6Ed4155b263698E2873814c128eD219b0";
+
+    function goToCabal() {
+      var token = (input.value || "").trim();
+      var chain = (chainSelect.value || "eth").toLowerCase();
+
+      if (!token) return;
+
+      var params = new URLSearchParams();
+      params.set("chain", chain);
+      params.set("token", token);
+
+      window.location.href = "/cabal?" + params.toString();
+    }
+
+    button.addEventListener("click", goToCabal);
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        goToCabal();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
