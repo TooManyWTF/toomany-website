@@ -1,0 +1,642 @@
+<script>
+// Auto-detect environment (local vs deployed)
+// Return just the origin/base URL, NOT including /api.
+// The rest of the code always appends "/api/..." on top of this.
+function getApiBase() {
+  const host = window.location.hostname;
+
+  // Local dev via `wrangler dev`
+  if (host === "127.0.0.1" || host === "localhost") {
+    return "http://127.0.0.1:8787";
+  }
+  // If opened directly from the filesystem, assume local dev worker
+  if (window.location.protocol === "file:") {
+    return "http://127.0.0.1:8787";
+  }
+  // In production, use same origin
+  return "";
+}
+const API_BASE = getApiBase();
+</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VQN64SEKQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6VQN64SEKQ');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Cabal Compare Tool | A vs B | $TOO</title>
+  <meta name="description" content="Compare two tokens side-by-side using the Crypto Cabal engine. Whales, CEX custody, bridges, project wallets and more." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://toomany.wtf/cabal/compare" />
+  <meta property="og:title" content="Cabal Compare Tool | A vs B | $TOO" />
+  <meta property="og:description" content="Compare two tokens side-by-side using the Crypto Cabal engine. Whales, CEX custody, bridges, project wallets and more." />
+  <meta property="og:image" content="https://toomany.wtf/images/ogbanner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cabal Compare Tool | A vs B | $TOO" />
+  <meta name="twitter:description" content="Compare two tokens side-by-side using the Crypto Cabal engine. Whales, CEX custody, bridges, project wallets and more." />
+  <meta name="twitter:image" content="https://toomany.wtf/images/ogbanner.png" />
+
+  <!-- Tailwind -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+  />
+
+  <style>
+    body {
+      background: #f3e7d3;
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    h1, h2, h3 {
+      line-height: 1.25 !important;
+    }
+    .font-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace !important;
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+<!-- NAVBAR (copied from cabal.html, with Scanner link) -->
+<header class="w-full border-b border-gray-200" style="background: rgb(255, 255, 255);">
+  <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-3 md:py-4">
+    <a href="/" class="flex items-center space-x-2">
+      <img src="images/transparentlogo.png" class="h-10 md:h-12" alt="Too Many logo" />
+    </a>
+
+    <nav class="flex flex-wrap items-center text-center justify-center space-x-4 md:space-x-6 mt-3 md:mt-0">
+      <a href="https://toomany.wtf" class="underline font-mono">Home</a>
+      <a href="https://toomany.wtf/cabal" class="underline font-mono">Scanner</a>
+      <a href="https://toomany.wtf/whitepaper" class="underline font-mono">WP</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline font-mono">X</a>
+      <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
+         target="_blank"
+         class="px-4 py-2 rounded-lg bg-black text-white font-mono shadow hover:bg-gray-900">
+        Buy on Uniswap
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="text-gray-800" style="background:#F3E7D3;">
+  <div class="container mx-auto px-5 pt-8 pb-4 md:pt-10 md:pb-6 flex flex-col md:flex-row items-center">
+    <div class="w-full md:w-7/12 lg:w-1/2 px-3 mb-6 md:mb-0">
+      <div class="inline-flex items-center rounded-full bg-gray-900/90 px-3 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-100 space-x-1">
+        <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+        <span>Anti-cabal</span>
+        <span>•</span>
+        <span>Compare two tokens</span>
+      </div>
+
+      <h1 class="font-mono font-bold text-3xl md:text-5xl mt-4 mb-4 text-gray-900">
+        Cabal <span class="bg-black text-white px-2">Compare</span> Tool
+      </h1>
+      <p class="font-mono text-sm md:text-base text-gray-700">
+        Paste any two contracts and see which one has nastier cabal fingerprints &mdash;
+        whales, CEX custody, bridge wallets and more.
+      </p>
+    </div>
+
+    <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
+      <img src="images/exposethem.png"
+           class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
+           alt="Expose them graphic" />
+    </div>
+  </div>
+</section>
+
+<!-- MAIN COMPARE TOOL -->
+<section class="w-full">
+  <div class="container mx-auto px-5 pb-8 md:pb-10">
+    <article class="max-w-4xl font-mono text-gray-800 leading-relaxed text-base md:text-lg w-full mx-auto">
+      <div class="bg-gray-800 rounded-2xl shadow-xl border border-gray-200 p-4 md:p-6 space-y-5">
+
+        <!-- Compare form + results -->
+        <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <p class="text-xs tracking-wide uppercase text-gray-500">
+              Quick compare (A vs B)
+            </p>
+            <p id="compareStatus" class="text-[10px] md:text-xs text-gray-500"></p>
+          </div>
+
+          <p class="text-xs md:text-sm text-gray-600">
+            Uses the same engine as the Crypto Cabal Scanner. We run a fresh scan for each side,
+            then show you whales, cabal score and key custody buckets.
+          </p>
+
+          <!-- Token A -->
+          <div class="space-y-2 mt-3">
+            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-600">
+              Token A
+            </p>
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
+              <div class="flex-1">
+                <input
+                  id="compareAInput"
+                  type="text"
+                  spellcheck="false"
+                  placeholder="Select chain and paste contract"
+                  class="w-full px-4 py-2.5 rounded-full border border-gray-200 bg-green-50 text-xs md:text-sm font-mono placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
+              <div class="w-full md:w-64">
+                <select
+                  id="compareAChain"
+                  class="w-full px-4 py-2.5 rounded-full border border-gray-200 bg-white text-xs md:text-sm font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                >
+                  <option value="eth">Ethereum</option>
+                  <option value="sol">Solana</option>
+                  <option value="monad">Monad</option>
+                  <option value="base">Base</option>
+                  <option value="bsc">BNB Chain</option>
+                  <option value="polygon">Polygon</option>
+                  <option value="avalanche">Avalanche</option>
+                  <option value="arbitrum">Arbitrum</option>
+                  <option value="optimism">Optimism</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Token B -->
+          <div class="space-y-2 mt-4">
+            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-600">
+              Token B
+            </p>
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
+              <div class="flex-1">
+                <input
+                  id="compareBInput"
+                  type="text"
+                  spellcheck="false"
+                  placeholder="Select chain and paste contract"
+                  class="w-full px-4 py-2.5 rounded-full border border-gray-200 bg-green-50 text-xs md:text-sm font-mono placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
+              <div class="w-full md:w-64">
+                <select
+                  id="compareBChain"
+                  class="w-full px-4 py-2.5 rounded-full border border-gray-200 bg-white text-xs md:text-sm font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                >
+                  <option value="eth">Ethereum</option>
+                  <option value="sol">Solana</option>
+                  <option value="monad">Monad</option>
+                  <option value="base">Base</option>
+                  <option value="bsc">BNB Chain</option>
+                  <option value="polygon">Polygon</option>
+                  <option value="avalanche">Avalanche</option>
+                  <option value="arbitrum">Arbitrum</option>
+                  <option value="optimism">Optimism</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button
+              id="compareBtn"
+              type="button"
+              class="inline-flex w-full items-center justify-center rounded-full bg-black px-5 py-2.5 text-xs md:text-sm font-mono uppercase tracking-wide text-white shadow-lg hover:bg-gray-900 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              Compare
+            </button>
+          </div>
+
+          <div id="compareVerdict" class="mt-4 text-xs md:text-sm text-gray-100 bg-gray-900 rounded-lg px-3 py-2 hidden"></div>
+
+          <div id="compareResult" class="mt-4 hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div id="compareAResult" class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
+              <div id="compareBResult" class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-[11px] md:text-xs text-gray-300">
+          <p>
+            *Top 10 adjusted excludes CEX, bridge, LP and burn wallets where detected by the Cabal engine.
+          </p>
+        </div>
+
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="w-full bg-gray-800">
+  <div class="container mx-auto flex justify-center text-center py-4 px-4">
+    <h1 class="font-mono text-white text-base md:text-xl">
+      toomany.wtf | toomanywtf (at) gmail
+    </h1>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const PUBLIC_API_KEY = "hfkdEJODJEOFKoekdoekl8763djEwrangler";
+
+  const compareAInput = document.getElementById("compareAInput");
+  const compareAChain = document.getElementById("compareAChain");
+  const compareBInput = document.getElementById("compareBInput");
+  const compareBChain = document.getElementById("compareBChain");
+  const compareBtn = document.getElementById("compareBtn");
+  const compareStatus = document.getElementById("compareStatus");
+  const compareResult = document.getElementById("compareResult");
+  const compareAResult = document.getElementById("compareAResult");
+  const compareBResult = document.getElementById("compareBResult");
+  const compareVerdict = document.getElementById("compareVerdict");
+
+  function setCompareStatus(message, type) {
+    if (!compareStatus) return;
+    compareStatus.textContent = message || "";
+    compareStatus.className = "text-[10px] md:text-xs";
+    if (type === "error") {
+      compareStatus.className += " text-red-500";
+    } else if (type === "ok") {
+      compareStatus.className += " text-green-500";
+    } else {
+      compareStatus.className += " text-gray-500";
+    }
+  }
+
+  function isValidEthAddress(value) {
+    if (!value) return false;
+    const v = value.trim();
+    return /^0x[a-fA-F0-9]{40}$/.test(v);
+  }
+
+  function isValidSolAddress(value) {
+    if (!value) return false;
+    const v = value.trim();
+    // Basic Solana base58 check
+    return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(v);
+  }
+
+  function isValidAddressForChain(chain, value) {
+    if (chain === "sol") {
+      return isValidSolAddress(value);
+    }
+    return isValidEthAddress(value);
+  }
+
+  function formatPercent(v) {
+    if (v == null || isNaN(v)) return "–";
+    if (Math.abs(v) < 0.01) return v === 0 ? "0%" : "<0.01%";
+    return v.toFixed(2) + "%";
+  }
+
+  function shortenAddress(addr) {
+    if (!addr || typeof addr !== "string") return addr || "";
+    const v = addr.trim();
+    if (v.length <= 12) return v;
+    return v.slice(0, 6) + "…" + v.slice(-4);
+  }
+
+  function getChainLabel(chain) {
+    switch (chain) {
+      case "eth":
+        return "Ethereum";
+      case "sol":
+        return "Solana";
+      case "monad":
+        return "Monad";
+      case "base":
+        return "Base";
+      case "bsc":
+        return "BNB Chain";
+      case "polygon":
+        return "Polygon";
+      case "avalanche":
+        return "Avalanche";
+      case "arbitrum":
+        return "Arbitrum";
+      case "optimism":
+        return "Optimism";
+      default:
+        return chain || "Unknown chain";
+    }
+  }
+
+  function formatRelativeTime(ts) {
+    if (!ts) return "";
+    try {
+      const now = Date.now();
+      const diffMs = now - ts;
+      const diffSec = Math.floor(diffMs / 1000);
+      if (diffSec < 60) return diffSec + "s ago";
+      const diffMin = Math.floor(diffSec / 60);
+      if (diffMin < 60) return diffMin + "m ago";
+      const diffHr = Math.floor(diffMin / 60);
+      if (diffHr < 24) return diffHr + "h ago";
+      const diffDay = Math.floor(diffHr / 24);
+      return diffDay + "d ago";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  async function runSingleScan(rawToken, chain) {
+    const token = (rawToken || "").trim();
+    if (!token) {
+      throw new Error("Missing token address.");
+    }
+
+    const url =
+      API_BASE +
+      "/api/scan?token=" +
+      encodeURIComponent(token) +
+      "&chain=" +
+      encodeURIComponent(chain) +
+      "&key=" +
+      encodeURIComponent(PUBLIC_API_KEY);
+
+    const res = await fetch(url, { method: "GET" });
+    let data = null;
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = null;
+    }
+
+    if (!res.ok || !data || data.error) {
+      const msg =
+        (data && data.message) ||
+        (data && data.error) ||
+        "Scan failed for this token.";
+      const err = new Error(msg);
+      err.code = data && data.error ? data.error : "scan_error";
+      err.httpStatus = res.status;
+      throw err;
+    }
+
+    return data;
+  }
+
+  function buildCompareCardHtml(whichLabel, scan) {
+    if (!scan) {
+      return '<p class="text-xs md:text-sm text-gray-500">No data.</p>';
+    }
+
+    const chain = scan.chain || "eth";
+    const chainLabel = getChainLabel(chain);
+    const symbol = scan.symbol
+      ? "$" + String(scan.symbol).replace(/^\$/,"").toUpperCase()
+      : null;
+    const tokenDisplay = symbol
+      ? symbol + " · " + shortenAddress(scan.token)
+      : shortenAddress(scan.token);
+
+    const score =
+      typeof scan.cabalScore === "number"
+        ? scan.cabalScore + "/100"
+        : "–";
+    const alert = scan.alertCategory || "";
+
+    const wi = scan.walletInsights || {};
+    const whales = formatPercent(wi.whalePercent);
+    const top10Adj = formatPercent(wi.top10AdjustedPercent);
+    const cex = formatPercent(wi.cexPercent);
+    const proj = formatPercent(wi.projectPercent);
+    const comm = formatPercent(wi.communityPercent);
+    const bridge = formatPercent(wi.bridgePercent);
+
+    const lastTs =
+      (scan.scanHistory &&
+        scan.scanHistory.length &&
+        scan.scanHistory[0] &&
+        scan.scanHistory[0].ts) ||
+      null;
+    const lastStr = lastTs ? formatRelativeTime(lastTs) : "0s ago";
+
+    return (
+      '<div class="space-y-1">' +
+        '<p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-500">' +
+          whichLabel +
+        "</p>" +
+        '<p class="font-mono text-sm md:text-base text-gray-900">' +
+          tokenDisplay +
+        "</p>" +
+        '<p class="font-mono text-[11px] md:text-xs text-gray-600">' +
+          chainLabel +
+        "</p>" +
+        '<div class="flex items-center justify-between mt-1">' +
+          '<span class="font-mono text-[11px] md:text-xs text-gray-700">Cabal score</span>' +
+          '<span class="font-mono text-sm md:text-base text-gray-900">' +
+            score +
+          "</span>" +
+        "</div>" +
+        '<p class="font-mono text-[11px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">' +
+          (alert || "No alert") +
+        "</p>" +
+        '<div class="space-y-0.5 mt-1">' +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Whales</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
+              whales +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Top 10*</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
+              top10Adj +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">CEX</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
+              cex +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Project</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
+              proj +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Community</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
+              comm +
+            "</span>" +
+          "</div>" +
+          '<div class="flex items-center justify-between">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Bridge</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
+              bridge +
+            "</span>" +
+          "</div>" +
+        "</div>" +
+        '<p class="mt-1 text-[11px] md:text-xs text-gray-400">' +
+          "Last scanned " +
+          lastStr +
+          "." +
+        "</p>" +
+      "</div>"
+    );
+  }
+
+  function buildVerdict(scanA, scanB) {
+    if (!scanA || !scanB) return "";
+    if (typeof scanA.cabalScore !== "number" || typeof scanB.cabalScore !== "number") {
+      return "Showing latest Cabal snapshots for both tokens.";
+    }
+
+    const scoreA = scanA.cabalScore;
+    const scoreB = scanB.cabalScore;
+
+    if (scoreA === scoreB) {
+      return "Both tokens have similar Cabal scores. Look at whales, CEX and project custody to decide which one feels cleaner.";
+    }
+
+    if (scoreA < scoreB) {
+      return "Token A looks cleaner on paper (lower Cabal score). Token B shows more concentrated or risky custody.";
+    }
+
+    return "Token B looks cleaner on paper (lower Cabal score). Token A shows more concentrated or risky custody.";
+  }
+
+  async function runCompare() {
+    const rawA = (compareAInput && compareAInput.value) || "";
+    const rawB = (compareBInput && compareBInput.value) || "";
+    const chainA = (compareAChain && compareAChain.value) || "eth";
+    const chainB = (compareBChain && compareBChain.value) || "eth";
+
+    if (!rawA || !rawB) {
+      setCompareStatus("Paste contract addresses for both Token A and Token B first.", "error");
+      if (compareResult) compareResult.classList.add("hidden");
+      if (compareVerdict) compareVerdict.classList.add("hidden");
+      return;
+    }
+
+    if (!isValidAddressForChain(chainA, rawA)) {
+      setCompareStatus("Token A address doesn\'t look valid for the selected chain.", "error");
+      if (compareResult) compareResult.classList.add("hidden");
+      if (compareVerdict) compareVerdict.classList.add("hidden");
+      return;
+    }
+
+    if (!isValidAddressForChain(chainB, rawB)) {
+      setCompareStatus("Token B address doesn\'t look valid for the selected chain.", "error");
+      if (compareResult) compareResult.classList.add("hidden");
+      if (compareVerdict) compareVerdict.classList.add("hidden");
+      return;
+    }
+
+    setCompareStatus("Running Cabal scans for both tokens…", "info");
+    if (compareBtn) compareBtn.disabled = true;
+
+    try {
+      const [scanA, scanB] = await Promise.all([
+        runSingleScan(rawA, chainA),
+        runSingleScan(rawB, chainB),
+      ]);
+
+      if (compareAResult) {
+        compareAResult.innerHTML = buildCompareCardHtml("Token A", scanA);
+      }
+      if (compareBResult) {
+        compareBResult.innerHTML = buildCompareCardHtml("Token B", scanB);
+      }
+      if (compareResult) compareResult.classList.remove("hidden");
+
+      const verdict = buildVerdict(scanA, scanB);
+      if (verdict && compareVerdict) {
+        compareVerdict.textContent = verdict;
+        compareVerdict.classList.remove("hidden");
+      }
+
+      setCompareStatus("Showing the latest Cabal snapshots for both tokens.", "ok");
+      updateUrlWithParams(chainA, rawA, chainB, rawB);
+    } catch (err) {
+      console.error("Compare error", err);
+      const msg =
+        (err && err.message) ||
+        "Could not load comparison data. Try again or run scans on /cabal first.";
+      setCompareStatus(msg, "error");
+      if (compareResult) compareResult.classList.add("hidden");
+      if (compareVerdict) compareVerdict.classList.add("hidden");
+    } finally {
+      if (compareBtn) compareBtn.disabled = false;
+    }
+  }
+
+  function updateUrlWithParams(chainA, tokenA, chainB, tokenB) {
+    try {
+      const url = new URL(window.location.href);
+      url.searchParams.set("chainA", chainA);
+      url.searchParams.set("tokenA", tokenA);
+      url.searchParams.set("chainB", chainB);
+      url.searchParams.set("tokenB", tokenB);
+      window.history.replaceState({}, "", url.toString());
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  function initFromUrl() {
+    try {
+      const url = new URL(window.location.href);
+      const chainA = url.searchParams.get("chainA") || "eth";
+      const chainB = url.searchParams.get("chainB") || "eth";
+      const tokenA = url.searchParams.get("tokenA") || "";
+      const tokenB = url.searchParams.get("tokenB") || "";
+
+      if (compareAChain) compareAChain.value = chainA;
+      if (compareBChain) compareBChain.value = chainB;
+      if (compareAInput) compareAInput.value = tokenA;
+      if (compareBInput) compareBInput.value = tokenB;
+
+      if (tokenA && tokenB) {
+        runCompare();
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  function initCompare() {
+    if (!compareBtn) return;
+    compareBtn.addEventListener("click", function () {
+      runCompare();
+    });
+
+    [compareAInput, compareBInput].forEach(function (input) {
+      if (!input) return;
+      input.addEventListener("keydown", function (evt) {
+        if (evt.key === "Enter") {
+          evt.preventDefault();
+          runCompare();
+        }
+      });
+    });
+  }
+
+  initCompare();
+  initFromUrl();
+})();
+</script>
+</body>
+</html>
