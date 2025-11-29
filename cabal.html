@@ -2710,6 +2710,7 @@ function renderHolders(data) {
   }
 
   
+
   function buildCompareCardHtml(summary, whichLabel) {
     if (!summary) {
       return '<div class="text-xs md:text-sm text-gray-500">No data found for this token.</div>';
@@ -2741,9 +2742,6 @@ function renderHolders(data) {
     const bridgePct = formatPercent(metrics.bridgePercent);
     const top10AdjPct = formatPercent(metrics.top10AdjustedPercent);
 
-    const lastTs = metrics.lastUpdatedTs || summary.lastScannedTs;
-    const lastStr = lastTs ? formatRelativeTime(lastTs) : "never";
-
     const safeLabel = (whichLabel || "Token").toUpperCase();
 
     const scoreText =
@@ -2751,24 +2749,26 @@ function renderHolders(data) {
 
     return (
       '<div class="border border-gray-200 rounded-lg bg-white px-3 py-2 space-y-1">' +
-        '<div class="flex items-center justify-between">' +
-          '<div class="flex flex-col">' +
-            '<span class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">' +
-              safeLabel +
-            "</span>" +
-            '<span class="font-mono text-sm md:text-base text-gray-900">' +
-              symbol +
-            "</span>" +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-600">' +
-              chainLabel +
-            "</span>" +
-          "</div>" +
-          '<div class="text-right">' +
-            '<div class="font-mono text-sm md:text-base text-gray-900">' +
-              scoreText +
+        '<div class="flex flex-col space-y-1">' +
+          '<span class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">' +
+            safeLabel +
+          "</span>" +
+          '<div class="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">' +
+            '<div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">' +
+              '<span class="font-mono text-sm md:text-base text-gray-900">' +
+                symbol +
+              "</span>" +
+              '<span class="font-mono text-[11px] md:text-xs text-gray-600">' +
+                chainLabel +
+              "</span>" +
             "</div>" +
-            '<div class="font-mono text-[11px] md:text-xs uppercase tracking-wide text-gray-500">' +
-              (alert || "No alert") +
+            '<div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">' +
+              '<span class="font-mono text-sm md:text-base text-gray-900">' +
+                scoreText +
+              "</span>" +
+              '<span class="font-mono text-[11px] md:text-xs uppercase tracking-wide text-gray-500">' +
+                (alert || "No alert") +
+              "</span>" +
             "</div>" +
           "</div>" +
         "</div>" +
@@ -2810,17 +2810,10 @@ function renderHolders(data) {
             "</span>" +
           "</div>" +
         "</div>" +
-        '<p class="mt-1 text-[11px] md:text-xs text-gray-400 italic">' +
-          "*Top 10 adjusted excludes CEX, bridge, LP and burn wallets where detected." +
-        "</p>" +
-        '<p class="mt-1 text-[11px] md:text-xs text-gray-400">' +
-          "Last scanned " +
-          lastStr +
-          "." +
-        "</p>" +
       "</div>"
     );
   }
+
 
 
   async function runCompare() {
