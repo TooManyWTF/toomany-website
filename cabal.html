@@ -2691,6 +2691,7 @@ function renderHolders(data) {
     }
   }
 
+  
   function buildCompareCardHtml(summary, whichLabel) {
     if (!summary) {
       return '<div class="text-xs md:text-sm text-gray-500">No data found for this token.</div>';
@@ -2725,73 +2726,76 @@ function renderHolders(data) {
     const lastTs = metrics.lastUpdatedTs || summary.lastScannedTs;
     const lastStr = lastTs ? formatRelativeTime(lastTs) : "never";
 
-    const safeLabel = whichLabel || "Token";
+    const safeLabel = (whichLabel || "Token").toUpperCase();
+
+    const scoreText =
+      score != null && !isNaN(score) ? String(score) + "/100" : "–";
 
     return (
       '<div class="border border-gray-200 rounded-lg bg-white px-3 py-2 space-y-1">' +
         '<div class="flex items-center justify-between">' +
           '<div class="flex flex-col">' +
-            '<span class="text-[10px] md:text-xs uppercase tracking-wide text-gray-400">' +
+            '<span class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">' +
               safeLabel +
             "</span>" +
-            '<span class="text-xs md:text-sm font-mono text-gray-900">' +
+            '<span class="font-mono text-sm md:text-base text-gray-900">' +
               symbol +
             "</span>" +
-            '<span class="text-[10px] md:text-xs text-gray-500">' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-600">' +
               chainLabel +
             "</span>" +
           "</div>" +
           '<div class="text-right">' +
-            '<div class="text-lg md:text-xl font-semibold text-gray-900">' +
-              (score != null ? String(score) : "–") +
+            '<div class="font-mono text-sm md:text-base text-gray-900">' +
+              scoreText +
             "</div>" +
-            '<div class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">' +
+            '<div class="font-mono text-[11px] md:text-xs uppercase tracking-wide text-gray-500">' +
               (alert || "No alert") +
             "</div>" +
           "</div>" +
         "</div>" +
-        '<div class="mt-2 grid grid-cols-2 gap-1.5 text-[10px] md:text-xs">' +
+        '<div class="mt-2 space-y-0.5">' +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-gray-500">Whales</span>' +
-            '<span class="font-mono text-gray-900">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Whales</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
               whalePct +
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-gray-500">Top 10*</span>' +
-            '<span class="font-mono text-gray-900">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Top 10*</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
               top10AdjPct +
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-gray-500">CEX</span>' +
-            '<span class="font-mono text-gray-900">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">CEX</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
               cexPct +
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-gray-500">Project</span>' +
-            '<span class="font-mono text-gray-900">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Project</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
               projectPct +
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-gray-500">Community</span>' +
-            '<span class="font-mono text-gray-900">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Community</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
               communityPct +
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-gray-500">Bridge</span>' +
-            '<span class="font-mono text-gray-900">' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Bridge</span>' +
+            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
               bridgePct +
             "</span>" +
           "</div>" +
         "</div>" +
-        '<p class="mt-1 text-[10px] md:text-[11px] text-gray-400 italic">' +
+        '<p class="mt-1 text-[11px] md:text-xs text-gray-400 italic">' +
           "*Top 10 adjusted excludes CEX, bridge, LP and burn wallets where detected." +
         "</p>" +
-        '<p class="mt-1 text-[10px] md:text-[11px] text-gray-400">' +
+        '<p class="mt-1 text-[11px] md:text-xs text-gray-400">' +
           "Last scanned " +
           lastStr +
           "." +
@@ -2799,6 +2803,7 @@ function renderHolders(data) {
       "</div>"
     );
   }
+
 
   async function runCompare() {
     if (!compareAInput || !compareBInput) return;
