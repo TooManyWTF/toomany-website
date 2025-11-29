@@ -143,26 +143,25 @@ const API_BASE = getApiBase();
 <section class="w-full">
   <div class="container mx-auto px-5 pb-8 md:pb-10">
     <article class="max-w-4xl font-mono text-gray-800 leading-relaxed text-base md:text-lg w-full mx-auto">
-      <!-- Dark scanner-style shell -->
       <div class="bg-gray-800 rounded-2xl shadow-xl border border-gray-200 p-4 md:p-6 space-y-5">
 
-        <!-- Compare form + results, now sitting directly on the dark card -->
-        <div class="rounded-xl bg-gray-800 p-4 md:p-5 space-y-4">
+        <!-- Compare form + results -->
+        <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-4">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-            <p class="text-xs tracking-wide uppercase text-gray-100">
+            <p class="text-xs tracking-wide uppercase text-gray-500">
               Quick compare (A vs B)
             </p>
-            <p id="compareStatus" class="text-[10px] md:text-xs text-gray-300"></p>
+            <p id="compareStatus" class="text-[10px] md:text-xs text-gray-500"></p>
           </div>
 
-          <p class="text-xs md:text-sm text-gray-100">
+          <p class="text-xs md:text-sm text-gray-600">
             Uses the same engine as the Crypto Cabal Scanner. We run a fresh scan for each side,
             then show you whales, cabal score and key custody buckets.
           </p>
 
           <!-- Token A -->
           <div class="space-y-2 mt-3">
-            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-100">
+            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-600">
               Token A
             </p>
             <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
@@ -198,7 +197,7 @@ const API_BASE = getApiBase();
 
           <!-- Token B -->
           <div class="space-y-2 mt-4">
-            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-100">
+            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-600">
               Token B
             </p>
             <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
@@ -232,9 +231,8 @@ const API_BASE = getApiBase();
             </div>
           </div>
 
-          <!-- Compare button -->
           <div class="mt-4">
-             <button
+            <button
               id="compareBtn"
               type="button"
               class="inline-flex w-full items-center justify-center rounded-full bg-black px-5 py-2.5 text-xs md:text-sm font-mono uppercase tracking-wide text-white shadow-lg hover:bg-gray-900 disabled:opacity-60 disabled:cursor-not-allowed"
@@ -243,7 +241,6 @@ const API_BASE = getApiBase();
             </button>
           </div>
 
-          <!-- Winner banner + results cards (unchanged) -->
           <div id="compareVerdict" class="mt-4 text-xs md:text-sm text-gray-100 bg-gray-900 rounded-lg px-3 py-2 hidden"></div>
 
           <div id="compareResult" class="mt-4 hidden">
@@ -264,8 +261,6 @@ const API_BASE = getApiBase();
     </article>
   </div>
 </section>
-
-
 
 <!-- FOOTER -->
 <footer class="w-full bg-gray-800">
@@ -454,6 +449,16 @@ const API_BASE = getApiBase();
       ? symbol + " · " + shortenAddress(scan.token)
       : shortenAddress(scan.token);
 
+    const fullScanUrl =
+      "/cabal?chain=" +
+      encodeURIComponent(chain) +
+      "&token=" +
+      encodeURIComponent(scan.token || "");
+
+    const tickerLabel = symbol
+      ? String(symbol).replace(/^\$/,"")
+      : "token";
+
     const score =
       typeof scan.cabalScore === "number"
         ? scan.cabalScore + "/100"
@@ -560,9 +565,19 @@ const API_BASE = getApiBase();
           lastStr +
           "." +
         "</p>" +
+        '<p class="mt-0.5 text-[11px] md:text-xs">' +
+          '<a href="' +
+            fullScanUrl +
+            '" class="underline text-gray-700 hover:text-black">' +
+            'Click to run full "' +
+            tickerLabel +
+            '" scan.' +
+          "</a>" +
+        "</p>" +
       "</div>"
     );
   }
+
 
   function buildVerdict(scanA, scanB) {
     if (!scanA || !scanB) return "";
