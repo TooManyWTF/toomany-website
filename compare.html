@@ -70,7 +70,26 @@ const API_BASE = getApiBase();
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace !important;
     }
-  </style>
+  
+
+    /* Compare card highlight */
+    .compare-card {
+      transition: background-color 150ms ease, border-color 150ms ease,
+                  box-shadow 150ms ease, transform 150ms ease;
+    }
+    .compare-card.winner {
+      background-color: #ecfdf3; /* green-50-ish */
+      border-color: #22c55e;     /* green-500 */
+      box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25);
+      transform: translateY(-2px);
+    }
+    .compare-card.loser {
+      background-color: #fef2f2; /* red-50-ish */
+      border-color: #ef4444;     /* red-500 */
+      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.15);
+      transform: translateY(0);
+    }
+</style>
 </head>
 <body class="text-gray-800">
 <!-- NAVBAR (copied from cabal.html, with Scanner link) -->
@@ -228,8 +247,8 @@ const API_BASE = getApiBase();
 
           <div id="compareResult" class="mt-4 hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div id="compareAResult" class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
-              <div id="compareBResult" class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
+              <div id="compareAResult" class="compare-card border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
+              <div id="compareBResult" class="compare-card border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
             </div>
           </div>
         </div>
@@ -307,29 +326,6 @@ const API_BASE = getApiBase();
     if (Math.abs(v) < 0.01) return v === 0 ? "0%" : "<0.01%";
     return v.toFixed(2) + "%";
   }
-
-  function formatUsd(v) {
-    if (v == null || isNaN(v)) return "–";
-    const val = Number(v);
-    const abs = Math.abs(val);
-    if (abs >= 1_000_000_000) {
-      return "$" + (val / 1_000_000_000).toFixed(2) + "B";
-    }
-    if (abs >= 1_000_000) {
-      return "$" + (val / 1_000_000).toFixed(2) + "M";
-    }
-    if (abs >= 1_000) {
-      return "$" + (val / 1_000).toFixed(2) + "K";
-    }
-    if (abs >= 1) {
-      return "$" + val.toFixed(2);
-    }
-    if (abs >= 0.01) {
-      return "$" + val.toFixed(2);
-    }
-    return "$0.00";
-  }
-
 
   function shortenAddress(addr) {
     if (!addr || typeof addr !== "string") return addr || "";
@@ -441,17 +437,10 @@ const API_BASE = getApiBase();
     const wi = scan.walletInsights || {};
     const whales = formatPercent(wi.whalePercent);
     const top10Adj = formatPercent(wi.top10AdjustedPercent);
-    const top20 = formatPercent(wi.top20Percent);
     const cex = formatPercent(wi.cexPercent);
     const proj = formatPercent(wi.projectPercent);
     const comm = formatPercent(wi.communityPercent);
     const bridge = formatPercent(wi.bridgePercent);
-    const largestTop10Usd = formatUsd(
-      wi.maxUsdTop10 != null ? wi.maxUsdTop10 : wi.top1Usd
-    );
-    const largestTop20Usd = formatUsd(
-      wi.maxUsdTop20 != null ? wi.maxUsdTop20 : wi.maxUsdTop10
-    );
 
     const lastTs =
       (scan.scanHistory &&
@@ -489,27 +478,9 @@ const API_BASE = getApiBase();
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 10*</span>' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Top 10</span>' +
             '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
               top10Adj +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 20</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top20 +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Largest wallet (Top 10)</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              largestTop10Usd +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Largest wallet (Top 20)</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              largestTop20Usd +
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
@@ -609,6 +580,27 @@ const API_BASE = getApiBase();
         compareBResult.innerHTML = buildCompareCardHtml("Token B", scanB);
       }
       if (compareResult) compareResult.classList.remove("hidden");
+
+      // Highlight winner/loser based on Cabal score (lower = cleaner)
+      if (compareAResult && compareBResult) {
+        compareAResult.classList.remove("winner", "loser");
+        compareBResult.classList.remove("winner", "loser");
+
+        const scoreA =
+          typeof scanA.cabalScore === "number" ? scanA.cabalScore : null;
+        const scoreB =
+          typeof scanB.cabalScore === "number" ? scanB.cabalScore : null;
+
+        if (scoreA != null && scoreB != null && scoreA !== scoreB) {
+          if (scoreA < scoreB) {
+            compareAResult.classList.add("winner");
+            compareBResult.classList.add("loser");
+          } else if (scoreB < scoreA) {
+            compareBResult.classList.add("winner");
+            compareAResult.classList.add("loser");
+          }
+        }
+      }
 
       const verdict = buildVerdict(scanA, scanB);
       if (verdict && compareVerdict) {
