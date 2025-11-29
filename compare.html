@@ -308,6 +308,29 @@ const API_BASE = getApiBase();
     return v.toFixed(2) + "%";
   }
 
+
+  function formatUsd(v) {
+    if (v == null || isNaN(v)) return "–";
+    const val = Number(v);
+    const abs = Math.abs(val);
+    if (abs >= 1_000_000_000) {
+      return "$" + (val / 1_000_000_000).toFixed(2) + "B";
+    }
+    if (abs >= 1_000_000) {
+      return "$" + (val / 1_000_000).toFixed(2) + "M";
+    }
+    if (abs >= 1_000) {
+      return "$" + (val / 1_000).toFixed(2) + "K";
+    }
+    if (abs >= 1) {
+      return "$" + val.toFixed(2);
+    }
+    if (abs >= 0.01) {
+      return "$" + val.toFixed(2);
+    }
+    return "$0.00";
+  }
+
   function shortenAddress(addr) {
     if (!addr || typeof addr !== "string") return addr || "";
     const v = addr.trim();
