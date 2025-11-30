@@ -2238,7 +2238,7 @@ function renderHolders(data) {
 
   function setupAdvancedToggle(button, panel, baseLabel) {
     if (!button || !panel) return;
-    let open = false;
+    let open = true;
 
     function update() {
       panel.classList.toggle("hidden", !open);
@@ -2247,7 +2247,7 @@ function renderHolders(data) {
       }
     }
 
-    // start closed
+    // start open
     open = false;
     update();
 
