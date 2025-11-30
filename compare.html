@@ -70,24 +70,7 @@ const API_BASE = getApiBase();
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace !important;
     }
-  
-    .compare-card {
-      transition: background-color 150ms ease, border-color 150ms ease,
-                  box-shadow 150ms ease, transform 150ms ease;
-    }
-    .compare-card.winner {
-      background-color: #ecfdf3;
-      border-color: #22c55e;
-      box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25);
-      transform: translateY(-2px);
-    }
-    .compare-card.loser {
-      background-color: #fef2f2;
-      border-color: #ef4444;
-      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.15);
-      transform: translateY(0);
-    }
-</style>
+  </style>
 </head>
 <body class="text-gray-800">
 <!-- NAVBAR (copied from cabal.html, with Scanner link) -->
@@ -245,8 +228,8 @@ const API_BASE = getApiBase();
 
           <div id="compareResult" class="mt-4 hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div id="compareAResult" class="compare-card border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
-              <div id="compareBResult" class="compare-card border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
+              <div id="compareAResult" class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
+              <div id="compareBResult" class="border border-gray-200 rounded-lg bg-white px-3 py-2 text-xs text-gray-700 font-mono"></div>
             </div>
           </div>
         </div>
@@ -323,29 +306,6 @@ const API_BASE = getApiBase();
     if (v == null || isNaN(v)) return "–";
     if (Math.abs(v) < 0.01) return v === 0 ? "0%" : "<0.01%";
     return v.toFixed(2) + "%";
-  }
-
-
-  function formatUsd(v) {
-    if (v == null || isNaN(v)) return "–";
-    const val = Number(v);
-    const abs = Math.abs(val);
-    if (abs >= 1_000_000_000) {
-      return "$" + (val / 1_000_000_000).toFixed(2) + "B";
-    }
-    if (abs >= 1_000_000) {
-      return "$" + (val / 1_000_000).toFixed(2) + "M";
-    }
-    if (abs >= 1_000) {
-      return "$" + (val / 1_000).toFixed(2) + "K";
-    }
-    if (abs >= 1) {
-      return "$" + val.toFixed(2);
-    }
-    if (abs >= 0.01) {
-      return "$" + val.toFixed(2);
-    }
-    return "$0.00";
   }
 
   function shortenAddress(addr) {
@@ -449,28 +409,45 @@ const API_BASE = getApiBase();
       ? symbol + " · " + shortenAddress(scan.token)
       : shortenAddress(scan.token);
 
-    const fullScanUrl =
-      "/cabal?chain=" +
-      encodeURIComponent(chain) +
-      "&token=" +
-      encodeURIComponent(scan.token || "");
-
-    const tickerLabel = symbol
-      ? String(symbol).replace(/^\$/,"")
-      : "token";
-
     const score =
       typeof scan.cabalScore === "number"
         ? scan.cabalScore + "/100"
         : "–";
+
+    let bandLabel = "";
+    let bandDotClass = "";
+    if (typeof scan.cabalScore === "number") {
+      const s = scan.cabalScore;
+      if (s <= 10) {
+        bandLabel = "EXCELLENT";
+        bandDotClass = "bg-green-500";
+      } else if (s <= 30) {
+        bandLabel = "GOOD";
+        bandDotClass = "bg-blue-400";
+      } else if (s <= 60) {
+        bandLabel = "CAUTION";
+        bandDotClass = "bg-yellow-400";
+      } else {
+        bandLabel = "WARNING";
+        bandDotClass = "bg-red-500";
+      }
+    }
+
+    const scorePill =
+      bandLabel
+        ? '<span class="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-300 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide text-gray-700">' +
+            '<span class="w-2 h-2 rounded-full ' +
+              bandDotClass +
+              ' mr-1.5"></span>' +
+            bandLabel +
+          "</span>"
+        : "";
+
     const alert = scan.alertCategory || "";
 
     const wi = scan.walletInsights || {};
     const whales = formatPercent(wi.whalePercent);
-    const top10Hold = formatPercent(wi.top10Percent);
-    const top20Hold = formatPercent(wi.top20Percent);
-    const top10TotalUsd = formatUsd(wi.top10TotalUsd);
-    const top20TotalUsd = formatUsd(wi.top20TotalUsd);
+    const top10Adj = formatPercent(wi.top10AdjustedPercent);
     const cex = formatPercent(wi.cexPercent);
     const proj = formatPercent(wi.projectPercent);
     const comm = formatPercent(wi.communityPercent);
@@ -489,9 +466,12 @@ const API_BASE = getApiBase();
         '<p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-500">' +
           whichLabel +
         "</p>" +
-        '<p class="font-mono text-sm md:text-base text-gray-900">' +
-          tokenDisplay +
-        "</p>" +
+        '<div class="flex items-center justify-between gap-2">' +
+          '<p class="font-mono text-sm md:text-base text-gray-900">' +
+            tokenDisplay +
+          "</p>" +
+          scorePill +
+        "</div>" +
         '<p class="font-mono text-[11px] md:text-xs text-gray-600">' +
           chainLabel +
         "</p>" +
@@ -512,27 +492,9 @@ const API_BASE = getApiBase();
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 10 wallets total</span>' +
+            '<span class="text-[11px] md:text-xs text-gray-600">Top 10</span>' +
             '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top10TotalUsd +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 10 wallets hold</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top10Hold +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 20 wallets total</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top20TotalUsd +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 20 wallets hold</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top20Hold +
+              top10Adj +
             "</span>" +
           "</div>" +
           '<div class="flex items-center justify-between">' +
@@ -565,19 +527,9 @@ const API_BASE = getApiBase();
           lastStr +
           "." +
         "</p>" +
-        '<p class="mt-0.5 text-[11px] md:text-xs">' +
-          '<a href="' +
-            fullScanUrl +
-            '" class="underline text-gray-700 hover:text-black">' +
-            'Click to run full "' +
-            tickerLabel +
-            '" scan.' +
-          "</a>" +
-        "</p>" +
       "</div>"
     );
   }
-
 
   function buildVerdict(scanA, scanB) {
     if (!scanA || !scanB) return "";
@@ -642,27 +594,6 @@ const API_BASE = getApiBase();
         compareBResult.innerHTML = buildCompareCardHtml("Token B", scanB);
       }
       if (compareResult) compareResult.classList.remove("hidden");
-
-      // Highlight winner/loser based on Cabal score (lower = cleaner)
-      if (compareAResult && compareBResult) {
-        compareAResult.classList.remove("winner", "loser");
-        compareBResult.classList.remove("winner", "loser");
-
-        const scoreA =
-          typeof scanA.cabalScore === "number" ? scanA.cabalScore : null;
-        const scoreB =
-          typeof scanB.cabalScore === "number" ? scanB.cabalScore : null;
-
-        if (scoreA != null && scoreB != null && scoreA !== scoreB) {
-          if (scoreA < scoreB) {
-            compareAResult.classList.add("winner");
-            compareBResult.classList.add("loser");
-          } else if (scoreB < scoreA) {
-            compareBResult.classList.add("winner");
-            compareAResult.classList.add("loser");
-          }
-        }
-      }
 
       const verdict = buildVerdict(scanA, scanB);
       if (verdict && compareVerdict) {
