@@ -111,31 +111,40 @@ const API_BASE = getApiBase();
   </div>
 </header>
 
-<!-- HERO -->
+<!-- HERO HEADER -->
 <section class="text-gray-800" style="background:#F3E7D3;">
-  <div class="container mx-auto px-5 pt-8 pb-4 md:pt-10 md:pb-6 flex flex-col md:flex-row items-center">
-    <div class="w-full md:w-7/12 lg:w-1/2 px-3 mb-6 md:mb-0">
-      <div class="inline-flex items-center rounded-full bg-gray-900/90 px-3 py-1 text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-100 space-x-1">
-        <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
-        <span>Anti-cabal</span>
-        <span>•</span>
-        <span>Compare two tokens</span>
-      </div>
+  <div class="container mx-auto px-5 pt-8 pb-0 md:pt-0 md:pb-0 flex flex-col md:flex-row items-center">
 
-      <h1 class="font-mono font-bold text-3xl md:text-5xl mt-4 mb-4 text-gray-900">
-        Cabal <span class="bg-black text-white px-2">Compare</span> Tool
+    <div class="w-full md:w-7/12 lg:w-1/2 px-3 mb-10 md:mb-0">
+          <div class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 space-x-1">
+  <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  <span>Anti-cabal</span>&nbsp;
+  <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  &nbsp;<span>Rug-proof</span>&nbsp;
+   <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  &nbsp;<span>No tax</span>
+</div>
+
+      <h1 class="font-mono font-bold text-3xl md:text-5xl mt-4 mb-6 text-gray-900">
+        Find a Winner with the <span class="bg-black text-white px-2">Cabal</span> Compare Tool &trade;
       </h1>
-      <p class="font-mono text-sm md:text-base text-gray-700">
-        Paste any two contracts and see which one has nastier cabal fingerprints &mdash;
-        whales, CEX custody, bridge wallets and more.
-      </p>
+
+   <!-- CTA ROW -->
+<div class="flex flex-wrap items-center gap-3 mb-0">
+            <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
+              0x95C1CFD6Ed4155b263698E2873814c128eD219b0
+            </code>
+          </div>
+
+          
     </div>
 
-    <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
-      <img src="images/exposethem.png"
-           class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
-           alt="Expose them graphic" />
-    </div>
+   <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
+  <img src="images/exposethem.png"
+       class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
+       alt="TOO Logo" />
+</div>
+
   </div>
 </section>
 
@@ -143,22 +152,21 @@ const API_BASE = getApiBase();
 <section class="w-full">
   <div class="container mx-auto px-5 pb-8 md:pb-10">
     <article class="max-w-4xl font-mono text-gray-800 leading-relaxed text-base md:text-lg w-full mx-auto">
-      <div class="bg-gray-800 rounded-2xl shadow-xl border border-gray-200 p-4 md:p-6 space-y-5">
+      <div class="bg-gray-800 rounded-2xl shadow-xl p-4 md:p-6 space-y-5">
 
         <!-- Compare form + results -->
-        <div class="border border-gray-200 rounded-xl bg-gray-800 p-4 md:p-5 space-y-4">
+        <div class="bg-gray-800 p-2 md:p-2 space-y-2">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-            <p class="text-xs tracking-wide uppercase text-gray-500">
+            <p class="text-xs tracking-wide uppercase text-gray-200">
               Quick compare (A vs B)
             </p>
-            <p id="compareStatus" class="text-[10px] md:text-xs text-gray-500"></p>
+            <p id="compareStatus" class="text-[10px] md:text-xs text-gray-200"></p>
           </div>
 
-          <p class="text-xs md:text-sm text-gray-600">
-            Uses the same engine as the Crypto Cabal Scanner. We run a fresh scan for each side,
-            then show you whales, cabal score and key custody buckets.
+          <p class="text-xs md:text-sm text-gray-200">
+            Choose your chains and paste in two crypto contracts. View the Cabal Compare battle cards and find a winner!
           </p>
-          <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] md:text-xs font-mono uppercase tracking-wide text-gray-600">
+          <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] md:text-xs font-mono uppercase tracking-wide text-gray-200">
             <span class="inline-flex items-center space-x-1">
               <span class="h-2 w-2 rounded-full bg-green-500"></span>
               <span>EXCELLENT</span>
@@ -179,7 +187,7 @@ const API_BASE = getApiBase();
 
           <!-- Token A -->
           <div class="space-y-2 mt-3">
-            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-600">
+            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-200">
               Token A
             </p>
             <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
@@ -215,7 +223,7 @@ const API_BASE = getApiBase();
 
           <!-- Token B -->
           <div class="space-y-2 mt-4">
-            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-600">
+            <p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-200">
               Token B
             </p>
             <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
@@ -269,7 +277,7 @@ const API_BASE = getApiBase();
           </div>
         </div>
 
-        <div class="text-[8px] md:text-xs mt-4 text-xs text-gray-300">
+        <div class="text-[8px] md:text-xs mt-4 text-xs text-gray-200">
           <p>
             Cabal Compare &trade; runs on the Crypto Cabal Scanner &trade; engine. Too Many &trade; is not responsible for your financial decisions.
           </p>
