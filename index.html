@@ -745,5 +745,56 @@ And they name it <span class="font-bold">$too many</span>.
   })();
 </script>
 
+<script>
+  (function () {
+    var tokenAInput = document.getElementById("home-compare-token-a");
+    var tokenBInput = document.getElementById("home-compare-token-b");
+    var chainASelect = document.getElementById("home-compare-chain-a");
+    var chainBSelect = document.getElementById("home-compare-chain-b");
+    var compareButton = document.getElementById("home-compare-run");
+
+    if (!tokenAInput || !tokenBInput || !chainASelect || !chainBSelect || !compareButton) {
+      return;
+    }
+
+    function goToCompare() {
+      var tokenA = (tokenAInput.value || "").trim();
+      var tokenB = (tokenBInput.value || "").trim();
+      var chainA = (chainASelect.value || "eth").toLowerCase();
+      var chainB = (chainBSelect.value || "eth").toLowerCase();
+
+      if (!tokenA || !tokenB) {
+        return; // you can swap this for an alert if you want
+      }
+
+      var params = new URLSearchParams();
+      params.set("tokenA", tokenA);
+      params.set("chainA", chainA);
+      params.set("tokenB", tokenB);
+      params.set("chainB", chainB);
+
+      // This will hit https://toomany.wtf/compare with A/B prefilled
+      window.location.href = "/compare?" + params.toString();
+    }
+
+    compareButton.addEventListener("click", goToCompare);
+
+    tokenAInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        goToCompare();
+      }
+    });
+
+    tokenBInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        goToCompare();
+      }
+    });
+  })();
+</script>
+
+
 </body>
 </html>
