@@ -521,7 +521,7 @@ const API_BASE = getApiBase();
         : "";
 
     const wi = scan.walletInsights || {};
-    const whales = formatPercent(wi.whalePercent);
+        const whales = typeof wi.whaleCount === "number" ? String(wi.whaleCount) : "–";
     const top10Hold = formatPercent(wi.top10Percent);
     const top20Hold = formatPercent(wi.top20Percent);
     const top10TotalUsd = formatUsd(wi.top10TotalUsd);
@@ -732,9 +732,13 @@ const API_BASE = getApiBase();
       updateUrlWithParams(chainA, rawA, chainB, rawB);
     } catch (err) {
       console.error("Compare error", err);
-      const msg =
+      let msg =
         (err && err.message) ||
         "Could not load comparison data. Try again or run scans on /cabal first.";
+      if (err && err.httpStatus === 500) {
+        msg =
+          "Our on-chain data provider returned an internal error while fetching top holders. Please try again in a few minutes.";
+      }
       setCompareStatus(msg, "error");
       if (compareResult) compareResult.classList.add("hidden");
       if (compareVerdict) compareVerdict.classList.add("hidden");
