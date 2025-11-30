@@ -411,8 +411,106 @@
               buy on uniswap
             </a>
           </div>
-        </div>
+		  
+		  <!-- QUICK COMPARE (A VS B) -->
+<div class="w-full bg-gray-800 text-white rounded-xl p-5 md:p-6 space-y-4 mt-4">
+  <div>
+    <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400 mb-1">
+      QUICK COMPARE (A VS B)
+    </p>
+    <p class="font-mono text-xs md:text-sm text-gray-200">
+      Choose your chains and paste two token contracts. View the Cabal Compare Battle Cards ™.
+    </p>
+  </div>
 
+  <!-- Legend -->
+  <div class="flex flex-wrap items-center gap-4 text-xs md:text-sm font-mono">
+    <div class="flex items-center gap-1">
+      <span class="h-2 w-2 rounded-full bg-green-400"></span>
+      <span>EXCELLENT</span>
+    </div>
+    <div class="flex items-center gap-1">
+      <span class="h-2 w-2 rounded-full bg-blue-400"></span>
+      <span>GOOD</span>
+    </div>
+    <div class="flex items-center gap-1">
+      <span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+      <span>CAUTION</span>
+    </div>
+    <div class="flex items-center gap-1">
+      <span class="h-2 w-2 rounded-full bg-red-500"></span>
+      <span>WARNING</span>
+    </div>
+  </div>
+
+  <!-- TOKEN A -->
+  <div class="space-y-2">
+    <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-300">
+      TOKEN A
+    </p>
+    <input
+      id="home-compare-token-a"
+      type="text"
+      class="w-full rounded-full bg-green-50 border border-green-100 px-4 py-3 text-sm md:text-base font-mono placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-300"
+      placeholder="Select chain and paste contract"
+    />
+    <select
+      id="home-compare-chain-a"
+      class="w-full rounded-full border border-gray-300 bg-white px-4 py-3 text-xs md:text-sm font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-300"
+    >
+      <option value="eth" selected>Ethereum</option>
+      <option value="sol">Solana</option>
+      <option value="monad">Monad</option>
+      <option value="base">Base</option>
+      <option value="bsc">BNB Chain</option>
+      <option value="polygon">Polygon</option>
+      <option value="avax">Avalanche</option>
+      <option value="arb">Arbitrum</option>
+      <option value="op">Optimism</option>
+    </select>
+  </div>
+
+  <!-- TOKEN B -->
+  <div class="space-y-2">
+    <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-300">
+      TOKEN B
+    </p>
+    <input
+      id="home-compare-token-b"
+      type="text"
+      class="w-full rounded-full bg-green-50 border border-green-100 px-4 py-3 text-sm md:text-base font-mono placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-300"
+      placeholder="Select chain and paste contract"
+    />
+    <select
+      id="home-compare-chain-b"
+      class="w-full rounded-full border border-gray-300 bg-white px-4 py-3 text-xs md:text-sm font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-gray-300"
+    >
+      <option value="eth" selected>Ethereum</option>
+      <option value="sol">Solana</option>
+      <option value="monad">Monad</option>
+      <option value="base">Base</option>
+      <option value="bsc">BNB Chain</option>
+      <option value="polygon">Polygon</option>
+      <option value="avax">Avalanche</option>
+      <option value="arb">Arbitrum</option>
+      <option value="op">Optimism</option>
+    </select>
+  </div>
+
+  <!-- Compare button -->
+  <div>
+    <button
+      id="home-compare-run"
+      type="button"
+      class="w-full rounded-full bg-black text-white font-mono text-xs md:text-sm uppercase tracking-wide px-5 py-3 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
+    >
+      Compare
+    </button>
+  </div>
+</div>
+
+		   
+        </div>
       </div>
     </section>
 
