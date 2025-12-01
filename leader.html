@@ -1,0 +1,703 @@
+<script>
+// Auto-detect environment (local vs deployed)
+// Return just the origin/base URL, NOT including /api.
+// The rest of the code always appends "/api/..." on top of this.
+function getApiBase() {
+  const host = window.location.hostname;
+
+  // Local dev via `wrangler dev`
+  if (host === "127.0.0.1" || host === "localhost") {
+    return "http://127.0.0.1:8787";
+  }
+  // If opened directly from the filesystem, assume local dev worker
+  if (window.location.protocol === "file:") {
+    return "http://127.0.0.1:8787";
+  }
+  // In production, use same origin
+  return "";
+}
+const API_BASE = getApiBase();
+</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VQN64SEKQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6VQN64SEKQ');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Crypto Cabal Leaderboard | Lowest Cabal Score Tokens | $TOO</title>
+  <meta name="description" content="All-time leaderboard of tokens scanned by the Crypto Cabal engine. Lower Cabal score = less cabal holder concentration." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://toomany.wtf/leaderboard" />
+  <meta property="og:title" content="Crypto Cabal Leaderboard | Lowest Cabal Score Tokens | $TOO" />
+  <meta property="og:description" content="All-time leaderboard of tokens scanned by the Crypto Cabal engine. Lower Cabal score = less cabal holder concentration." />
+  <meta property="og:image" content="https://toomany.wtf/images/fightbanner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Crypto Cabal Leaderboard | Lowest Cabal Score Tokens | $TOO" />
+  <meta name="twitter:description" content="All-time leaderboard of tokens scanned by the Crypto Cabal engine. Lower Cabal score = less cabal holder concentration." />
+  <meta name="twitter:image" content="https://toomany.wtf/images/fightbanner.png" />
+
+  <!-- Tailwind -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+  />
+
+  <style>
+    body {
+      background: #f3e7d3;
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    h1, h2, h3 {
+      line-height: 1.25 !important;
+    }
+    .font-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace !important;
+    }
+  
+    .compare-card {
+      transition: background-color 150ms ease, border-color 150ms ease,
+                  box-shadow 150ms ease, transform 150ms ease;
+    }
+    .compare-card.winner {
+      background-color: #ecfdf3;
+      border-color: #22c55e;
+      box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25);
+      transform: translateY(-2px);
+    }
+    .compare-card.loser {
+      background-color: #fef2f2;
+      border-color: #ef4444;
+      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.15);
+      transform: translateY(0);
+    }
+</style>
+</head>
+<body class="text-gray-800">
+<!-- NAVBAR (copied from cabal.html, with Scanner link) -->
+<header class="w-full border-b border-gray-200" style="background: rgb(255, 255, 255);">
+  <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-3 md:py-4">
+    <a href="/" class="flex items-center space-x-2">
+      <img src="images/transparentlogo.png" class="h-10 md:h-12" alt="Too Many logo" />
+    </a>
+
+    <nav class="flex flex-wrap items-center text-center justify-center space-x-4 md:space-x-6 mt-3 md:mt-0">
+      <a href="https://toomany.wtf" class="underline font-mono">Home</a>
+      <a href="https://toomany.wtf/cabal" class="underline font-mono">Scan</a>
+      <a href="https://toomany.wtf/whitepaper" class="underline font-mono">WP</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline font-mono">X</a>
+      <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
+         target="_blank"
+         class="px-4 py-2 rounded-lg bg-black text-white font-mono shadow hover:bg-gray-900">
+        Buy
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO HEADER -->
+<section class="text-gray-800" style="background:#F3E7D3;">
+  <div class="container mx-auto px-5 pt-8 pb-0 md:pt-0 md:pb-0 flex flex-col md:flex-row items-center">
+
+    <div class="w-full md:w-7/12 lg:w-1/2 px-3 mb-10 md:mb-0">
+          <div class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 space-x-1">
+  <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  <span>Anti-cabal</span>&nbsp;
+  <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  &nbsp;<span>Rug-proof</span>&nbsp;
+   <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  &nbsp;<span>No tax</span>
+</div>
+
+      <h1 class="font-mono font-bold text-3xl md:text-5xl mt-4 mb-6 text-gray-900">
+        Two <span class="bg-black text-yellow-100 px-2">Token Battle</span> on the Cabal Compare Tool &trade;
+      </h1>
+
+   <!-- CTA ROW -->
+<div class="flex flex-wrap items-center gap-3 mb-0">
+            <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
+              0x95C1CFD6Ed4155b263698E2873814c128eD219b0
+            </code>
+          </div>
+
+          
+    </div>
+
+   <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
+  <img src="images/fight.png"
+       class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
+       alt="TOO Logo" />
+</div>
+
+  </div>
+</section>
+
+<!-- MAIN LEADERBOARD TOOL -->
+<section class="w-full">
+  <div class="container mx-auto px-0 pb-8 md:pb-10">
+    <article class="max-w-4xl font-mono text-gray-800 leading-relaxed text-base md:text-lg w-full mx-auto">
+      <div class="bg-gray-800 rounded-2xl shadow-xl p-4 md:p-6 space-y-5">
+
+        <!-- Leaderboard -->
+        <div class="bg-gray-800 p-2 md:p-2 space-y-4">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <p class="text-xs tracking-wide uppercase text-gray-200">
+              Cabal Leaderboard – lowest cabal scores
+            </p>
+            <p id="leaderboardStatus" class="text-[10px] md:text-xs text-gray-200"></p>
+          </div>
+
+          <p class="text-xs md:text-sm text-gray-200">
+            All-time leaderboard of tokens scanned by the Crypto Cabal engine. Lower Cabal score = less cabal holder concentration.
+          </p>
+
+          <!-- Legend -->
+          <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] md:text-xs mt-4 text-xs font-mono uppercase tracking-wide text-gray-200">
+            <span class="inline-flex items-center space-x-1">
+              <span class="h-2 w-2 rounded-full bg-green-500"></span>
+              <span>EXCELLENT</span>
+            </span>
+            <span class="inline-flex items-center space-x-1">
+              <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+              <span>GOOD</span>
+            </span>
+            <span class="inline-flex items-center space-x-1">
+              <span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+              <span>CAUTION</span>
+            </span>
+            <span class="inline-flex items-center space-x-1">
+              <span class="h-2 w-2 rounded-full bg-red-500"></span>
+              <span>WARNING</span>
+            </span>
+          </div>
+
+          <!-- Filters -->
+          <div class="mt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <div>
+                <label for="leaderboardChain" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-300 mb-1">
+                  Chain
+                </label>
+                <select
+                  id="leaderboardChain"
+                  class="w-40 px-3 py-2 rounded-full border border-gray-200 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+                >
+                  <option value="all">All chains</option>
+                  <option value="eth">Ethereum</option>
+                  <option value="sol">Solana</option>
+                  <option value="monad">Monad</option>
+                  <option value="base">Base</option>
+                  <option value="bsc">BNB Chain</option>
+                  <option value="polygon">Polygon</option>
+                  <option value="avalanche">Avalanche</option>
+                  <option value="arbitrum">Arbitrum</option>
+                  <option value="optimism">Optimism</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="leaderboardSort" class="block text-[10px] md:text-xs uppercase tracking-wide text-gray-300 mb-1">
+                Sort
+              </label>
+              <select
+                id="leaderboardSort"
+                class="w-44 px-3 py-2 rounded-full border border-gray-200 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
+              >
+                <option value="scoreAsc">Lowest Cabal score first</option>
+                <option value="scoreDesc">Highest Cabal score first</option>
+                <option value="recent">Most recently scanned</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="mt-4 bg-gray-900 rounded-lg border border-gray-700 overflow-x-auto">
+            <table class="min-w-full text-[11px] md:text-xs text-gray-100">
+              <thead>
+                <tr class="bg-gray-900 border-b border-gray-700">
+                  <th class="px-3 py-2 text-left font-semibold">#</th>
+                  <th class="px-3 py-2 text-left font-semibold">Token</th>
+                  <th class="px-3 py-2 text-left font-semibold">Chain</th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Cabal score</th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Whales</th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Top 10%</sup></th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">CEX %</th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Project %</th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Community %</th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Bridge %</th>
+                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Last scan</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody">
+                <tr>
+                  <td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">
+                    Loading leaderboard…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mt-3 text-[10px] md:text-xs text-gray-300">
+            Leaderboard is all-time: entries reflect the best Cabal score we've recorded for each contract so far. Each contract shows at most once in the table.
+          </p>
+        </div>
+
+        <div class="text-[8px] md:text-xs mt-4 text-xs text-gray-200">
+          <p>
+            Cabal Leaderboard&trade; runs on the Crypto Cabal Scanner&trade; engine. Too Many&trade; is not responsible for your financial decisions.
+          </p>
+        </div>
+
+      </div>
+    </article>
+  </div>
+</section>
+<div style="text-align:center;">
+    <center><img src="images/transparentlogo.png" alt="Too Many Rugs Meme" width="400"></center>
+</div>
+
+<!-- FOOTER -->
+<footer class="w-full bg-gray-800">
+  <div class="container mx-auto flex justify-center text-center py-4 px-4">
+    <h1 class="font-mono text-white text-base md:text-xl">
+      toomany.wtf | toomanywtf (at) gmail
+    </h1>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const PUBLIC_API_KEY = "hfkdEJODJEOFKoekdoekl8763djEwrangler";
+
+  const leaderboardBody = document.getElementById("leaderboardBody");
+  const chainFilter = document.getElementById("leaderboardChain");
+  const sortSelect = document.getElementById("leaderboardSort");
+  const statusEl = document.getElementById("leaderboardStatus");
+
+  let rawEntries = [];
+
+  function setStatus(message, type) {
+    if (!statusEl) return;
+    statusEl.textContent = message || "";
+    let baseClass = "text-[10px] md:text-xs";
+    if (type === "error") {
+      statusEl.className = baseClass + " text-red-400";
+    } else if (type === "ok") {
+      statusEl.className = baseClass + " text-green-400";
+    } else {
+      statusEl.className = baseClass + " text-gray-400";
+    }
+  }
+
+  function formatPercent(v) {
+    if (v == null || v === "" || isNaN(Number(v))) return "–";
+    const n = Number(v);
+    if (Math.abs(n) < 0.01) return n === 0 ? "0%" : "<0.01%";
+    return n.toFixed(2) + "%";
+  }
+
+  function shortenAddress(addr) {
+    if (!addr || typeof addr !== "string") return addr || "";
+    const v = addr.trim();
+    if (v.length <= 12) return v;
+    return v.slice(0, 6) + "…" + v.slice(-4);
+  }
+
+  function formatRelativeTime(ts) {
+    if (!ts) return "";
+    let ms;
+    if (typeof ts === "number") {
+      ms = ts;
+    } else {
+      const parsed = Date.parse(ts);
+      if (isNaN(parsed)) return "";
+      ms = parsed;
+    }
+    const now = Date.now();
+    const diffMs = now - ms;
+    const diffSec = Math.floor(diffMs / 1000);
+    if (diffSec < 60) return diffSec + "s ago";
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return diffMin + "m ago";
+    const diffHr = Math.floor(diffMin / 60);
+    if (diffHr < 24) return diffHr + "h ago";
+    const diffDay = Math.floor(diffHr / 24);
+    return diffDay + "d ago";
+  }
+
+  function getChainLabel(chain) {
+    const c = (chain || "eth").toString().toLowerCase();
+    switch (c) {
+      case "eth":
+        return "Ethereum";
+      case "sol":
+        return "Solana";
+      case "monad":
+        return "Monad";
+      case "base":
+        return "Base";
+      case "bsc":
+        return "BNB Chain";
+      case "polygon":
+        return "Polygon";
+      case "avalanche":
+        return "Avalanche";
+      case "arbitrum":
+        return "Arbitrum";
+      case "optimism":
+        return "Optimism";
+      default:
+        return chain || "Unknown chain";
+    }
+  }
+
+  function getBandData(score) {
+    if (typeof score !== "number") {
+      return { label: "", dotClass: "", badgeClass: "" };
+    }
+    if (score <= 10) {
+      return {
+        label: "EXCELLENT",
+        dotClass: "bg-green-500",
+        badgeClass: "bg-green-950 text-green-200 border-green-500"
+      };
+    }
+    if (score <= 30) {
+      return {
+        label: "GOOD",
+        dotClass: "bg-blue-500",
+        badgeClass: "bg-blue-950 text-blue-200 border-blue-500"
+      };
+    }
+    if (score <= 60) {
+      return {
+        label: "CAUTION",
+        dotClass: "bg-yellow-400",
+        badgeClass: "bg-yellow-950 text-yellow-100 border-yellow-400"
+      };
+    }
+    return {
+      label: "WARNING",
+      dotClass: "bg-red-500",
+      badgeClass: "bg-red-950 text-red-200 border-red-500"
+    };
+  }
+
+  function getScore(entry) {
+    if (!entry || typeof entry !== "object") return null;
+    if (typeof entry.cabalScore === "number") return entry.cabalScore;
+    if (typeof entry.score === "number") return entry.score;
+    if (typeof entry.scoreMin === "number") return entry.scoreMin;
+    if (typeof entry.score_max === "number") return entry.score_max;
+    return null;
+  }
+
+  function getTimestamp(entry) {
+    if (!entry || typeof entry !== "object") return null;
+    const t =
+      entry.lastScanAt ||
+      entry.lastScanTs ||
+      entry.lastScan ||
+      entry.timestamp ||
+      entry.last_seen_at;
+    if (!t) return null;
+    if (typeof t === "number") return t;
+    const parsed = Date.parse(t);
+    return isNaN(parsed) ? null : parsed;
+  }
+
+  function dedupeEntries(entries) {
+    const seen = new Set();
+    const out = [];
+    for (const e of entries || []) {
+      if (!e || typeof e !== "object") continue;
+      const token =
+        (e.token || e.address || e.tokenAddress || e.contract || "").toString().toLowerCase();
+      if (!token) continue;
+      const chain = (e.chain || "eth").toString().toLowerCase();
+      const key = chain + ":" + token;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(e);
+    }
+    return out;
+  }
+
+  function buildRowHtml(entry, rank) {
+    const chainRaw = entry.chain || "eth";
+    const chain = chainRaw.toString().toLowerCase();
+    const chainLabel = getChainLabel(chain);
+
+    const tokenAddr =
+      entry.token || entry.address || entry.tokenAddress || entry.contract || "";
+    const symbol = entry.symbol || entry.tokenSymbol || "";
+    const name = entry.name || entry.tokenName || "";
+
+    const symbolClean = symbol ? String(symbol).replace(/^\$/,"").toUpperCase() : "";
+    const mainLabel = symbolClean ? "$" + symbolClean : shortenAddress(tokenAddr);
+    const subLabel = symbolClean ? shortenAddress(tokenAddr) : name || "";
+
+    const scoreVal = getScore(entry);
+    const scoreDisplay = typeof scoreVal === "number" ? String(scoreVal) : "–";
+    const band = getBandData(scoreVal);
+
+    const whales =
+      entry.whalesPercentOfSupply ?? entry.whalePercent ?? entry.whalePct ?? entry.whalesPct;
+    const top10 =
+      entry.top10AdjustedPercent ?? entry.top10Percent ?? entry.top10_pct ?? entry.top10Pct;
+    const cex =
+      entry.cexPercentOfSupply ?? entry.cexPercent ?? entry.cexPct ?? entry.cex_pct;
+    const proj =
+      entry.projectPercentOfSupply ??
+      entry.projectPercent ??
+      entry.devPercent ??
+      entry.teamPercent ??
+      entry.team_pct;
+    const comm =
+      entry.communityPercentOfSupply ?? entry.communityPercent ?? entry.communityPct;
+    const bridge =
+      entry.bridgePercentOfSupply ?? entry.bridgePercent ?? entry.bridgePct;
+
+    const ts = getTimestamp(entry);
+    const rel = ts ? formatRelativeTime(ts) : "–";
+
+    const fullScanUrl =
+      "/cabal?chain=" +
+      encodeURIComponent(chain) +
+      "&token=" +
+      encodeURIComponent(tokenAddr);
+
+    let html = '<tr class="border-b border-gray-800">';
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs text-gray-400">' +
+      rank +
+      "</td>";
+
+    html += '<td class="px-3 py-2 align-middle text-[11px] md:text-xs">';
+    html +=
+      '<a href="' +
+      fullScanUrl +
+      '" class="text-gray-50 hover:text-white underline">' +
+      mainLabel +
+      "</a>";
+    if (subLabel) {
+      html +=
+        '<div class="text-[10px] md:text-[11px] text-gray-400">' +
+        subLabel +
+        "</div>";
+    }
+    html += "</td>";
+
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs text-gray-100">' +
+      chainLabel +
+      "</td>";
+
+    html += '<td class="px-3 py-2 align-middle text-[11px] md:text-xs">';
+    html += '<div class="flex items-center space-x-2">';
+    html +=
+      '<span class="font-mono text-[11px] md:text-sm text-gray-50">' +
+      scoreDisplay +
+      "</span>";
+    if (band && band.label) {
+      html +=
+        '<span class="inline-flex items-center px-1.5 py-0.5 rounded-full border ' +
+        band.badgeClass +
+        ' text-[9px] md:text-[10px]">';
+      if (band.dotClass) {
+        html +=
+          '<span class="h-1.5 w-1.5 rounded-full ' + band.dotClass + ' mr-1"></span>';
+      }
+      html += band.label + "</span>";
+    }
+    html += "</div>";
+    html += "</td>";
+
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(whales) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(top10) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(cex) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(proj) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(comm) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(bridge) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs text-gray-300">' +
+      rel +
+      "</td>";
+
+    html += "</tr>";
+    return html;
+  }
+
+  function render() {
+    if (!leaderboardBody) return;
+
+    let entries = rawEntries.slice();
+    if (!entries.length) {
+      leaderboardBody.innerHTML =
+        '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
+      return;
+    }
+
+    const chainVal = chainFilter ? chainFilter.value : "all";
+    if (chainVal && chainVal !== "all") {
+      const chainLower = chainVal.toLowerCase();
+      entries = entries.filter(function (e) {
+        return (e.chain || "eth").toString().toLowerCase() === chainLower;
+      });
+    }
+
+    // Deduplicate by (chain, token) so each contract shows at most once.
+    entries = dedupeEntries(entries);
+
+    const sortVal = sortSelect ? sortSelect.value : "scoreAsc";
+    entries.sort(function (a, b) {
+      const sa = getScore(a);
+      const sb = getScore(b);
+      const ta = getTimestamp(a) || 0;
+      const tb = getTimestamp(b) || 0;
+
+      if (sortVal === "scoreDesc") {
+        if (sa == null && sb == null) return 0;
+        if (sa == null) return 1;
+        if (sb == null) return -1;
+        if (sa !== sb) return sb - sa;
+        return tb - ta;
+      } else if (sortVal === "recent") {
+        return tb - ta;
+      } else {
+        // scoreAsc (lowest first)
+        if (sa == null && sb == null) return 0;
+        if (sa == null) return 1;
+        if (sb == null) return -1;
+        if (sa !== sb) return sa - sb;
+        return tb - ta;
+      }
+    });
+
+    const totalAvailable = entries.length;
+    const limited = entries.slice(0, 100); // show at most 100 unique contracts
+
+    let rowsHtml = "";
+    for (let i = 0; i < limited.length; i++) {
+      rowsHtml += buildRowHtml(limited[i], i + 1);
+    }
+    leaderboardBody.innerHTML = rowsHtml;
+    setStatus(
+      "Showing " + limited.length + " tokens (" + totalAvailable + " unique in stats).",
+      "ok"
+    );
+  }
+
+  async function init() {
+    if (!leaderboardBody) return;
+
+    setStatus("Loading leaderboard…", "info");
+    leaderboardBody.innerHTML =
+      '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">Loading leaderboard…</td></tr>';
+
+    try {
+      const url =
+        API_BASE +
+        "/api/stats/leaderboard?limit=200&key=" +
+        encodeURIComponent(PUBLIC_API_KEY);
+
+      const res = await fetch(url, { method: "GET" });
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (e) {
+        data = null;
+      }
+
+      if (!res.ok || !data) {
+        const msg =
+          (data && (data.error || data.message)) ||
+          "Failed to load leaderboard.";
+        throw new Error(msg);
+      }
+
+      const list = Array.isArray(data.leaderboard)
+        ? data.leaderboard
+        : Array.isArray(data.entries)
+        ? data.entries
+        : Array.isArray(data.tokens)
+        ? data.tokens
+        : [];
+
+      rawEntries = list.filter(function (x) {
+        return !!x;
+      });
+
+      if (!rawEntries.length) {
+        leaderboardBody.innerHTML =
+          '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
+        setStatus("No leaderboard data yet.", "info");
+        return;
+      }
+
+      render();
+    } catch (err) {
+      console.error("Leaderboard error", err);
+      const msg =
+        (err && err.message) || "Failed to load leaderboard.";
+      leaderboardBody.innerHTML =
+        '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-red-400">' +
+        msg +
+        "</td></tr>";
+      setStatus(msg, "error");
+    }
+  }
+
+  if (chainFilter) {
+    chainFilter.addEventListener("change", render);
+  }
+  if (sortSelect) {
+    sortSelect.addEventListener("change", render);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
