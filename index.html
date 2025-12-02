@@ -94,7 +94,6 @@
 <body>
 
 <!-- NAVBAR -->
-<!-- NAVBAR -->
 <header class="w-full bg-white border-b border-gray-200">
   <div class="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
 
@@ -108,8 +107,6 @@
       id="mobile-menu-toggle"
       class="md:hidden text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 p-2"
       aria-label="Toggle navigation"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
     >
       <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -120,27 +117,64 @@
     <!-- Desktop Nav -->
     <nav class="hidden md:flex items-center space-x-4 md:space-x-6 font-mono">
       <a href="#how-to-buy" class="underline">How to Buy</a>
-      <a href="https://toomany.wtf/cabal" class="underline">Scan</a>
-      <a href="https://toomany.wtf/compare" class="underline">Compare</a>
-	  <a href="https://toomany.wtf/leader" class="underline">Leaderboard</a>
-      <a href="https://toomany.wtf/whitepaper.html" class="underline">WP</a>
-      <a href="https://x.com/toomanywtf" class="underline" target="_blank">X</a>
+      <a href="/cabal" class="underline">Cabal Scanner</a>
+      <a href="/compare" class="underline">Crypto Compare</a>
+	  <a href="/leader" class="underline">Leaderboard</a>
+      <a href="/whitepaper.html" class="underline">Whitepaper</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
     </nav>
   </div>
 
-  <!-- Mobile dropdown (slide-down) -->
+  <!-- MOBILE DROPDOWN -->
   <nav
     id="mobile-menu"
-    class="md:hidden flex flex-col px-4 font-mono bg-white border-t border-gray-200 overflow-hidden transition-all duration-300 max-h-0 pt-0 pb-0 space-y-0"
+    class="md:hidden overflow-hidden bg-white border-t border-gray-200 font-mono transition-all duration-300"
+    style="max-height: 0;"
   >
-    <a href="#how-to-buy" class="underline">How to Buy</a>
-    <a href="https://toomany.wtf/cabal" class="underline">Scan</a>
-    <a href="https://toomany.wtf/compare" class="underline">Compare</a>
-	 <a href="https://toomany.wtf/leader" class="underline">Leaderboard</a>
-    <a href="https://toomany.wtf/whitepaper.html" class="underline">WP</a>
-    <a href="https://x.com/toomanywtf" class="underline" target="_blank">X</a>
+    <div class="flex flex-col px-4 py-2 space-y-3">
+      <a href="#how-to-buy" class="underline">How to Buy</a>
+      <a href="/cabal" class="underline">Cabal Scanner</a>
+      <a href="/compare" class="underline">Crypto Compare</a>
+	  <a href="/leader" class="underline">Leaderboard</a>
+      <a href="/whitepaper.html" class="underline">Whitepaper</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
+    </div>
   </nav>
 </header>
+
+<script>
+  (function () {
+    var toggle = document.getElementById("mobile-menu-toggle");
+    var menu = document.getElementById("mobile-menu");
+
+    if (!toggle || !menu) return;
+
+    var isOpen = false;
+
+    toggle.addEventListener("click", function () {
+      isOpen = !isOpen;
+
+      if (isOpen) {
+        // Measure content height & animate open
+        var contentHeight = menu.scrollHeight;
+        menu.style.maxHeight = contentHeight + "px";
+      } else {
+        // Collapse
+        menu.style.maxHeight = "0px";
+      }
+    });
+
+    // Close on link tap
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        menu.style.maxHeight = "0px";
+        isOpen = false;
+      });
+    });
+
+  })();
+</script>
+
 
 <script>
   (function () {
