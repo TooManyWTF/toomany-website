@@ -90,25 +90,51 @@ const API_BASE = getApiBase();
 </style>
 </head>
 <body class="text-gray-800">
-<!-- NAVBAR (copied from cabal.html, with Scanner link) -->
-<header class="w-full border-b border-gray-200" style="background: rgb(255, 255, 255);">
-  <div class="container mx-auto flex flex-wrap items-center justify-between px-4 py-3 md:py-4">
+<!-- NAVBAR -->
+<header class="w-full bg-white border-b border-gray-200">
+  <div class="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
+
+    <!-- Logo -->
     <a href="/" class="flex items-center space-x-2">
       <img src="images/transparentlogo.png" class="h-10 md:h-12" alt="Too Many logo" />
     </a>
 
-    <nav class="flex flex-wrap items-center text-center justify-center space-x-4 md:space-x-6 mt-3 md:mt-0">
-      <a href="https://toomany.wtf" class="underline font-mono">Home</a>
-      <a href="https://toomany.wtf/cabal" class="underline font-mono">Scan</a>
-      <a href="https://toomany.wtf/whitepaper" class="underline font-mono">WP</a>
-      <a href="https://x.com/toomanywtf" target="_blank" class="underline font-mono">X</a>
-      <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
-         target="_blank"
-         class="px-4 py-2 rounded-lg bg-black text-white font-mono shadow hover:bg-gray-900">
-        Buy
-      </a>
+    <!-- Mobile hamburger -->
+    <button
+      id="mobile-menu-toggle"
+      class="md:hidden text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 p-2"
+      aria-label="Toggle navigation"
+    >
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center space-x-4 md:space-x-6 font-mono">
+      <a href="/" class="underline">Home</a>
+      <a href="/cabal" class="underline">Cabal Scanner</a>
+	  <a href="/leader" class="underline">Leaderboard</a>
+      <a href="/whitepaper.html" class="underline">Whitepaper</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
     </nav>
   </div>
+
+  <!-- MOBILE DROPDOWN -->
+  <nav
+    id="mobile-menu"
+    class="md:hidden overflow-hidden bg-white border-t border-gray-200 font-mono transition-all duration-300"
+    style="max-height: 0;"
+  >
+    <div class="flex flex-col px-4 py-2 space-y-3">
+      <a href="/" class="underline">Home</a>
+      <a href="/cabal" class="underline">Cabal Scanner</a>
+	  <a href="/leader" class="underline">Leaderboard</a>
+      <a href="/whitepaper.html" class="underline">Whitepaper</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
+    </div>
+  </nav>
 </header>
 
 <!-- HERO HEADER -->
