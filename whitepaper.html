@@ -101,6 +101,39 @@
   </nav>
 </header>
 
+<script>
+  (function () {
+    var toggle = document.getElementById("mobile-menu-toggle");
+    var menu = document.getElementById("mobile-menu");
+
+    if (!toggle || !menu) return;
+
+    var isOpen = false;
+
+    toggle.addEventListener("click", function () {
+      isOpen = !isOpen;
+
+      if (isOpen) {
+        // Measure content height & animate open
+        var contentHeight = menu.scrollHeight;
+        menu.style.maxHeight = contentHeight + "px";
+      } else {
+        // Collapse
+        menu.style.maxHeight = "0px";
+      }
+    });
+
+    // Close on link tap
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        menu.style.maxHeight = "0px";
+        isOpen = false;
+      });
+    });
+
+  })();
+</script>
+
 <!-- HERO HEADER -->
 <section class="text-gray-800" style="background:#F3E7D3;">
   <div class="container mx-auto px-5 py-8 md:py-10 flex flex-col md:flex-row items-center">
