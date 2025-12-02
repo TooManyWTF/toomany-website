@@ -294,174 +294,410 @@ const API_BASE = getApiBase();
 
   let rawEntries = [];
 
-  function setStatus(msg, type) {
-    statusEl.textContent = msg || "";
-    statusEl.className = "text-[10px] md:text-xs " +
-      (type === "error"
-        ? "text-red-400"
-        : type === "ok"
-        ? "text-green-400"
-        : "text-gray-400");
+  function setStatus(message, type) {
+    if (!statusEl) return;
+    statusEl.textContent = message || "";
+    let baseClass = "text-[10px] md:text-xs";
+    if (type === "error") {
+      statusEl.className = baseClass + " text-red-400";
+    } else if (type === "ok") {
+      statusEl.className = baseClass + " text-green-400";
+    } else {
+      statusEl.className = baseClass + " text-gray-400";
+    }
   }
 
   function formatPercent(v) {
-    if (v == null || isNaN(Number(v))) return "–";
+    if (v == null || v === "" || isNaN(Number(v))) return "–";
     const n = Number(v);
     if (Math.abs(n) < 0.01) return n === 0 ? "0%" : "<0.01%";
     return n.toFixed(2) + "%";
   }
 
-  function shortenAddress(a) {
-    if (!a) return "";
-    return a.slice(0, 6) + "…" + a.slice(-4);
+  function shortenAddress(addr) {
+    if (!addr || typeof addr !== "string") return addr || "";
+    const v = addr.trim();
+    if (v.length <= 12) return v;
+    return v.slice(0, 6) + "…" + v.slice(-4);
   }
 
   function formatRelativeTime(ts) {
     if (!ts) return "";
+    let ms;
+    if (typeof ts === "number") {
+      ms = ts;
+    } else {
+      const parsed = Date.parse(ts);
+      if (isNaN(parsed)) return "";
+      ms = parsed;
+    }
     const now = Date.now();
-    const diff = now - ts;
-    const s = Math.floor(diff / 1000);
-    if (s < 60) return s + "s ago";
-    const m = Math.floor(s / 60);
-    if (m < 60) return m + "m ago";
-    const h = Math.floor(m / 60);
-    if (h < 24) return h + "h ago";
-    return Math.floor(h / 24) + "d ago";
+    const diffMs = now - ms;
+    const diffSec = Math.floor(diffMs / 1000);
+    if (diffSec < 60) return diffSec + "s ago";
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return diffMin + "m ago";
+    const diffHr = Math.floor(diffMin / 60);
+    if (diffHr < 24) return diffHr + "h ago";
+    const diffDay = Math.floor(diffHr / 24);
+    return diffDay + "d ago";
   }
 
-  function getBand(score) {
-    if (score == null) return { color: "", label: "" };
-
-    if (score <= 10)
-      return { color: "bg-green-500", label: "EXCELLENT" };
-    if (score <= 30)
-      return { color: "bg-blue-500", label: "GOOD" };
-    if (score <= 60)
-      return { color: "bg-yellow-400", label: "CAUTION" };
-    return { color: "bg-red-500", label: "WARNING" };
+  function getChainLabel(chain) {
+    const c = (chain || "eth").toString().toLowerCase();
+    switch (c) {
+      case "eth":
+        return "Ethereum";
+      case "sol":
+        return "Solana";
+      case "monad":
+        return "Monad";
+      case "base":
+        return "Base";
+      case "bsc":
+        return "BNB Chain";
+      case "polygon":
+        return "Polygon";
+      case "avalanche":
+        return "Avalanche";
+      case "arbitrum":
+        return "Arbitrum";
+      case "optimism":
+        return "Optimism";
+      default:
+        return chain || "Unknown chain";
+    }
   }
 
-  function buildRow(entry, index) {
-    const score = entry.cabalScore;
-    const band = getBand(score);
+  function getBandData(score) {
+    if (typeof score !== "number") {
+      return { label: "", dotClass: "", badgeClass: "" };
+    }
+    if (score <= 10) {
+      return {
+        label: "EXCELLENT",
+        dotClass: "bg-green-500",
+        badgeClass: "bg-green-950 text-green-200 border-green-500"
+      };
+    }
+    if (score <= 30) {
+      return {
+        label: "GOOD",
+        dotClass: "bg-blue-500",
+        badgeClass: "bg-blue-950 text-blue-200 border-blue-500"
+      };
+    }
+    if (score <= 60) {
+      return {
+        label: "CAUTION",
+        dotClass: "bg-yellow-400",
+        badgeClass: "bg-yellow-950 text-yellow-100 border-yellow-400"
+      };
+    }
+    return {
+      label: "WARNING",
+      dotClass: "bg-red-500",
+      badgeClass: "bg-red-950 text-red-200 border-red-500"
+    };
+  }
 
-    const tokenAddr = entry.token;
-    const chain = entry.chain || "eth";
-    const symbol = entry.symbol ? ("$" + entry.symbol.toUpperCase()) : shortenAddress(tokenAddr);
+  function getScore(entry) {
+    if (!entry || typeof entry !== "object") return null;
+    if (typeof entry.cabalScore === "number") return entry.cabalScore;
+    if (typeof entry.score === "number") return entry.score;
+    if (typeof entry.scoreMin === "number") return entry.scoreMin;
+    if (typeof entry.score_max === "number") return entry.score_max;
+    return null;
+  }
 
-    const whales = formatPercent(entry.whalesPercentOfSupply);
-    const top10 = formatPercent(entry.top10AdjustedPercent);
-    const cex = formatPercent(entry.cexPercentOfSupply);
-    const project = formatPercent(entry.projectPercentOfSupply);
-    const community = formatPercent(entry.communityPercentOfSupply);
-    const bridge = formatPercent(entry.bridgePercentOfSupply);
+  function getTimestamp(entry) {
+    if (!entry || typeof entry !== "object") return null;
+    const t =
+      entry.lastScanAt ||
+      entry.lastScanTs ||
+      entry.lastScan ||
+      entry.timestamp ||
+      entry.last_seen_at;
+    if (!t) return null;
+    if (typeof t === "number") return t;
+    const parsed = Date.parse(t);
+    return isNaN(parsed) ? null : parsed;
+  }
 
-    const last = formatRelativeTime(entry.lastScannedTs);
+  function dedupeEntries(entries) {
+    const seen = new Set();
+    const out = [];
+    for (const e of entries || []) {
+      if (!e || typeof e !== "object") continue;
+      const token =
+        (e.token || e.address || e.tokenAddress || e.contract || "").toString().toLowerCase();
+      if (!token) continue;
+      const chain = (e.chain || "eth").toString().toLowerCase();
+      const key = chain + ":" + token;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push(e);
+    }
+    return out;
+  }
 
-    const scanUrl =
+  function buildRowHtml(entry, rank) {
+    const chainRaw = entry.chain || "eth";
+    const chain = chainRaw.toString().toLowerCase();
+    const chainLabel = getChainLabel(chain);
+
+    const tokenAddr =
+      entry.token || entry.address || entry.tokenAddress || entry.contract || "";
+    const symbol = entry.symbol || entry.tokenSymbol || "";
+    const name = entry.name || entry.tokenName || "";
+
+    const symbolClean = symbol ? String(symbol).replace(/^\$/,"").toUpperCase() : "";
+    const mainLabel = symbolClean ? "$" + symbolClean : shortenAddress(tokenAddr);
+    const subLabel = symbolClean ? shortenAddress(tokenAddr) : name || "";
+
+    const scoreVal = getScore(entry);
+    const scoreDisplay = typeof scoreVal === "number" ? String(scoreVal) : "–";
+    const band = getBandData(scoreVal);
+
+    const whales =
+      entry.whalesPercentOfSupply ?? entry.whalePercent ?? entry.whalePct ?? entry.whalesPct;
+    const top10 =
+      entry.top10AdjustedPercent ?? entry.top10Percent ?? entry.top10_pct ?? entry.top10Pct;
+    const cex =
+      entry.cexPercentOfSupply ?? entry.cexPercent ?? entry.cexPct ?? entry.cex_pct;
+    const proj =
+      entry.projectPercentOfSupply ??
+      entry.projectPercent ??
+      entry.devPercent ??
+      entry.teamPercent ??
+      entry.team_pct;
+    const comm =
+      entry.communityPercentOfSupply ?? entry.communityPercent ?? entry.communityPct;
+    const bridge =
+      entry.bridgePercentOfSupply ?? entry.bridgePercent ?? entry.bridgePct;
+
+    const ts = getTimestamp(entry);
+    const rel = ts ? formatRelativeTime(ts) : "–";
+
+    const fullScanUrl =
       "/cabal?chain=" +
       encodeURIComponent(chain) +
       "&token=" +
       encodeURIComponent(tokenAddr);
 
-    return `
-      <tr class="border-b border-gray-800">
-        <td class="px-3 py-2 text-gray-400">${index}</td>
-        <td class="px-3 py-2">
-          <a href="${scanUrl}" class="underline text-white">${symbol}</a>
-          <div class="text-gray-400 text-[10px]">${shortenAddress(tokenAddr)}</div>
-        </td>
-        <td class="px-3 py-2">${chain.toUpperCase()}</td>
-        <td class="px-3 py-2">
-          <div class="flex items-center space-x-2">
-            <span class="font-mono">${score}</span>
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] uppercase border border-gray-600 ${band.color}">
-              ${band.label}
-            </span>
-          </div>
-        </td>
-        <td class="px-3 py-2 font-mono">${whales}</td>
-        <td class="px-3 py-2 font-mono">${top10}</td>
-        <td class="px-3 py-2 font-mono">${cex}</td>
-        <td class="px-3 py-2 font-mono">${project}</td>
-        <td class="px-3 py-2 font-mono">${community}</td>
-        <td class="px-3 py-2 font-mono">${bridge}</td>
-        <td class="px-3 py-2 text-gray-400">${last}</td>
-      </tr>
-    `;
+    let html = '<tr class="border-b border-gray-800">';
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs text-gray-400">' +
+      rank +
+      "</td>";
+
+    html += '<td class="px-3 py-2 align-middle text-[11px] md:text-xs">';
+    html +=
+      '<a href="' +
+      fullScanUrl +
+      '" class="text-gray-50 hover:text-white underline">' +
+      mainLabel +
+      "</a>";
+    if (subLabel) {
+      html +=
+        '<div class="text-[10px] md:text-[11px] text-gray-400">' +
+        subLabel +
+        "</div>";
+    }
+    html += "</td>";
+
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs text-gray-100">' +
+      chainLabel +
+      "</td>";
+
+    html += '<td class="px-3 py-2 align-middle text-[11px] md:text-xs">';
+    html += '<div class="flex items-center space-x-2">';
+    html +=
+      '<span class="font-mono text-[11px] md:text-sm text-gray-50">' +
+      scoreDisplay +
+      "</span>";
+    if (band && band.label) {
+      html +=
+        '<span class="inline-flex items-center px-1.5 py-0.5 rounded-full border ' +
+        band.badgeClass +
+        ' text-[9px] md:text-[10px]">';
+      if (band.dotClass) {
+        html +=
+          '<span class="h-1.5 w-1.5 rounded-full ' + band.dotClass + ' mr-1"></span>';
+      }
+      html += band.label + "</span>";
+    }
+    html += "</div>";
+    html += "</td>";
+
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(whales) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(top10) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(cex) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(proj) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(comm) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
+      formatPercent(bridge) +
+      "</td>";
+    html +=
+      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs text-gray-300">' +
+      rel +
+      "</td>";
+
+    html += "</tr>";
+    return html;
   }
 
   function render() {
-    let list = rawEntries.slice();
+    if (!leaderboardBody) return;
 
-    // ---- filter by chain ----
-    const chainVal = (chainFilter.value || "all").toLowerCase();
-    if (chainVal !== "all") {
-      list = list.filter(e => (e.chain || "").toLowerCase() === chainVal);
+    let entries = rawEntries.slice();
+    if (!entries.length) {
+      leaderboardBody.innerHTML =
+        '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
+      return;
     }
 
-    // ---- ALWAYS sort by (latest score, timestamp) ----
-    list = list.sort((a, b) => {
-      const sa = a.cabalScore ?? Infinity;
-      const sb = b.cabalScore ?? Infinity;
-      if (sa !== sb) return sa - sb;
-      return (b.lastScannedTs || 0) - (a.lastScannedTs || 0);
+    const chainVal = chainFilter ? chainFilter.value : "all";
+    if (chainVal && chainVal !== "all") {
+      const chainLower = chainVal.toLowerCase();
+      entries = entries.filter(function (e) {
+        return (e.chain || "eth").toString().toLowerCase() === chainLower;
+      });
+    }
+
+    // Deduplicate by (chain, token) so each contract shows at most once.
+    entries = dedupeEntries(entries);
+
+    const sortVal = sortSelect ? sortSelect.value : "scoreAsc";
+    entries.sort(function (a, b) {
+      const sa = getScore(a);
+      const sb = getScore(b);
+      const ta = getTimestamp(a) || 0;
+      const tb = getTimestamp(b) || 0;
+
+      if (sortVal === "scoreDesc") {
+        if (sa == null && sb == null) return 0;
+        if (sa == null) return 1;
+        if (sb == null) return -1;
+        if (sa !== sb) return sb - sa;
+        return tb - ta;
+      } else if (sortVal === "recent") {
+        return tb - ta;
+      } else {
+        // scoreAsc (lowest first)
+        if (sa == null && sb == null) return 0;
+        if (sa == null) return 1;
+        if (sb == null) return -1;
+        if (sa !== sb) return sa - sb;
+        return tb - ta;
+      }
     });
 
-    // ---- apply sort selector ----
-    const sortMode = sortSelect.value;
-    if (sortMode === "scoreDesc") {
-      list = list.sort((a, b) => {
-        const sa = a.cabalScore ?? Infinity;
-        const sb = b.cabalScore ?? Infinity;
-        if (sa !== sb) return sb - sa;
-        return (b.lastScannedTs || 0) - (a.lastScannedTs || 0);
-      });
-    } else if (sortMode === "recent") {
-      list = list.sort((a, b) => (b.lastScannedTs || 0) - (a.lastScannedTs || 0));
+    const totalAvailable = entries.length;
+    const limited = entries.slice(0, 100); // show at most 100 unique contracts
+
+    let rowsHtml = "";
+    for (let i = 0; i < limited.length; i++) {
+      rowsHtml += buildRowHtml(limited[i], i + 1);
     }
-
-    // ---- top 100 ----
-    list = list.slice(0, 100);
-
-    leaderboardBody.innerHTML = list
-      .map((e, i) => buildRow(e, i + 1))
-      .join("");
-
-    setStatus(`Showing ${list.length} tokens`, "ok");
+    leaderboardBody.innerHTML = rowsHtml;
+    setStatus(
+      "Showing " + limited.length + " tokens (" + totalAvailable + " unique in stats).",
+      "ok"
+    );
   }
 
   async function init() {
-    setStatus("Loading…");
+    if (!leaderboardBody) return;
+
+    setStatus("Loading leaderboard…", "info");
+    leaderboardBody.innerHTML =
+      '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">Loading leaderboard…</td></tr>';
 
     try {
-      const res = await fetch(
-        `/api/stats/leaderboard?limit=500&key=${encodeURIComponent(PUBLIC_API_KEY)}`
-      );
-      const data = await res.json();
+      const url =
+        API_BASE +
+        "/api/stats/leaderboard?limit=200&key=" +
+        encodeURIComponent(PUBLIC_API_KEY);
 
-      if (!res.ok || !data || !Array.isArray(data.leaderboard)) {
-        throw new Error("Invalid leaderboard response");
+      const res = await fetch(url, { method: "GET" });
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (e) {
+        data = null;
       }
 
-      rawEntries = data.leaderboard;
+      if (!res.ok || !data) {
+        const msg =
+          (data && (data.error || data.message)) ||
+          "Failed to load leaderboard.";
+        throw new Error(msg);
+      }
+
+      const list = Array.isArray(data.leaderboard)
+        ? data.leaderboard
+        : Array.isArray(data.entries)
+        ? data.entries
+        : Array.isArray(data.tokens)
+        ? data.tokens
+        : [];
+
+      rawEntries = list.filter(function (x) {
+        return !!x;
+      });
+
+      if (!rawEntries.length) {
+        leaderboardBody.innerHTML =
+          '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
+        setStatus("No leaderboard data yet.", "info");
+        return;
+      }
+
       render();
     } catch (err) {
-      console.error(err);
-      setStatus("Failed to load leaderboard", "error");
-      leaderboardBody.innerHTML = `
-        <tr><td colspan="11" class="text-center py-4 text-red-400">Failed to load leaderboard</td></tr>
-      `;
+      console.error("Leaderboard error", err);
+      const msg =
+        (err && err.message) || "Failed to load leaderboard.";
+      leaderboardBody.innerHTML =
+        '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-red-400">' +
+        msg +
+        "</td></tr>";
+      setStatus(msg, "error");
     }
   }
 
-  chainFilter.addEventListener("change", render);
-  sortSelect.addEventListener("change", render);
+  if (chainFilter) {
+    chainFilter.addEventListener("change", render);
+  }
+  if (sortSelect) {
+    sortSelect.addEventListener("change", render);
+  }
 
-  init();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
 </script>
-
 
 </body>
 </html>
