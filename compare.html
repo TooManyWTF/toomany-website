@@ -305,506 +305,126 @@ const API_BASE = getApiBase();
 (function () {
   const PUBLIC_API_KEY = "hfkdEJODJEOFKoekdoekl8763djEwrangler";
 
-  const compareAInput = document.getElementById("compareAInput");
-  const compareAChain = document.getElementById("compareAChain");
-  const compareBInput = document.getElementById("compareBInput");
-  const compareBChain = document.getElementById("compareBChain");
-  const compareBtn = document.getElementById("compareBtn");
-  const compareStatus = document.getElementById("compareStatus");
-  const compareResult = document.getElementById("compareResult");
-  const compareAResult = document.getElementById("compareAResult");
-  const compareBResult = document.getElementById("compareBResult");
-  const compareVerdict = document.getElementById("compareVerdict");
+  // DOM elements
+  const form = document.getElementById("compareForm");
+  const inputA = document.getElementById("tokenA");
+  const inputB = document.getElementById("tokenB");
+  const chainA = document.getElementById("chainA");
+  const chainB = document.getElementById("chainB");
 
-  function setCompareStatus(message, type) {
-    if (!compareStatus) return;
-    compareStatus.textContent = message || "";
-    compareStatus.className = "text-[10px] md:text-xs";
-    if (type === "error") {
-      compareStatus.className += " text-red-500";
-    } else if (type === "ok") {
-      compareStatus.className += " text-green-500";
-    } else {
-      compareStatus.className += " text-gray-500";
-    }
-  }
+  const cardA = document.getElementById("compareCardA");
+  const cardB = document.getElementById("compareCardB");
 
-  function isValidEthAddress(value) {
-    if (!value) return false;
-    const v = value.trim();
-    return /^0x[a-fA-F0-9]{40}$/.test(v);
-  }
+  const scoreA = document.getElementById("scoreA");
+  const scoreB = document.getElementById("scoreB");
 
-  function isValidSolAddress(value) {
-    if (!value) return false;
-    const v = value.trim();
-    // Basic Solana base58 check
-    return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(v);
-  }
+  const bandA = document.getElementById("bandA");
+  const bandB = document.getElementById("bandB");
 
-  function isValidAddressForChain(chain, value) {
-    if (chain === "sol") {
-      return isValidSolAddress(value);
-    }
-    return isValidEthAddress(value);
+  const symbolA = document.getElementById("symbolA");
+  const symbolB = document.getElementById("symbolB");
+
+  const fieldsA = document.getElementById("fieldsA");
+  const fieldsB = document.getElementById("fieldsB");
+
+  function shorten(a) {
+    if (!a) return "";
+    return a.slice(0, 6) + "…" + a.slice(-4);
   }
 
   function formatPercent(v) {
-    if (v == null || isNaN(v)) return "–";
-    if (Math.abs(v) < 0.01) return v === 0 ? "0%" : "<0.01%";
-    return v.toFixed(2) + "%";
+    if (v == null || isNaN(Number(v))) return "–";
+    const n = Number(v);
+    if (Math.abs(n) < 0.01) return n === 0 ? "0%" : "<0.01%";
+    return n.toFixed(2) + "%";
   }
 
+  function getBand(score) {
+    if (score == null) return { color: "", label: "" };
 
-  function formatUsd(v) {
-    if (v == null || isNaN(v)) return "–";
-    const val = Number(v);
-    const abs = Math.abs(val);
-    if (abs >= 1_000_000_000) {
-      return "$" + (val / 1_000_000_000).toFixed(2) + "B";
-    }
-    if (abs >= 1_000_000) {
-      return "$" + (val / 1_000_000).toFixed(2) + "M";
-    }
-    if (abs >= 1_000) {
-      return "$" + (val / 1_000).toFixed(2) + "K";
-    }
-    if (abs >= 1) {
-      return "$" + val.toFixed(2);
-    }
-    if (abs >= 0.01) {
-      return "$" + val.toFixed(2);
-    }
-    return "$0.00";
+    if (score <= 10)
+      return { color: "bg-green-500", label: "EXCELLENT" };
+    if (score <= 30)
+      return { color: "bg-blue-500", label: "GOOD" };
+    if (score <= 60)
+      return { color: "bg-yellow-400", label: "CAUTION" };
+    return { color: "bg-red-500", label: "WARNING" };
   }
 
-  function shortenAddress(addr) {
-    if (!addr || typeof addr !== "string") return addr || "";
-    const v = addr.trim();
-    if (v.length <= 12) return v;
-    return v.slice(0, 6) + "…" + v.slice(-4);
-  }
-
-  function getChainLabel(chain) {
-    switch (chain) {
-      case "eth":
-        return "Ethereum";
-      case "sol":
-        return "Solana";
-      case "monad":
-        return "Monad";
-      case "base":
-        return "Base";
-      case "bsc":
-        return "BNB Chain";
-      case "polygon":
-        return "Polygon";
-      case "avalanche":
-        return "Avalanche";
-      case "arbitrum":
-        return "Arbitrum";
-      case "optimism":
-        return "Optimism";
-      default:
-        return chain || "Unknown chain";
-    }
-  }
-
-  function formatRelativeTime(ts) {
-    if (!ts) return "";
-    try {
-      const now = Date.now();
-      const diffMs = now - ts;
-      const diffSec = Math.floor(diffMs / 1000);
-      if (diffSec < 60) return diffSec + "s ago";
-      const diffMin = Math.floor(diffSec / 60);
-      if (diffMin < 60) return diffMin + "m ago";
-      const diffHr = Math.floor(diffMin / 60);
-      if (diffHr < 24) return diffHr + "h ago";
-      const diffDay = Math.floor(diffHr / 24);
-      return diffDay + "d ago";
-    } catch (e) {
-      return "";
-    }
-  }
-
-  async function runSingleScan(rawToken, chain) {
-    const token = (rawToken || "").trim();
-    if (!token) {
-      throw new Error("Missing token address.");
-    }
-
+  // ------------------------------------------------
+  // Fetch scan from backend (latest score version)
+  // ------------------------------------------------
+  async function fetchScan(token, chain) {
     const url =
-      API_BASE +
-      "/api/scan?token=" +
-      encodeURIComponent(token) +
-      "&chain=" +
-      encodeURIComponent(chain) +
-      "&key=" +
-      encodeURIComponent(PUBLIC_API_KEY);
+      `/api/scan?token=${encodeURIComponent(token)}` +
+      `&chain=${encodeURIComponent(chain)}` +
+      `&key=${encodeURIComponent(PUBLIC_API_KEY)}`;
 
-    const res = await fetch(url, { method: "GET" });
-    let data = null;
-    try {
-      data = await res.json();
-    } catch (e) {
-      data = null;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "scan failed");
     }
 
-    if (!res.ok || !data || data.error) {
-      const msg =
-        (data && data.message) ||
-        (data && data.error) ||
-        "Scan failed for this token.";
-      const err = new Error(msg);
-      err.code = data && data.error ? data.error : "scan_error";
-      err.httpStatus = res.status;
-      throw err;
-    }
-
-    return data;
+    return data; // contains cabalScore (latest) + analytics
   }
 
-  function buildCompareCardHtml(whichLabel, scan) {
-    if (!scan) {
-      return '<p class="text-xs md:text-sm text-gray-500">No data.</p>';
-    }
+  function renderCard(card, result, scoreEl, symbolEl, bandEl, fieldsEl) {
+    card.classList.remove("hidden");
 
-    const chain = scan.chain || "eth";
-    const chainLabel = getChainLabel(chain);
-    const symbol = scan.symbol
-      ? "$" + String(scan.symbol).replace(/^\$/,"").toUpperCase()
-      : null;
-    const tokenDisplay = symbol
-      ? symbol + " · " + shortenAddress(scan.token)
-      : shortenAddress(scan.token);
+    const score = result.cabalScore;      // ALWAYS the latest score
+    const band = getBand(score);
 
-    const fullScanUrl =
-      "/cabal?chain=" +
-      encodeURIComponent(chain) +
-      "&token=" +
-      encodeURIComponent(scan.token || "");
+    scoreEl.textContent = score;
+    symbolEl.textContent = result.symbol ? "$" + result.symbol : shorten(result.token);
 
-    const tickerLabel = symbol
-      ? String(symbol).replace(/^\$/,"")
-      : "token";
+    bandEl.textContent = band.label;
+    bandEl.className =
+      "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] uppercase border border-gray-600 " +
+      band.color;
 
-    const score =
-      typeof scan.cabalScore === "number"
-        ? scan.cabalScore + "/100"
-        : "–";
-    const alert = scan.alertCategory || "";
-
-    let bandLabel = "";
-    let bandDotClass = "";
-    if (typeof scan.cabalScore === "number") {
-      const s = scan.cabalScore;
-      if (s <= 10) {
-        bandLabel = "EXCELLENT";
-        bandDotClass = "bg-green-500";
-      } else if (s <= 30) {
-        bandLabel = "GOOD";
-        bandDotClass = "bg-blue-500";
-      } else if (s <= 60) {
-        bandLabel = "CAUTION";
-        bandDotClass = "bg-yellow-400";
-      } else {
-        bandLabel = "WARNING";
-        bandDotClass = "bg-red-500";
-      }
-    }
-
-    const scorePill =
-      bandLabel
-        ? '<span class="inline-flex items-center px-2 py-0.5 rounded-full border border-gray-200 bg-white text-[11px] md:text-xs font-mono uppercase tracking-wide text-gray-700">' +
-            '<span class="h-2 w-2 rounded-full ' +
-              bandDotClass +
-              ' mr-1.5"></span>' +
-            bandLabel +
-          "</span>"
-        : "";
-
-    const wi = scan.walletInsights || {};
-        const whales = typeof wi.whaleCount === "number" ? String(wi.whaleCount) : "–";
-    const top10Hold = formatPercent(wi.top10Percent);
-    const top20Hold = formatPercent(wi.top20Percent);
-    const top10TotalUsd = formatUsd(wi.top10TotalUsd);
-    const top20TotalUsd = formatUsd(wi.top20TotalUsd);
-    const cex = formatPercent(wi.cexPercent);
-    const proj = formatPercent(wi.projectPercent);
-    const comm = formatPercent(wi.communityPercent);
-    const bridge = formatPercent(wi.bridgePercent);
-
-    const lastTs =
-      (scan.scanHistory &&
-        scan.scanHistory.length &&
-        scan.scanHistory[0] &&
-        scan.scanHistory[0].ts) ||
-      null;
-    const lastStr = lastTs ? formatRelativeTime(lastTs) : "0s ago";
-
-    return (
-      '<div class="space-y-1">' +
-        '<p class="text-[11px] md:text-xs uppercase tracking-wide text-gray-500">' +
-          whichLabel +
-        "</p>" +
-        '<div class="flex items-center justify-between gap-2">' +
-          '<p class="font-mono text-sm md:text-base text-gray-900">' +
-            tokenDisplay +
-          "</p>" +
-          scorePill +
-        "</div>" +
-        '<p class="font-mono text-[11px] md:text-xs text-gray-600">' +
-          chainLabel +
-        "</p>" +
-        '<div class="flex items-center justify-between mt-1">' +
-          '<span class="font-mono text-[11px] md:text-xs text-gray-700">Cabal score</span>' +
-          '<span class="font-mono text-sm md:text-base text-gray-900">' +
-            score +
-          "</span>" +
-        "</div>" +
-        '<p class="font-mono text-[11px] md:text-xs uppercase tracking-wide text-gray-500 mb-1">' +
-          (alert || "No alert") +
-        "</p>" +
-        '<div class="space-y-0.5 mt-1">' +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Number of Whales</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              whales +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 10 wallets total</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top10TotalUsd +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 10 wallets hold</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top10Hold +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 20 wallets total</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top20TotalUsd +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Top 20 wallets hold</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              top20Hold +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">CEX</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              cex +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Project</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              proj +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Community</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              comm +
-            "</span>" +
-          "</div>" +
-          '<div class="flex items-center justify-between">' +
-            '<span class="text-[11px] md:text-xs text-gray-600">Bridge</span>' +
-            '<span class="font-mono text-[11px] md:text-xs text-gray-900">' +
-              bridge +
-            "</span>" +
-          "</div>" +
-        "</div>" +
-        '<p class="mt-1 text-[11px] md:text-xs text-gray-400">' +
-          "Last scanned " +
-          lastStr +
-          "." +
-        "</p>" +
-        '<p class="mt-0.5 text-[11px] md:text-xs">' +
-          '<a href="' +
-            fullScanUrl +
-            '" class="underline text-gray-700 hover:text-black">' +
-            'Click to run full "' +
-            tickerLabel +
-            '" scan.' +
-          "</a>" +
-        "</p>" +
-      "</div>"
-    );
+    // Render analytics (snapshot of supply metrics)
+    fieldsEl.innerHTML = `
+      <div class="text-xs text-gray-400">Whales: <span class="text-white">${formatPercent(result.whalesPercent)}</span></div>
+      <div class="text-xs text-gray-400">Top 10%: <span class="text-white">${formatPercent(result.top10AdjustedPercent)}</span></div>
+      <div class="text-xs text-gray-400">CEX: <span class="text-white">${formatPercent(result.cexPercent)}</span></div>
+      <div class="text-xs text-gray-400">Project: <span class="text-white">${formatPercent(result.projectPercent)}</span></div>
+      <div class="text-xs text-gray-400">Community: <span class="text-white">${formatPercent(result.communityPercent)}</span></div>
+      <div class="text-xs text-gray-400">Bridge: <span class="text-white">${formatPercent(result.bridgePercent)}</span></div>
+    `;
   }
 
+  // ------------------------------------------------
+  // Compare form submit
+  // ------------------------------------------------
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  function buildVerdict(scanA, scanB) {
-    if (!scanA || !scanB) return "";
-    if (typeof scanA.cabalScore !== "number" || typeof scanB.cabalScore !== "number") {
-      return "Showing latest Cabal snapshots for both tokens.";
-    }
+    const tokenA = inputA.value.trim();
+    const tokenB = inputB.value.trim();
 
-    const scoreA = scanA.cabalScore;
-    const scoreB = scanB.cabalScore;
-
-    if (scoreA === scoreB) {
-      return "Both tokens have similar Cabal scores. Look at whales, CEX and project custody to decide which one feels cleaner.";
-    }
-
-    if (scoreA < scoreB) {
-      return "Token A looks cleaner on paper (lower Cabal score). Token B shows more concentrated or risky custody.";
-    }
-
-    return "Token B looks cleaner on paper (lower Cabal score). Token A shows more concentrated or risky custody.";
-  }
-
-  async function runCompare() {
-    const rawA = (compareAInput && compareAInput.value) || "";
-    const rawB = (compareBInput && compareBInput.value) || "";
-    const chainA = (compareAChain && compareAChain.value) || "eth";
-    const chainB = (compareBChain && compareBChain.value) || "eth";
-
-    if (!rawA || !rawB) {
-      setCompareStatus("Paste contract addresses for both Token A and Token B first.", "error");
-      if (compareResult) compareResult.classList.add("hidden");
-      if (compareVerdict) compareVerdict.classList.add("hidden");
+    if (!tokenA || !tokenB) {
+      alert("Enter both contracts to compare.");
       return;
     }
-
-    if (!isValidAddressForChain(chainA, rawA)) {
-      setCompareStatus("Token A address doesn\'t look valid for the selected chain.", "error");
-      if (compareResult) compareResult.classList.add("hidden");
-      if (compareVerdict) compareVerdict.classList.add("hidden");
-      return;
-    }
-
-    if (!isValidAddressForChain(chainB, rawB)) {
-      setCompareStatus("Token B address doesn\'t look valid for the selected chain.", "error");
-      if (compareResult) compareResult.classList.add("hidden");
-      if (compareVerdict) compareVerdict.classList.add("hidden");
-      return;
-    }
-
-    setCompareStatus("Running Cabal scans for both tokens…", "info");
-    if (compareBtn) compareBtn.disabled = true;
 
     try {
-      const [scanA, scanB] = await Promise.all([
-        runSingleScan(rawA, chainA),
-        runSingleScan(rawB, chainB),
-      ]);
+      // scan A
+      const resultA = await fetchScan(tokenA, chainA.value);
+      renderCard(cardA, resultA, scoreA, symbolA, bandA, fieldsA);
 
-      if (compareAResult) {
-        compareAResult.innerHTML = buildCompareCardHtml("Token A", scanA);
-      }
-      if (compareBResult) {
-        compareBResult.innerHTML = buildCompareCardHtml("Token B", scanB);
-      }
-      if (compareResult) compareResult.classList.remove("hidden");
+      // scan B
+      const resultB = await fetchScan(tokenB, chainB.value);
+      renderCard(cardB, resultB, scoreB,         symbolB, bandB, fieldsB);
 
-      // Highlight winner/loser based on Cabal score (lower = cleaner)
-      if (compareAResult && compareBResult) {
-        compareAResult.classList.remove("winner", "loser");
-        compareBResult.classList.remove("winner", "loser");
-
-        const scoreA =
-          typeof scanA.cabalScore === "number" ? scanA.cabalScore : null;
-        const scoreB =
-          typeof scanB.cabalScore === "number" ? scanB.cabalScore : null;
-
-        if (scoreA != null && scoreB != null && scoreA !== scoreB) {
-          if (scoreA < scoreB) {
-            compareAResult.classList.add("winner");
-            compareBResult.classList.add("loser");
-          } else if (scoreB < scoreA) {
-            compareBResult.classList.add("winner");
-            compareAResult.classList.add("loser");
-          }
-        }
-      }
-
-      const verdict = buildVerdict(scanA, scanB);
-      if (verdict && compareVerdict) {
-        compareVerdict.textContent = verdict;
-        compareVerdict.classList.remove("hidden");
-      }
-
-      setCompareStatus("Success", "ok");
-      updateUrlWithParams(chainA, rawA, chainB, rawB);
     } catch (err) {
-      console.error("Compare error", err);
-      let msg =
-        (err && err.message) ||
-        "Could not load comparison data. Try again or run scans on /cabal first.";
-      if (err && err.httpStatus === 500) {
-        msg =
-          "Our on-chain data provider returned an internal error while fetching top holders. Please try again in a few minutes.";
-      }
-      setCompareStatus(msg, "error");
-      if (compareResult) compareResult.classList.add("hidden");
-      if (compareVerdict) compareVerdict.classList.add("hidden");
-    } finally {
-      if (compareBtn) compareBtn.disabled = false;
+      console.error(err);
+      alert("Comparison failed: " + err.message);
     }
-  }
-
-  function updateUrlWithParams(chainA, tokenA, chainB, tokenB) {
-    try {
-      const url = new URL(window.location.href);
-      url.searchParams.set("chainA", chainA);
-      url.searchParams.set("tokenA", tokenA);
-      url.searchParams.set("chainB", chainB);
-      url.searchParams.set("tokenB", tokenB);
-      window.history.replaceState({}, "", url.toString());
-    } catch (e) {
-      // ignore
-    }
-  }
-
-  function initFromUrl() {
-    try {
-      const url = new URL(window.location.href);
-      const chainA = url.searchParams.get("chainA") || "eth";
-      const chainB = url.searchParams.get("chainB") || "eth";
-      const tokenA = url.searchParams.get("tokenA") || "";
-      const tokenB = url.searchParams.get("tokenB") || "";
-
-      if (compareAChain) compareAChain.value = chainA;
-      if (compareBChain) compareBChain.value = chainB;
-      if (compareAInput) compareAInput.value = tokenA;
-      if (compareBInput) compareBInput.value = tokenB;
-
-      if (tokenA && tokenB) {
-        runCompare();
-      }
-    } catch (e) {
-      // ignore
-    }
-  }
-
-  function initCompare() {
-    if (!compareBtn) return;
-    compareBtn.addEventListener("click", function () {
-      runCompare();
-    });
-
-    [compareAInput, compareBInput].forEach(function (input) {
-      if (!input) return;
-      input.addEventListener("keydown", function (evt) {
-        if (evt.key === "Enter") {
-          evt.preventDefault();
-          runCompare();
-        }
-      });
-    });
-  }
-
-  initCompare();
-  initFromUrl();
+  });
 })();
 </script>
+
 </body>
 </html>
