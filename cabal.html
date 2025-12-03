@@ -291,11 +291,11 @@ const API_BASE = getApiBase();
               <span>Scan token</span>
             </button>
           </div>
-		   <p id="statusLine" class="text-xs mt-1"></p>
-          <p class="text-[10px] md:text-xs tracking-wide uppercase text-gray-100">
+		   <p id="statusLine" class="text-sm mt-1"></p>
+          <p class="text-[10px] md:text-sm tracking-wide uppercase text-gray-100">
             About
           </p>
-          <p class="text-xs text-gray-100">
+          <p class="text-sm text-gray-100">
             Crypto Cabal Scanner &trade; analyzes token supply, where it's held and how much each entity holds. Lower Cabal scores equals better supply distribution.
           </p>
         </div>
@@ -308,7 +308,7 @@ const API_BASE = getApiBase();
               <div class="flex items-center gap-1">
                 <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">Cabal score</p>
               </div>
-              <p class="text-[10px] md:text-xs uppercase tracking-wide text-gray-500">Lower is better</p>
+              <p class="text-[10px] md:text-sm uppercase tracking-wide text-gray-500">Lower is better</p>
             </div>
             <div class="flex items-center justify-between space-x-3">
               <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">–</p>
@@ -363,7 +363,7 @@ const API_BASE = getApiBase();
                 <p class="text-sm tracking-wide uppercase text-gray-500">Snapshot of supply</p>
               </div>
             </div>
-            <p id="scoreExplanation" class="mt-1 text-xs text-gray-500 leading-snug">
+            <p id="scoreExplanation" class="mt-1 text-sm text-gray-500 leading-snug">
               Percent of total supply held by each wallet category based on the top holders we can see on-chain.
             </p>
             <div class="mt-2 space-y-2">
@@ -429,11 +429,11 @@ const API_BASE = getApiBase();
             <div class="flex items-center justify-between">
               <p class="text-sm tracking-wide uppercase text-gray-500">Custody clusters</p>
             </div>
-            <p class="text-xs text-gray-600">
+            <p class="text-sm text-gray-600">
               Large shared wallets (CEX, LP, bridge, multisigs) can hide concentrated power. We group them to show how much they jointly hold.
             </p>
             <div id="clustersList" class="space-y-2">
-              <p class="text-xs text-gray-500">
+              <p class="text-sm text-gray-500">
                 Scan a token to see if any clustered holdings show up (CEX, LPs, bridges, project multisigs).
               </p>
             </div>
@@ -454,11 +454,11 @@ const API_BASE = getApiBase();
             <div class="flex items-center justify-between">
               <p class="text-sm tracking-wide uppercase text-gray-500">Top holders</p>
             </div>
-            <p class="text-xs text-gray-600">
+            <p class="text-sm text-gray-600">
               Snapshot of the largest wallets on-chain. Burn wallets excluded from Cabal Score. Whale wallets are non-infrastructure, non-exchange holders with >5% of the supply.
             </p>
             <div id="topHoldersCards" class="space-y-2">
-              <p class="text-xs text-gray-500">
+              <p class="text-sm text-gray-500">
                 Scan a token to see a breakdown of the largest holder buckets (top 10, top 20, whales).
               </p>
             </div>
