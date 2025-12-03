@@ -90,6 +90,98 @@ const API_BASE = getApiBase();
 </style>
 </head>
 <body class="text-gray-800">
+<script>
+// Auto-detect environment (local vs deployed)
+// Return just the origin/base URL, NOT including /api.
+// The rest of the code always appends "/api/..." on top of this.
+function getApiBase() {
+  const host = window.location.hostname;
+
+  // Local dev via `wrangler dev`
+  if (host === "127.0.0.1" || host === "localhost") {
+    return "http://127.0.0.1:8787";
+  }
+  // If opened directly from the filesystem, assume local dev worker
+  if (window.location.protocol === "file:") {
+    return "http://127.0.0.1:8787";
+  }
+  // In production, use same origin
+  return "";
+}
+const API_BASE = getApiBase();
+</script>
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6VQN64SEKQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6VQN64SEKQ');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Crypto Cabal Leaderboard | Lowest Cabal Score Tokens | $TOO</title>
+  <meta name="description" content="Real-time leaderboard of tokens scanned by the Crypto Cabal Engine. Lower Cabal score = less cabal holder concentration." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://toomany.wtf/leaderboard" />
+  <meta property="og:title" content="Crypto Cabal Leaderboard | Lowest Cabal Score Tokens | $TOO" />
+  <meta property="og:description" content="All-time leaderboard of tokens scanned by the Crypto Cabal engine. Lower Cabal score = less cabal holder concentration." />
+  <meta property="og:image" content="https://toomany.wtf/images/leaderbanner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Crypto Cabal Leaderboard | Lowest Cabal Score Tokens | $TOO" />
+  <meta name="twitter:description" content="All-time leaderboard of tokens scanned by the Crypto Cabal Engine. Lower Cabal score = less cabal holder concentration." />
+  <meta name="twitter:image" content="https://toomany.wtf/images/leaderbanner.png" />
+
+  <!-- Tailwind -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+  />
+
+  <style>
+    body {
+      background: #f3e7d3;
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    h1, h2, h3 {
+      line-height: 1.25 !important;
+    }
+    .font-mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace !important;
+    }
+  
+    .compare-card {
+      transition: background-color 150ms ease, border-color 150ms ease,
+                  box-shadow 150ms ease, transform 150ms ease;
+    }
+    .compare-card.winner {
+      background-color: #ecfdf3;
+      border-color: #22c55e;
+      box-shadow: 0 8px 18px rgba(34, 197, 94, 0.25);
+      transform: translateY(-2px);
+    }
+    .compare-card.loser {
+      background-color: #fef2f2;
+      border-color: #ef4444;
+      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.15);
+      transform: translateY(0);
+    }
+</style>
+</head>
+<body class="text-gray-800">
 <!-- NAVBAR -->
 <header class="w-full bg-white border-b border-gray-200">
   <div class="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
@@ -301,12 +393,11 @@ const API_BASE = getApiBase();
                   <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Project %</th>
                   <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Community %</th>
                   <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Bridge %</th>
-                  <th class="px-3 py-2 text-left font-semibold whitespace-nowrap">Last scan</th>
                 </tr>
               </thead>
               <tbody id="leaderboardBody">
                 <tr>
-                  <td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">
+                  <td colspan="10" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">
                     Loading leaderboard…
                   </td>
                 </tr>
@@ -535,9 +626,6 @@ const API_BASE = getApiBase();
     const bridge =
       entry.bridgePercentOfSupply ?? entry.bridgePercent ?? entry.bridgePct;
 
-    const ts = getTimestamp(entry);
-    const rel = ts ? formatRelativeTime(ts) : "–";
-
     const fullScanUrl =
       "/cabal?chain=" +
       encodeURIComponent(chain) +
@@ -614,10 +702,6 @@ const API_BASE = getApiBase();
       '<td class="px-3 py-2 align-middle text-[11px] md:text-xs font-mono">' +
       formatPercent(bridge) +
       "</td>";
-    html +=
-      '<td class="px-3 py-2 align-middle text-[11px] md:text-xs text-gray-300">' +
-      rel +
-      "</td>";
 
     html += "</tr>";
     return html;
@@ -629,7 +713,7 @@ const API_BASE = getApiBase();
     let entries = rawEntries.slice();
     if (!entries.length) {
       leaderboardBody.innerHTML =
-        '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
+        '<tr><td colspan="10" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
       return;
     }
 
@@ -688,7 +772,7 @@ const API_BASE = getApiBase();
 
     setStatus("Loading leaderboard…", "info");
     leaderboardBody.innerHTML =
-      '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">Loading leaderboard…</td></tr>';
+      '<tr><td colspan="10" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">Loading leaderboard…</td></tr>';
 
     try {
       const url =
@@ -725,7 +809,7 @@ const API_BASE = getApiBase();
 
       if (!rawEntries.length) {
         leaderboardBody.innerHTML =
-          '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
+          '<tr><td colspan="10" class="px-3 py-4 text-center text-[11px] md:text-xs text-gray-400">No leaderboard data yet. Run some scans on /cabal.</td></tr>';
         setStatus("No leaderboard data yet.", "info");
         return;
       }
@@ -736,7 +820,7 @@ const API_BASE = getApiBase();
       const msg =
         (err && err.message) || "Failed to load leaderboard.";
       leaderboardBody.innerHTML =
-        '<tr><td colspan="11" class="px-3 py-4 text-center text-[11px] md:text-xs text-red-400">' +
+        '<tr><td colspan="10" class="px-3 py-4 text-center text-[11px] md:text-xs text-red-400">' +
         msg +
         "</td></tr>";
       setStatus(msg, "error");
