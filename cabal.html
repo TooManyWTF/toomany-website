@@ -482,7 +482,6 @@ const API_BASE = getApiBase();
             </div>
           </div>
         </div>
-
         <!-- Cabal AI suspicious behavior watch -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-2">
           <div class="flex items-center justify-between">
@@ -491,7 +490,7 @@ const API_BASE = getApiBase();
             </p>
           </div>
           <p id="cabalAiHeadline" class="text-xs text-gray-700">
-            Scan a token to see AI flags on whales, team wallets, bridges and more.
+            Scan a token to see AI flags on whales, team wallets, exchanges and bridges.
           </p>
           <div id="cabalAiList" class="mt-2 space-y-1">
             <p class="text-xs text-gray-500">
@@ -1016,10 +1015,10 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
     }
 
     const sorted = (items || []).slice().sort(function (a, b) {
-      const at = typeof a.ts === "number" ? a.ts : 0;
-      const bt = typeof b.ts === "number" ? b.ts : 0;
-      // Descending: most recently scanned first
-      return bt - at;
+      const ac = typeof a.scanCount === "number" ? a.scanCount : 0;
+      const bc = typeof b.scanCount === "number" ? b.scanCount : 0;
+      // Descending: highest number of scans first
+      return bc - ac;
     });
 
     const rows = sorted.slice(0, 5).map(function (item) {
@@ -1199,6 +1198,7 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   }
 
 
+  
   function renderMostScanned(items) {
     const container = document.getElementById("mostScannedContainer");
     if (!container) return;
@@ -1212,10 +1212,65 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
     }
 
     const sorted = (items || []).slice().sort(function (a, b) {
-      const at = typeof a.ts === "number" ? a.ts : 0;
-      const bt = typeof b.ts === "number" ? b.ts : 0;
-      // Descending: most recently scanned first
-      return bt - at;
+      const ac = typeof a.scanCount === "number" ? a.scanCount : 0;
+      const bc = typeof b.scanCount === "number" ? b.scanCount : 0;
+      // Descending: highest number of scans first
+      return bc - ac;
+    });
+
+    const rows = sorted.slice(0, 5).map(function (item) {
+      const shortToken = item.token
+        ? shortenAddress(item.token)
+        : "Unknown token";
+
+      const scorePart =
+        typeof item.cabalScore === "number"
+          ? item.cabalScore + "/100"
+          : "Score unknown";
+
+      const label = item.alertCategory || "";
+      const chainLabel = (item.chain || "eth").toUpperCase();
+      const rawTicker = item.symbol || item.ticker;
+      const ticker = rawTicker ? rawTicker : null;
+      const scansLabel =
+        (item.scanCount || 1) +
+        ((item.scanCount || 1) === 1 ? " scan" : " scans");
+
+      const linkUrl =
+        "/cabal?chain=" +
+        encodeURIComponent(item.chain || "eth") +
+        "&token=" +
+        encodeURIComponent(item.token || "");
+
+      return `
+        <button
+          type="button"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
+          onclick="window.location.href='${linkUrl}'"
+        >
+          <div class="flex flex-col">
+            <span class="text-sm md:text-base text-gray-900">
+              ${shortToken}
+            </span>
+            <span class="font-mono text-sm md:text-base text-gray-800">
+              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
+            </span>
+          </div>
+          <span class="font-mono text-xs md:text-sm text-green-500 font-medium">
+            ${scansLabel}
+          </span>
+        </button>
+      `;
+    });
+
+    container.innerHTML = rows.join("");
+  }
+
+const sorted = (items || []).slice().sort(function (a, b) {
+      const ac = typeof a.scanCount === "number" ? a.scanCount : 0;
+      const bc = typeof b.scanCount === "number" ? b.scanCount : 0;
+      // Descending: highest number of scans first
+      return bc - ac;
     });
 
     const rows = sorted.slice(0, 5).map(function (item) {
@@ -2337,62 +2392,116 @@ function renderHolders(data) {
     });
   }
 
-
-  function renderCabalAi(cabalAi) {
+  
+  function renderCabalAi(data, cabalScore, alertCategory) {
     if (!cabalAiHeadline || !cabalAiList) return;
 
-    // If nothing came back or no bullets, fall back to a neutral explanation.
-    if (!cabalAi || !Array.isArray(cabalAi.bullets) || !cabalAi.bullets.length) {
+    cabalAiList.innerHTML = "";
+
+    const ai = data || {};
+    const bullets = Array.isArray(ai.bullets) ? ai.bullets.slice() : [];
+    let severity = ai.severity || "info";
+
+    // Map score into bands so Cabal AI always matches the main Cabal Score.
+    let band = null;
+    if (typeof cabalScore === "number" && isFinite(cabalScore)) {
+      if (cabalScore <= 10) band = "excellent";
+      else if (cabalScore <= 30) band = "good";
+      else if (cabalScore <= 60) band = "caution";
+      else band = "warning";
+    }
+
+    // Fallback if we only have alertCategory string.
+    if (!band && typeof alertCategory === "string") {
+      const ac = alertCategory.toLowerCase();
+      if (ac.includes("pure community")) band = "excellent";
+      else if (ac.includes("mild cabal")) band = "good";
+      else if (ac.includes("moderate cabal")) band = "caution";
+      else if (ac.includes("elevated") || ac.includes("heavy")) band = "warning";
+    }
+
+    // If we have no bullets, show neutral explanation.
+    if (!bullets.length) {
       cabalAiHeadline.textContent =
-        (cabalAi && cabalAi.headline) ||
-        "Cabal AI didn't detect any obvious cabal magnets from this holder map.";
-      cabalAiList.innerHTML = "";
+        band === "warning"
+          ? "Cabal AI could not find specific structural notes, but the score skews cabal-heavy."
+          : "Scan a token to see AI flags on whales, team wallets, exchanges and bridges.";
       var p = document.createElement("p");
       p.className = "text-xs text-gray-500";
       p.textContent =
-        "This view looks at how much power sits in whales, project wallets, exchanges and bridges. It's a structural snapshot, not trading advice.";
+        "This view looks only at structural supply distribution — who holds the power wallets and custody buckets.";
       cabalAiList.appendChild(p);
       return;
     }
 
-    cabalAiHeadline.textContent =
-      cabalAi.headline ||
-      "Cabal AI commentary on the current holder map";
-
-    cabalAiList.innerHTML = "";
-
-    cabalAi.bullets.forEach(function (item) {
-      if (!item || !item.text) return;
-
-      var row = document.createElement("div");
-      row.className = "flex items-start space-x-2";
-
-      var badge = document.createElement("span");
-      var sev = item.severity || "info";
-      var baseClass =
-        "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium";
-      if (sev === "high") {
-        badge.className = baseClass + " bg-red-100 text-red-700";
-        badge.textContent = "High";
-      } else if (sev === "medium") {
-        badge.className = baseClass + " bg-yellow-100 text-yellow-700";
-        badge.textContent = "Watch";
+    // Clamp visual severity/headline to the score band (strict sync).
+    let headline;
+    if (band === "excellent") {
+      severity = "info";
+      headline = "Cabal AI sees no meaningful cabal risk in this holder map.";
+    } else if (band === "good") {
+      if (severity === "high") severity = "medium";
+      headline =
+        "Cabal AI sees mild cabal structuring — overall distribution looks reasonable.";
+    } else if (band === "caution") {
+      if (severity === "info") severity = "medium";
+      headline =
+        "Cabal AI sees moderate cabal pressure points worth watching.";
+    } else if (band === "warning") {
+      severity = "high";
+      headline =
+        "Cabal AI sees strong cabal magnets in this holder map.";
+    } else {
+      // Fallback: use server-provided headline if we truly have no band.
+      if (ai.headline) {
+        headline = ai.headline;
+      } else if (ai.severity === "high") {
+        headline =
+          "Cabal AI sees strong cabal magnets in this holder map.";
+      } else if (ai.severity === "medium") {
+        headline =
+          "Cabal AI sees a mix of cabal and community signals in this holder map.";
       } else {
-        badge.className = baseClass + " bg-gray-200 text-gray-700";
-        badge.textContent = "Note";
+        headline =
+          "Cabal AI doesn't see obvious cabal magnets in this holder map.";
       }
+    }
 
-      var text = document.createElement("p");
+    cabalAiHeadline.textContent = headline;
+
+    bullets.forEach(function (b) {
+      if (!b || !b.text) return;
+
+      const row = document.createElement("div");
+      row.className = "flex gap-1 items-center";
+
+      const dot = document.createElement("span");
+      dot.className = "h-1.5 w-1.5 rounded-full flex-shrink-0";
+
+      // Decide dot color based on the score band to match the Cabal Score legend.
+      let dotColorClass = "bg-emerald-400";
+      if (band === "excellent") {
+        dotColorClass = "bg-green-500";   // Excellent
+      } else if (band === "good") {
+        dotColorClass = "bg-blue-400";    // Good
+      } else if (band === "caution") {
+        dotColorClass = "bg-yellow-400";  // Caution
+      } else if (band === "warning") {
+        dotColorClass = "bg-red-500";     // Warning
+      }
+      dot.classList.add(dotColorClass);
+
+      const text = document.createElement("p");
       text.className = "text-xs text-gray-700";
-      text.textContent = item.text;
+      text.textContent = b.text;
 
-      row.appendChild(badge);
+      row.appendChild(dot);
       row.appendChild(text);
       cabalAiList.appendChild(row);
     });
   }
 
-  function initAdvancedSections() {
+function initAdvancedSections() {
     setupAdvancedToggle(snapshotAdvancedToggle, snapshotAdvanced, "Address type details");
     setupAdvancedToggle(clustersAdvancedToggle, clustersAdvanced, "Infrastructure details");
     setupAdvancedToggle(topAdvancedToggle, topAdvanced, "Advanced breakdown");
@@ -2479,7 +2588,7 @@ function renderHolders(data) {
       renderClusters(data);
       renderHolders(data);
       renderTopHolderSummaryCards(data);
-      renderCabalAi(data.cabalAi || null);
+      renderCabalAi(data.cabalAi || null, data.cabalScore, data.alertCategory);
       updatePromo(data);
 
       setStatus("Scan complete.", "ok");
