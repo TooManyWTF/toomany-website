@@ -360,7 +360,7 @@ const API_BASE = getApiBase();
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-1">
-                <p class="text-xs tracking-wide uppercase text-gray-500">Snapshot of supply</p>
+                <p class="text-sm tracking-wide uppercase text-gray-500">Snapshot of supply</p>
               </div>
             </div>
             <p id="scoreExplanation" class="mt-1 text-xs text-gray-500 leading-snug">
@@ -427,7 +427,7 @@ const API_BASE = getApiBase();
           <!-- Clusters card -->
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="flex items-center justify-between">
-              <p class="text-xs tracking-wide uppercase text-gray-500">Custody clusters</p>
+              <p class="text-sm tracking-wide uppercase text-gray-500">Custody clusters</p>
             </div>
             <p class="text-xs text-gray-600">
               Large shared wallets (CEX, LP, bridge, multisigs) can hide concentrated power. We group them to show how much they jointly hold.
@@ -452,7 +452,7 @@ const API_BASE = getApiBase();
           </div>
 <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="flex items-center justify-between">
-              <p class="text-xs tracking-wide uppercase text-gray-500">Top holders</p>
+              <p class="text-sm tracking-wide uppercase text-gray-500">Top holders</p>
             </div>
             <p class="text-xs text-gray-600">
               Snapshot of the largest wallets on-chain. Burn wallets excluded from Cabal Score. Whale wallets are non-infrastructure, non-exchange holders with >5% of the supply.
@@ -486,15 +486,15 @@ const API_BASE = getApiBase();
         <!-- Cabal AI suspicious behavior watch -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-2">
           <div class="flex items-center justify-between">
-            <p class="text-xs tracking-wide uppercase text-gray-500">
+            <p class="text-sm tracking-wide uppercase text-gray-500">
               Cabal AI — suspicious behavior watch
             </p>
           </div>
-          <p id="cabalAiHeadline" class="text-xs text-gray-700">
+          <p id="cabalAiHeadline" class="text-sm text-gray-700">
             Scan a token to see AI flags on whales, team wallets, exchanges and bridges.
           </p>
           <div id="cabalAiList" class="mt-2 space-y-1">
-            <p class="text-xs text-gray-500">
+            <p class="text-sm text-gray-500">
               No scan yet. Paste a contract and run a scan to see Cabal AI commentary here.
             </p>
           </div>
@@ -617,7 +617,7 @@ const API_BASE = getApiBase();
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-4 mt-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1">
-              <p class="text-xs tracking-wide uppercase text-gray-500">Scanner activity</p>
+              <p class="text-sm tracking-wide uppercase text-gray-500">Scanner activity</p>
             </div>
           </div>
           <div class="space-y-4">
@@ -666,8 +666,8 @@ const API_BASE = getApiBase();
 
         <!-- How to read this page -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3 mt-4">
-          <p class="text-xs tracking-wide uppercase text-gray-500">How to read this page</p>
-          <div class="space-y-2 text-xs text-gray-700">
+          <p class="text-sm tracking-wide uppercase text-gray-500">How to read this page</p>
+          <div class="space-y-2 text-sm text-gray-500">
             <p>
               <span class="font-semibold">Cabal score.</span>
               A 0–100 risk score for how “caballed” the visible supply looks. Lower is better.
