@@ -482,8 +482,7 @@ const API_BASE = getApiBase();
             </div>
           </div>
         </div>
-
-        <!-- Cabal AI suspicious behavior watch -->
+                <!-- Cabal AI suspicious behavior watch -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-2">
           <div class="flex items-center justify-between">
             <p class="text-xs tracking-wide uppercase text-gray-500">
@@ -500,7 +499,7 @@ const API_BASE = getApiBase();
           </div>
         </div>
 
-        <!-- Top holders summary -->
+<!-- Top holders summary -->
         <div class="space-y-3 mt-2">
        <div class="flex items-center justify-between w-full">
   <!-- Left side: Share + Feedback links -->
@@ -737,8 +736,8 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   const scoreRatingEl = document.getElementById("scoreRating");
   const scoreSummaryEl = document.getElementById("scoreSummary");
   const scoreExplanationEl = document.getElementById("scoreExplanation");
-  const cabalAiHeadline = document.getElementById("cabalAiHeadline");
-  const cabalAiList = document.getElementById("cabalAiList");
+const cabalAiHeadline = document.getElementById("cabalAiHeadline");
+const cabalAiList = document.getElementById("cabalAiList");
 
   const scoreHistoryLineEl = document.getElementById("scoreHistoryLine");
   const bestScoreLineEl = document.getElementById("bestScoreLine");
@@ -2252,7 +2251,69 @@ function renderHolders(data) {
     }
   }
 
-  function updatePromo(data) {
+  
+function renderCabalAi(data) {
+  if (!cabalAiHeadline || !cabalAiList) return;
+
+  cabalAiList.innerHTML = "";
+
+  if (
+    !data ||
+    !Array.isArray(data.bullets) ||
+    !data.bullets.length
+  ) {
+    cabalAiHeadline.textContent =
+      "Scan a token to see AI flags on whales, team wallets, bridges and more.";
+    const p = document.createElement("p");
+    p.className = "text-xs text-gray-500";
+    p.textContent =
+      "No scan yet. Paste a contract and run a scan to see Cabal AI commentary here.";
+    cabalAiList.appendChild(p);
+    return;
+  }
+
+  if (data.severity === "high") {
+    cabalAiHeadline.textContent =
+      data.headline ||
+      "Cabal AI sees strong cabal magnets in this holder map.";
+  } else if (data.severity === "medium") {
+    cabalAiHeadline.textContent =
+      data.headline ||
+      "Cabal AI sees some cabal pressure points to watch.";
+  } else {
+    cabalAiHeadline.textContent =
+      data.headline ||
+      "Cabal AI doesn't see obvious cabal magnets from this holder map.";
+  }
+
+  data.bullets.forEach(function (b) {
+    if (!b || !b.text) return;
+
+    const row = document.createElement("div");
+    row.className = "flex gap-1 items-start";
+
+    const dot = document.createElement("span");
+    dot.className = "mt-[3px] h-1.5 w-1.5 rounded-full";
+    if (b.severity === "high") {
+      dot.classList.add("bg-red-500");
+    } else if (b.severity === "medium") {
+      dot.classList.add("bg-amber-400");
+    } else {
+      dot.classList.add("bg-emerald-400");
+    }
+
+    const text = document.createElement("p");
+    text.className = "text-xs text-gray-700";
+    text.textContent = b.text;
+
+    row.appendChild(dot);
+    row.appendChild(text);
+    cabalAiList.appendChild(row);
+  });
+}
+
+
+function updatePromo(data) {
     data = data || {};
     if (!buyTooBtn || !shareButtons.length || !footerNote) return;
 
@@ -2334,61 +2395,6 @@ function renderHolders(data) {
     button.addEventListener("click", function () {
       open = !open;
       update();
-    });
-  }
-
-
-  function renderCabalAi(cabalAi) {
-    if (!cabalAiHeadline || !cabalAiList) return;
-
-    // If nothing came back or no bullets, fall back to a neutral explanation.
-    if (!cabalAi || !Array.isArray(cabalAi.bullets) || !cabalAi.bullets.length) {
-      cabalAiHeadline.textContent =
-        (cabalAi && cabalAi.headline) ||
-        "Cabal AI didn't detect any obvious cabal magnets from this holder map.";
-      cabalAiList.innerHTML = "";
-      var p = document.createElement("p");
-      p.className = "text-xs text-gray-500";
-      p.textContent =
-        "This view looks at how much power sits in whales, project wallets, exchanges and bridges. It's a structural snapshot, not trading advice.";
-      cabalAiList.appendChild(p);
-      return;
-    }
-
-    cabalAiHeadline.textContent =
-      cabalAi.headline ||
-      "Cabal AI commentary on the current holder map";
-
-    cabalAiList.innerHTML = "";
-
-    cabalAi.bullets.forEach(function (item) {
-      if (!item || !item.text) return;
-
-      var row = document.createElement("div");
-      row.className = "flex items-start space-x-2";
-
-      var badge = document.createElement("span");
-      var sev = item.severity || "info";
-      var baseClass =
-        "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium";
-      if (sev === "high") {
-        badge.className = baseClass + " bg-red-100 text-red-700";
-        badge.textContent = "High";
-      } else if (sev === "medium") {
-        badge.className = baseClass + " bg-yellow-100 text-yellow-700";
-        badge.textContent = "Watch";
-      } else {
-        badge.className = baseClass + " bg-gray-200 text-gray-700";
-        badge.textContent = "Note";
-      }
-
-      var text = document.createElement("p");
-      text.className = "text-xs text-gray-700";
-      text.textContent = item.text;
-
-      row.appendChild(badge);
-      row.appendChild(text);
-      cabalAiList.appendChild(row);
     });
   }
 
