@@ -663,6 +663,60 @@ const API_BASE = getApiBase();
           </div>
         </div>
 
+
+        <!-- How to read this page -->
+        <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3 mt-4">
+          <p class="text-xs tracking-wide uppercase text-gray-500">How to read this page</p>
+          <div class="space-y-2 text-xs text-gray-700">
+            <p>
+              <span class="font-semibold">Cabal score.</span>
+              A 0–100 risk score for how “caballed” the visible supply looks. Lower is better.
+              The Cabal Score looks at how much supply sits in whales, exchanges, bridges, LPs and project wallets
+              versus many smaller community holders. It only uses the top holders we can see on-chain.
+            </p>
+            <p>
+              <span class="font-semibold">Snapshot of supply.</span>
+              Breaks the visible supply into buckets like Community, Whales, CEX custody, Bridges, DEX / LP,
+              Project / Treasury and Burned. Percentages are based on the top holders returned by the API,
+              after tagging known CEX, LP, bridge, project and burn wallets.
+            </p>
+            <p>
+              <span class="font-semibold">Custody clusters.</span>
+              Groups big shared wallets (centralized exchanges, LP pools, project multisigs, bridges) into clusters
+              so you can see how much supply those infrastructures jointly control. A large cluster means a single
+              failure or freeze could affect a big chunk of supply.
+            </p>
+            <p>
+              <span class="font-semibold">Top holders summary.</span>
+              Shows how concentrated the largest wallets are: top 10 / 20 / 50 holders and whale wallets.
+              Whale wallets are non-infrastructure, non-exchange holders above our whale threshold of the supply.
+              Higher percentages here mean more power in fewer hands.
+            </p>
+            <p>
+              <span class="font-semibold">Top holders table.</span>
+              A wallet-by-wallet view of the largest holders we can see. Tags like Whale, CEX, DEX / LP,
+              Project, Bridge, Burn and Contract explain what each address looks like. “View” opens the wallet
+              on a block explorer for deeper manual research.
+            </p>
+            <p>
+              <span class="font-semibold">Cabal AI — suspicious behavior watch.</span>
+              An AI summary that reads the same holder map you see and highlights structural cabal magnets:
+              oversized whales, team wallets with too much control, exchange or bridge dominance, or unusually
+              clean community distributions. The colored dots match the main Cabal Score band (Excellent, Good,
+              Caution, Warning).
+            </p>
+            <p>
+              <span class="font-semibold">Scanner activity.</span>
+              These four lists look at all scans run through this tool:
+              Leaderboard shows contracts with the cleanest scores,
+              Hall of Shame surfaces the most cabal-heavy ones,
+              Recent Scans is the latest contracts checked,
+              and Most Scanned Contracts shows what other users keep
+              double-checking.
+            </p>
+          </div>
+        </div>
+
 <!-- Bottom CTAs -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs text-gray-100">
           <div class="flex flex-wrap items-center gap-2">
