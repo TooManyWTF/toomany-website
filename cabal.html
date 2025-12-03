@@ -482,6 +482,7 @@ const API_BASE = getApiBase();
             </div>
           </div>
         </div>
+
         <!-- Cabal AI suspicious behavior watch -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-2">
           <div class="flex items-center justify-between">
@@ -1198,7 +1199,6 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   }
 
 
-  
   function renderMostScanned(items) {
     const container = document.getElementById("mostScannedContainer");
     if (!container) return;
@@ -1212,61 +1212,6 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
     }
 
     const sorted = (items || []).slice().sort(function (a, b) {
-      const ac = typeof a.scanCount === "number" ? a.scanCount : 0;
-      const bc = typeof b.scanCount === "number" ? b.scanCount : 0;
-      // Descending: highest number of scans first
-      return bc - ac;
-    });
-
-    const rows = sorted.slice(0, 5).map(function (item) {
-      const shortToken = item.token
-        ? shortenAddress(item.token)
-        : "Unknown token";
-
-      const scorePart =
-        typeof item.cabalScore === "number"
-          ? item.cabalScore + "/100"
-          : "Score unknown";
-
-      const label = item.alertCategory || "";
-      const chainLabel = (item.chain || "eth").toUpperCase();
-      const rawTicker = item.symbol || item.ticker;
-      const ticker = rawTicker ? rawTicker : null;
-      const scansLabel =
-        (item.scanCount || 1) +
-        ((item.scanCount || 1) === 1 ? " scan" : " scans");
-
-      const linkUrl =
-        "/cabal?chain=" +
-        encodeURIComponent(item.chain || "eth") +
-        "&token=" +
-        encodeURIComponent(item.token || "");
-
-      return `
-        <button
-          type="button"
-          class="w-full flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-gray-200 hover:border-gray-400 text-left"
-          onclick="window.location.href='${linkUrl}'"
-        >
-          <div class="flex flex-col">
-            <span class="text-sm md:text-base text-gray-900">
-              ${shortToken}
-            </span>
-            <span class="font-mono text-sm md:text-base text-gray-800">
-              ${chainLabel}${ticker ? " · " + ticker : ""} · ${scorePart}${label ? " · " + label : ""}
-            </span>
-          </div>
-          <span class="font-mono text-xs md:text-sm text-green-500 font-medium">
-            ${scansLabel}
-          </span>
-        </button>
-      `;
-    });
-
-    container.innerHTML = rows.join("");
-  }
-
-const sorted = (items || []).slice().sort(function (a, b) {
       const ac = typeof a.scanCount === "number" ? a.scanCount : 0;
       const bc = typeof b.scanCount === "number" ? b.scanCount : 0;
       // Descending: highest number of scans first
@@ -2392,7 +2337,7 @@ function renderHolders(data) {
     });
   }
 
-  
+
   function renderCabalAi(data, cabalScore, alertCategory) {
     if (!cabalAiHeadline || !cabalAiList) return;
 
@@ -2411,7 +2356,7 @@ function renderHolders(data) {
       else band = "warning";
     }
 
-    // Fallback if we only have alertCategory string.
+    // Fallback if we have only alertCategory string.
     if (!band && typeof alertCategory === "string") {
       const ac = alertCategory.toLowerCase();
       if (ac.includes("pure community")) band = "excellent";
@@ -2420,7 +2365,7 @@ function renderHolders(data) {
       else if (ac.includes("elevated") || ac.includes("heavy")) band = "warning";
     }
 
-    // If we have no bullets, show neutral explanation.
+    // If we have no bullets, show a neutral explanation.
     if (!bullets.length) {
       cabalAiHeadline.textContent =
         band === "warning"
@@ -2434,7 +2379,7 @@ function renderHolders(data) {
       return;
     }
 
-    // Clamp visual severity/headline to the score band (strict sync).
+    // Clamp visual severity/headline to the score band (Option A: strict sync).
     let headline;
     if (band === "excellent") {
       severity = "info";
@@ -2452,7 +2397,7 @@ function renderHolders(data) {
       headline =
         "Cabal AI sees strong cabal magnets in this holder map.";
     } else {
-      // Fallback: use server-provided headline if we truly have no band.
+      // If we truly have no band, fall back to server-provided headline.
       if (ai.headline) {
         headline = ai.headline;
       } else if (ai.severity === "high") {
@@ -2469,6 +2414,7 @@ function renderHolders(data) {
 
     cabalAiHeadline.textContent = headline;
 
+
     bullets.forEach(function (b) {
       if (!b || !b.text) return;
 
@@ -2478,16 +2424,16 @@ function renderHolders(data) {
       const dot = document.createElement("span");
       dot.className = "h-1.5 w-1.5 rounded-full flex-shrink-0";
 
-      // Decide dot color based on the score band to match the Cabal Score legend.
+      // Dot color now directly mirrors the Cabal Score legend band.
       let dotColorClass = "bg-emerald-400";
       if (band === "excellent") {
-        dotColorClass = "bg-green-500";   // Excellent
+        dotColorClass = "bg-green-500";
       } else if (band === "good") {
-        dotColorClass = "bg-blue-400";    // Good
+        dotColorClass = "bg-blue-400";
       } else if (band === "caution") {
-        dotColorClass = "bg-yellow-400";  // Caution
+        dotColorClass = "bg-yellow-400";
       } else if (band === "warning") {
-        dotColorClass = "bg-red-500";     // Warning
+        dotColorClass = "bg-red-500";
       }
       dot.classList.add(dotColorClass);
 
@@ -2501,7 +2447,8 @@ function renderHolders(data) {
     });
   }
 
-function initAdvancedSections() {
+
+  function initAdvancedSections() {
     setupAdvancedToggle(snapshotAdvancedToggle, snapshotAdvanced, "Address type details");
     setupAdvancedToggle(clustersAdvancedToggle, clustersAdvanced, "Infrastructure details");
     setupAdvancedToggle(topAdvancedToggle, topAdvanced, "Advanced breakdown");
@@ -2534,9 +2481,7 @@ function initAdvancedSections() {
         "/api/scan?token=" +
         encodeURIComponent(rawValue) +
         "&chain=" +
-        encodeURIComponent(chain) +
-        "&key=" +
-        encodeURIComponent(PUBLIC_API_KEY);
+        encodeURIComponent(chain);
 
       const res = await fetch(url, { method: "GET" });
       if (!res.ok) {
