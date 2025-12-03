@@ -482,7 +482,8 @@ const API_BASE = getApiBase();
             </div>
           </div>
         </div>
-                <!-- Cabal AI suspicious behavior watch -->
+
+        <!-- Cabal AI suspicious behavior watch -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-2">
           <div class="flex items-center justify-between">
             <p class="text-xs tracking-wide uppercase text-gray-500">
@@ -490,7 +491,7 @@ const API_BASE = getApiBase();
             </p>
           </div>
           <p id="cabalAiHeadline" class="text-xs text-gray-700">
-            Scan a token to see AI flags on whales, team wallets, bridges and more.
+            Scan a token to see AI flags on whales, team wallets, exchanges and bridges.
           </p>
           <div id="cabalAiList" class="mt-2 space-y-1">
             <p class="text-xs text-gray-500">
@@ -499,7 +500,7 @@ const API_BASE = getApiBase();
           </div>
         </div>
 
-<!-- Top holders summary -->
+        <!-- Top holders summary -->
         <div class="space-y-3 mt-2">
        <div class="flex items-center justify-between w-full">
   <!-- Left side: Share + Feedback links -->
@@ -736,8 +737,8 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   const scoreRatingEl = document.getElementById("scoreRating");
   const scoreSummaryEl = document.getElementById("scoreSummary");
   const scoreExplanationEl = document.getElementById("scoreExplanation");
-const cabalAiHeadline = document.getElementById("cabalAiHeadline");
-const cabalAiList = document.getElementById("cabalAiList");
+  const cabalAiHeadline = document.getElementById("cabalAiHeadline");
+  const cabalAiList = document.getElementById("cabalAiList");
 
   const scoreHistoryLineEl = document.getElementById("scoreHistoryLine");
   const bestScoreLineEl = document.getElementById("bestScoreLine");
@@ -2251,69 +2252,7 @@ function renderHolders(data) {
     }
   }
 
-  
-function renderCabalAi(data) {
-  if (!cabalAiHeadline || !cabalAiList) return;
-
-  cabalAiList.innerHTML = "";
-
-  if (
-    !data ||
-    !Array.isArray(data.bullets) ||
-    !data.bullets.length
-  ) {
-    cabalAiHeadline.textContent =
-      "Scan a token to see AI flags on whales, team wallets, bridges and more.";
-    const p = document.createElement("p");
-    p.className = "text-xs text-gray-500";
-    p.textContent =
-      "No scan yet. Paste a contract and run a scan to see Cabal AI commentary here.";
-    cabalAiList.appendChild(p);
-    return;
-  }
-
-  if (data.severity === "high") {
-    cabalAiHeadline.textContent =
-      data.headline ||
-      "Cabal AI sees strong cabal magnets in this holder map.";
-  } else if (data.severity === "medium") {
-    cabalAiHeadline.textContent =
-      data.headline ||
-      "Cabal AI sees some cabal pressure points to watch.";
-  } else {
-    cabalAiHeadline.textContent =
-      data.headline ||
-      "Cabal AI doesn't see obvious cabal magnets from this holder map.";
-  }
-
-  data.bullets.forEach(function (b) {
-    if (!b || !b.text) return;
-
-    const row = document.createElement("div");
-    row.className = "flex gap-1 items-start";
-
-    const dot = document.createElement("span");
-    dot.className = "mt-[3px] h-1.5 w-1.5 rounded-full";
-    if (b.severity === "high") {
-      dot.classList.add("bg-red-500");
-    } else if (b.severity === "medium") {
-      dot.classList.add("bg-amber-400");
-    } else {
-      dot.classList.add("bg-emerald-400");
-    }
-
-    const text = document.createElement("p");
-    text.className = "text-xs text-gray-700";
-    text.textContent = b.text;
-
-    row.appendChild(dot);
-    row.appendChild(text);
-    cabalAiList.appendChild(row);
-  });
-}
-
-
-function updatePromo(data) {
+  function updatePromo(data) {
     data = data || {};
     if (!buyTooBtn || !shareButtons.length || !footerNote) return;
 
@@ -2395,6 +2334,123 @@ function updatePromo(data) {
     button.addEventListener("click", function () {
       open = !open;
       update();
+    });
+  }
+
+
+  function renderCabalAi(data, cabalScore, alertCategory) {
+    if (!cabalAiHeadline || !cabalAiList) return;
+
+    cabalAiList.innerHTML = "";
+
+    const ai = data || {};
+    const bullets = Array.isArray(ai.bullets) ? ai.bullets.slice() : [];
+    let severity = ai.severity || "info";
+
+    // Map score into bands so Cabal AI always matches the main Cabal Score.
+    let band = null;
+    if (typeof cabalScore === "number" && isFinite(cabalScore)) {
+      if (cabalScore <= 10) band = "excellent";
+      else if (cabalScore <= 30) band = "good";
+      else if (cabalScore <= 60) band = "caution";
+      else band = "warning";
+    }
+
+    // Fallback if we have only alertCategory string.
+    if (!band && typeof alertCategory === "string") {
+      const ac = alertCategory.toLowerCase();
+      if (ac.includes("pure community")) band = "excellent";
+      else if (ac.includes("mild cabal")) band = "good";
+      else if (ac.includes("moderate cabal")) band = "caution";
+      else if (ac.includes("elevated") || ac.includes("heavy")) band = "warning";
+    }
+
+    // If we have no bullets, show a neutral explanation.
+    if (!bullets.length) {
+      cabalAiHeadline.textContent =
+        band === "warning"
+          ? "Cabal AI could not find specific structural notes, but the score skews cabal-heavy."
+          : "Scan a token to see AI flags on whales, team wallets, exchanges and bridges.";
+      var p = document.createElement("p");
+      p.className = "text-xs text-gray-500";
+      p.textContent =
+        "This view looks only at structural supply distribution — who holds the power wallets and custody buckets.";
+      cabalAiList.appendChild(p);
+      return;
+    }
+
+    // Clamp visual severity/headline to the score band (Option A: strict sync).
+    let headline;
+    if (band === "excellent") {
+      severity = "info";
+      headline = "Cabal AI sees no meaningful cabal risk in this holder map.";
+    } else if (band === "good") {
+      if (severity === "high") severity = "medium";
+      headline =
+        "Cabal AI sees mild cabal structuring — overall distribution looks reasonable.";
+    } else if (band === "caution") {
+      if (severity === "info") severity = "medium";
+      headline =
+        "Cabal AI sees moderate cabal pressure points worth watching.";
+    } else if (band === "warning") {
+      severity = "high";
+      headline =
+        "Cabal AI sees strong cabal magnets in this holder map.";
+    } else {
+      // If we truly have no band, fall back to server-provided headline.
+      if (ai.headline) {
+        headline = ai.headline;
+      } else if (ai.severity === "high") {
+        headline =
+          "Cabal AI sees strong cabal magnets in this holder map.";
+      } else if (ai.severity === "medium") {
+        headline =
+          "Cabal AI sees a mix of cabal and community signals in this holder map.";
+      } else {
+        headline =
+          "Cabal AI doesn't see obvious cabal magnets in this holder map.";
+      }
+    }
+
+    cabalAiHeadline.textContent = headline;
+
+    bullets.forEach(function (b) {
+      if (!b || !b.text) return;
+
+      const row = document.createElement("div");
+      row.className = "flex gap-1 items-start";
+
+      const dot = document.createElement("span");
+      dot.className = "mt-[3px] h-1.5 w-1.5 rounded-full";
+
+      // Decide dot color based on both band and bullet severity.
+      let sev = b.severity || "info";
+      if (band === "excellent" || band === "good") {
+        // Never show red for excellent/good scores.
+        sev = "info";
+      } else if (band === "caution") {
+        // Allow amber for anything non-trivial, but no hard red.
+        sev = sev === "info" ? "info" : "medium";
+      } else if (band === "warning") {
+        // Only in warning band do we respect high severity for red.
+        // leave sev as-is.
+      }
+
+      if (sev === "high") {
+        dot.classList.add("bg-red-500");
+      } else if (sev === "medium") {
+        dot.classList.add("bg-amber-400");
+      } else {
+        dot.classList.add("bg-emerald-400");
+      }
+
+      const text = document.createElement("p");
+      text.className = "text-xs text-gray-700";
+      text.textContent = b.text;
+
+      row.appendChild(dot);
+      row.appendChild(text);
+      cabalAiList.appendChild(row);
     });
   }
 
@@ -2485,7 +2541,7 @@ function updatePromo(data) {
       renderClusters(data);
       renderHolders(data);
       renderTopHolderSummaryCards(data);
-      renderCabalAi(data.cabalAi || null);
+      renderCabalAi(data.cabalAi || null, data.cabalScore, data.alertCategory);
       updatePromo(data);
 
       setStatus("Scan complete.", "ok");
