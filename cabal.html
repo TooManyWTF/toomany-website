@@ -2419,10 +2419,10 @@ function renderHolders(data) {
       if (!b || !b.text) return;
 
       const row = document.createElement("div");
-      row.className = "flex gap-1 items-start";
+      row.className = "flex gap-1 items-center";
 
       const dot = document.createElement("span");
-      dot.className = "mt-[3px] h-1.5 w-1.5 rounded-full";
+      dot.className = "h-1.5 w-1.5 rounded-full flex-shrink-0";
 
       // Dot color now directly mirrors the Cabal Score legend band.
       let dotColorClass = "bg-emerald-400";
