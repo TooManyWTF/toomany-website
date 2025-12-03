@@ -2414,6 +2414,7 @@ function renderHolders(data) {
 
     cabalAiHeadline.textContent = headline;
 
+
     bullets.forEach(function (b) {
       if (!b || !b.text) return;
 
@@ -2423,26 +2424,18 @@ function renderHolders(data) {
       const dot = document.createElement("span");
       dot.className = "mt-[3px] h-1.5 w-1.5 rounded-full";
 
-      // Decide dot color based on both band and bullet severity.
-      let sev = b.severity || "info";
-      if (band === "excellent" || band === "good") {
-        // Never show red for excellent/good scores.
-        sev = "info";
+      // Dot color now directly mirrors the Cabal Score legend band.
+      let dotColorClass = "bg-emerald-400";
+      if (band === "excellent") {
+        dotColorClass = "bg-green-500";
+      } else if (band === "good") {
+        dotColorClass = "bg-blue-400";
       } else if (band === "caution") {
-        // Allow amber for anything non-trivial, but no hard red.
-        sev = sev === "info" ? "info" : "medium";
+        dotColorClass = "bg-yellow-400";
       } else if (band === "warning") {
-        // Only in warning band do we respect high severity for red.
-        // leave sev as-is.
+        dotColorClass = "bg-red-500";
       }
-
-      if (sev === "high") {
-        dot.classList.add("bg-red-500");
-      } else if (sev === "medium") {
-        dot.classList.add("bg-amber-400");
-      } else {
-        dot.classList.add("bg-emerald-400");
-      }
+      dot.classList.add(dotColorClass);
 
       const text = document.createElement("p");
       text.className = "text-xs text-gray-700";
@@ -2453,6 +2446,7 @@ function renderHolders(data) {
       cabalAiList.appendChild(row);
     });
   }
+
 
   function initAdvancedSections() {
     setupAdvancedToggle(snapshotAdvancedToggle, snapshotAdvanced, "Address type details");
