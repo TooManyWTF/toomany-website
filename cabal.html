@@ -1145,22 +1145,49 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
       return;
     }
 
+    // Sort by Cabal score (latest) when available, otherwise fall back to bestScore.
     const sorted = (items || []).slice().sort(function (a, b) {
-      const as = typeof a.bestScore === "number" ? a.bestScore : 0;
-      const bs = typeof b.bestScore === "number" ? b.bestScore : 0;
-      // Ascending: lowest score (cleanest) first
-      return as - bs;
+      const as =
+        typeof a.cabalScore === "number"
+          ? a.cabalScore
+          : typeof a.bestScore === "number"
+          ? a.bestScore
+          : Infinity;
+      const bs =
+        typeof b.cabalScore === "number"
+          ? b.cabalScore
+          : typeof b.bestScore === "number"
+          ? b.bestScore
+          : Infinity;
+
+      if (as !== bs) return as - bs;
+
+      const at =
+        typeof a.lastScannedTs === "number" ? a.lastScannedTs : 0;
+      const bt =
+        typeof b.lastScannedTs === "number" ? b.lastScannedTs : 0;
+      // Newest first when scores tie
+      return bt - at;
     });
 
     const rows = sorted.slice(0, 5).map(function (item) {
       const shortToken = item.token
         ? shortenAddress(item.token)
         : "Unknown token";
-      const scorePart =
+
+      const effectiveScore =
         typeof item.cabalScore === "number"
-          ? item.cabalScore + "/100"
+          ? item.cabalScore
+          : typeof item.bestScore === "number"
+          ? item.bestScore
+          : null;
+
+      const scorePart =
+        effectiveScore != null
+          ? effectiveScore + "/100"
           : "Score unknown";
-      const label = item.bestAlertCategory || "";
+
+      const label = item.bestAlertCategory || item.alertCategory || "";
       const chainLabel = (item.chain || "eth").toUpperCase();
       const rawTicker = item.symbol || item.ticker;
       const ticker = rawTicker ? rawTicker : null;
@@ -1197,8 +1224,7 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
 
     container.innerHTML = rows.join("");
   }
-
-  function renderWorstScores(items) {
+function renderWorstScores(items) {
     const container = document.getElementById("worstScoresContainer");
     if (!container) return;
 
@@ -1326,6 +1352,20 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
     });
 
     container.innerHTML = rows.join("");
+  }
+
+  async function fetchScannerLeaderboard() {
+    try {
+      const res = await fetch(API_BASE + "/api/stats/leaderboard?limit=5");
+      if (!res.ok) return;
+      const data = await res.json();
+      const items = Array.isArray(data && data.leaderboard)
+        ? data.leaderboard
+        : [];
+      renderBestScores(items);
+    } catch (err) {
+      console.error("Failed to load leaderboard for scanner activity:", err);
+    }
   }
 function formatRelativeTime(ts) {
     if (!ts) return "";
@@ -2771,6 +2811,7 @@ function renderHolders(data) {
   updatePromo();
   initFromUrl();
   fetchRecentScans();
+  fetchScannerLeaderboard();
 })();
 </script>
 </body>
