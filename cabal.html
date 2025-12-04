@@ -1157,8 +1157,8 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
         ? shortenAddress(item.token)
         : "Unknown token";
       const scorePart =
-        typeof item.bestScore === "number"
-          ? item.bestScore + "/100"
+        typeof item.cabalScore === "number"
+          ? item.cabalScore + "/100"
           : "Score unknown";
       const label = item.bestAlertCategory || "";
       const chainLabel = (item.chain || "eth").toUpperCase();
@@ -1287,8 +1287,8 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
         ? shortenAddress(item.token)
         : "Unknown token";
       const scorePart =
-        typeof item.bestScore === "number"
-          ? item.bestScore + "/100"
+        typeof item.cabalScore === "number"
+          ? item.cabalScore + "/100"
           : "Score unknown";
       const label = item.bestAlertCategory || "";
       const chainLabel = (item.chain || "eth").toUpperCase();
