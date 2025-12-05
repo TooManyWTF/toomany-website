@@ -356,162 +356,6 @@ const API_BASE = getApiBase();
           </div>
 
 
-
-          <!-- CABAL FINGERPRINT™ (cyberpunk radial DNA) -->
-          <div class="border border-gray-800 rounded-xl bg-gray-900 p-4 md:p-5 space-y-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-xs md:text-sm tracking-wide uppercase text-gray-300">
-                  CABAL FINGERPRINT&trade;
-                </p>
-                <p class="text-xs md:text-sm text-gray-400 mt-1">
-                  Behavioral DNA of this token’s holder map.
-                </p>
-              </div>
-              <span class="inline-flex items-center px-2.5 py-1 rounded-full border border-yellow-400 text-[10px] md:text-xs font-mono uppercase tracking-wide text-yellow-200 bg-black bg-opacity-60">
-                <span class="w-2 h-2 rounded-full bg-green-400 mr-1.5 shadow-md"></span>
-                Live scan
-              </span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-center">
-              <!-- Radial fingerprint -->
-              <div class="md:col-span-2 flex items-center justify-center">
-                <div class="relative w-full max-w-xs md:max-w-sm aspect-square">
-                  <svg viewBox="0 0 200 200" class="w-full h-full">
-                    <!-- Background glow -->
-                    <defs>
-                      <radialGradient id="fingerprintGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#4ade80" stop-opacity="0.45" />
-                        <stop offset="55%" stop-color="#22c55e" stop-opacity="0.12" />
-                        <stop offset="100%" stop-color="#000000" stop-opacity="0" />
-                      </radialGradient>
-                    </defs>
-
-                    <!-- Outer glow -->
-                    <circle cx="100" cy="100" r="92" fill="url(#fingerprintGlow)" />
-
-                    <!-- Concentric rings -->
-                    <circle cx="100" cy="100" r="70" fill="none" stroke="#27272a" stroke-width="1" />
-                    <circle cx="100" cy="100" r="50" fill="none" stroke="#3f3f46" stroke-width="1" />
-                    <circle cx="100" cy="100" r="30" fill="none" stroke="#52525b" stroke-width="1" />
-
-                    <!-- Spokes -->
-                    <g stroke="#27272a" stroke-width="1">
-                      <line x1="100" y1="10" x2="100" y2="190" />
-                      <line x1="10" y1="100" x2="190" y2="100" />
-                      <line x1="32" y1="32" x2="168" y2="168" />
-                      <line x1="32" y1="168" x2="168" y2="32" />
-                    </g>
-
-                    <!-- Data polygon (static example shape for now) -->
-                    <polygon
-                      id="cabalFingerprintShape"
-                      points="
-                        100,20
-                        165,80
-                        175,120
-                        140,175
-                        100,185
-                        55,170
-                        30,115
-                        40,60
-                      "
-                      fill="rgba(74,222,128,0.10)"
-                      stroke="#a855f7"
-                      stroke-width="2"
-                      stroke-linejoin="round"
-                    />
-
-                    <!-- Inner neon contour -->
-                    <polygon
-                      points="
-                        100,35
-                        150,85
-                        160,115
-                        135,160
-                        100,170
-                        65,155
-                        45,115
-                        55,70
-                      "
-                      fill="none"
-                      stroke="#22c55e"
-                      stroke-width="1.2"
-                      stroke-dasharray="4 3"
-                      stroke-linejoin="round"
-                    />
-
-                    <!-- Center node -->
-                    <circle cx="100" cy="100" r="4" fill="#22c55e" />
-                    <circle cx="100" cy="100" r="8" fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.6" />
-
-                    <!-- Direction labels -->
-                    <g font-size="8" fill="#9ca3af" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">
-                      <!-- Top: Whale Gravity -->
-                      <text x="100" y="20">Whale</text>
-                      <text x="100" y="30">Gravity</text>
-
-                      <!-- Upper-right: CEX Custody Heat -->
-                      <text x="164" y="40">CEX</text>
-                      <text x="164" y="50">Heat</text>
-
-                      <!-- Right: Bridge Dependency -->
-                      <text x="188" y="104">Bridge</text>
-                      <text x="188" y="114">Depend.</text>
-
-                      <!-- Lower-right: LP Stability -->
-                      <text x="164" y="166">LP</text>
-                      <text x="164" y="176">Stability</text>
-
-                      <!-- Bottom: Holder Churn -->
-                      <text x="100" y="188">Holder</text>
-                      <text x="100" y="198">Churn</text>
-
-                      <!-- Lower-left: Cluster Density -->
-                      <text x="36" y="166">Cluster</text>
-                      <text x="36" y="176">Density</text>
-
-                      <!-- Left: Top 10 Compression -->
-                      <text x="12" y="104">Top 10</text>
-                      <text x="12" y="114">Compress.</text>
-
-                      <!-- Upper-left: Fresh Wallet Velocity -->
-                      <text x="36" y="40">Fresh</text>
-                      <text x="36" y="50">Velocity</text>
-                    </g>
-                  </svg>
-                </div>
-              </div>
-
-              <!-- Cabal health summary (Option A) -->
-              <div class="space-y-3">
-                <p class="text-xs md:text-sm uppercase tracking-wide text-gray-400">
-                  Cabal health summary
-                </p>
-                <div
-                  id="fingerprintHealthPill"
-                  class="inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 bg-gray-800 text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-200"
-                >
-                  <span
-                    id="fingerprintHealthDot"
-                    class="w-2 h-2 rounded-full bg-gray-400 mr-1.5"
-                  ></span>
-                  <span id="fingerprintHealthLabel">Scan a token</span>
-                </div>
-                <p
-                  id="fingerprintHealthSummary"
-                  class="text-xs md:text-sm text-gray-300"
-                >
-                  Scan a token to see how balanced this fingerprint looks based on Cabal Score band.
-                </p>
-                <p class="text-sm text-gray-600">
-                  Rounder shapes indicate healthier holder ecosystems. Sharp, lopsided spikes show which behaviors dominate cabal risk.
-                </p>
-              </div>
-            </div>
-          </div>
-
           <!-- Supply snapshot -->
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="flex items-center justify-between">
@@ -825,72 +669,61 @@ const API_BASE = getApiBase();
           <p class="text-sm tracking-wide uppercase text-gray-500">How to read this page</p>
           <div class="space-y-2 text-sm text-gray-500">
             <p>
-              <span class="font-semibold">Cabal Score</span></p>
-              <p>A 0–100 risk score for how “caballed” the visible supply looks. Lower is better.
+              <span class="font-semibold">Cabal Score.</span>
+              A 0–100 risk score for how “caballed” the visible supply looks. Lower is better.
               The Cabal Score looks at how much supply sits in whales, exchanges, bridges, LPs and project wallets
               versus many smaller community holders. It only uses the top holders we can see on-chain.
             </p>
-			<p><span class="font-semibold">How to Read This Fingerprint</span></p>
-            <ul class="list-disc">
-			  <li>Whale Gravity – how much control the largest whales have; farther out = fewer wallets hold more power.</li>
-<li>CEX Custody Heat – how much supply sits on exchanges; higher = more centralized exchange risk.</li>
-<li>Bridge Dependency – how bridge-heavy the token is; higher = more supply locked in bridges.</li>
-<li>LP Stability – how fragile the LP looks; higher = easier to nuke or manipulate liquidity.</li>
-<li>Holder Churn – how fast wallets rotate; higher = degen / bot-heavy trading, less diamond hands.</li>
-<li>Cluster Density – how much power sits in shared infra (CEX, LPs, bridges, project multisigs).</li>
-<li>Top 10 Compression – how concentrated the top 10 wallets are; higher = more cabal tension at the top.</li>
-<li>Fresh Wallet Velocity – how quickly new wallets rush in; higher = hype / momentum inflow speed.</li></ul>
-<p>Bigger spikes mean stronger influence. Smooth, rounded shapes are healthier; jagged, lopsided shapes point to cabal-heavy risk.</p>
-			</p>
             <p>
-              <span class="font-semibold">Snapshot of Supply</span></p>
-              <p>Breaks the visible supply into buckets like Community, Whales, CEX custody, Bridges, DEX / LP,
+              <span class="font-semibold">Snapshot of Supply</span>
+              Breaks the visible supply into buckets like Community, Whales, CEX custody, Bridges, DEX / LP,
               Project / Treasury and Burned. Percentages are based on the top holders returned by the API,
               after tagging known CEX, LP, bridge, project and burn wallets.
             </p>
             <p>
-              <span class="font-semibold">Custody Clusters</span></p>
-              <p>Groups big shared wallets (centralized exchanges, LP pools, project multisigs, bridges) into clusters
+              <span class="font-semibold">Custody Clusters</span>
+              Groups big shared wallets (centralized exchanges, LP pools, project multisigs, bridges) into clusters
               so you can see how much supply those infrastructures jointly control. A large cluster means a single
               failure or freeze could affect a big chunk of supply.
             </p>
             <p>
-              <span class="font-semibold">Top Holders Summary</span></p>
-              <p>Shows how concentrated the largest wallets are: top 10 / 20 / 50 holders and whale wallets.
+              <span class="font-semibold">Top Holders Summary</span>
+              Shows how concentrated the largest wallets are: top 10 / 20 / 50 holders and whale wallets.
               Whale wallets are non-infrastructure, non-exchange holders above our whale threshold of the supply.
               Higher percentages here mean more power in fewer hands.
             </p>
             <p>
-              <span class="font-semibold">Top Holders Table</span></p>
-              <p>A wallet-by-wallet view of the largest holders we can see. Tags like Whale, CEX, DEX / LP,
+              <span class="font-semibold">Top Holders Table</span>
+              A wallet-by-wallet view of the largest holders we can see. Tags like Whale, CEX, DEX / LP,
               Project, Bridge, Burn and Contract explain what each address looks like. “View” opens the wallet
               on a block explorer for deeper manual research.
             </p>
+            <div>
+              <p>
+                <span class="font-semibold">Cabal AI — suspicious behavior watch</span>
+                First of its kind AI that reads the same holder map you see and highlights structural cabal magnets:
+                oversized whales, team wallets with too much control, exchange or bridge dominance, or unusually
+                clean community distributions. The colored dots match the main Cabal Score band (Excellent, Good,
+                Caution, Warning).
+              </p>
+              <p>V2 auto AI behavioral detection now live.</p>
+              <ul class="list-disc list-inside">
+                <li>Whale Wakeups — dormant whales that suddenly reactivate.</li>
+                <li>Team Micro-Drain — treasury wallets dripping small transfers across multiple addresses.</li>
+                <li>Cluster Pressure — CEX / bridge custody hotspots.</li>
+                <li>Structural Concentration — top-holder power pockets.</li>
+                <li>LP Shockwave Detection — if LP decreases &gt;20% in 24h.</li>
+                <li>Bridge Scan — large bridge inflow followed by exchange outflow.</li>
+                <li>Funding Wallet Fan-Out — if a wallet sends seeds to 10+ fresh wallets, sybil / honeypot risk.</li>
+              </ul>
+            </div>
             <p>
-              <span class="font-semibold">Cabal AI — suspicious behavior watch</span></p>
-              <p>First of its kind AI with that reads the same holder map you see and highlights structural cabal magnets:
-              oversized whales, team wallets with too much control, exchange or bridge dominance, or unusually
-              clean community distributions. The colored dots match the main Cabal Score band (Excellent, Good,
-              Caution, Warning).
-			  <p>V2 auto AI behavioral detection now live.
-			  <ul class="list-disc">
-			  <li>Whale Wakeups — dormant whales that suddenly reactivate</li>
-               <li>Team Micro-Drain — treasury wallets dripping small transfers across multiple addresses</li>
-               <li>Cluster Pressure — CEX / bridge custody hotspots</li>
-               <li>Structural Concentration — top-holder power pockets</li>
-			   <li>LP Shockwave Detection — if LP decreases >20% in 24h</li>
-               <li>Bridge Scan - large bridge inflow is followed by exchange outflow</li>
-			   <li>Funding Wallet Fan-Out - if a wallet sends seeds to 10+ fresh wallets sybil/honeypot risk.</li>
-			   </ul></p>
-            </p>
-            <p>
-              <span class="font-semibold">Scanner Activity</span></p>
-              <p>These four lists look at all scans run through this tool:
+              <span class="font-semibold">Scanner Activity</span>
+              These four lists look at all scans run through this tool:
               Leaderboard shows contracts with the cleanest scores,
               Hall of Shame surfaces the most cabal-heavy ones,
               Recent Scans is the latest contracts checked,
-              and Most Scanned Contracts shows what other users keep
-              double-checking.
+              and Most Scanned Contracts shows what other users keep double-checking.
             </p>
           </div>
         </div>
@@ -969,15 +802,8 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   const scoreRatingEl = document.getElementById("scoreRating");
   const scoreSummaryEl = document.getElementById("scoreSummary");
   const scoreExplanationEl = document.getElementById("scoreExplanation");
-  const cabalFingerprintShape = document.getElementById("cabalFingerprintShape");
   const cabalAiHeadline = document.getElementById("cabalAiHeadline");
   const cabalAiList = document.getElementById("cabalAiList");
-  const fingerprintHealthPill = document.getElementById("fingerprintHealthPill");
-  const fingerprintHealthDot = document.getElementById("fingerprintHealthDot");
-  const fingerprintHealthLabel = document.getElementById("fingerprintHealthLabel");
-  const fingerprintHealthSummary = document.getElementById("fingerprintHealthSummary");
-  const fingerprintGlowStops = document.querySelectorAll("#fingerprintGlow stop");
-
 
   const scoreHistoryLineEl = document.getElementById("scoreHistoryLine");
   const bestScoreLineEl = document.getElementById("bestScoreLine");
@@ -1132,88 +958,6 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
     else if (bucket === "caution") colorClass = "bg-yellow-400";
     else if (bucket === "warning") colorClass = "bg-red-500";
     scorePillDot.className = base + colorClass;
-  }
-
-  function updateFingerprintHealth(bucket) {
-    if (!fingerprintHealthPill || !fingerprintHealthLabel || !fingerprintHealthDot) {
-      return;
-    }
-
-    let label = "Scan a token";
-    let summary =
-      "Scan a token to see how balanced this fingerprint looks based on Cabal Score band.";
-    let pillClasses =
-      "inline-flex items-center px-2.5 py-1 rounded-full border text-[10px] md:text-xs font-mono uppercase tracking-wide ";
-    let dotColor = "bg-gray-400";
-    let borderColor = "border-gray-600";
-    let bgColor = "bg-gray-800";
-    let textColor = "text-gray-200";
-
-    if (bucket === "excellent") {
-      label = "Very stable";
-      summary =
-        "Holder map looks extremely balanced with low cabal tension.";
-      borderColor = "border-green-500";
-      bgColor = "bg-green-900 bg-opacity-20";
-      textColor = "text-green-200";
-      dotColor = "bg-green-400";
-    } else if (bucket === "good") {
-      label = "Stable";
-      summary =
-        "Mostly healthy distribution with mild concentration hotspots.";
-      borderColor = "border-blue-500";
-      bgColor = "bg-blue-900 bg-opacity-20";
-      textColor = "text-blue-200";
-      dotColor = "bg-blue-400";
-    } else if (bucket === "caution") {
-      label = "Imbalanced";
-      summary =
-        "Cabal pressure starting to build — watch whales, LP and clusters.";
-      borderColor = "border-yellow-400";
-      bgColor = "bg-yellow-900 bg-opacity-20";
-      textColor = "text-yellow-100";
-      dotColor = "bg-yellow-400";
-    } else if (bucket === "warning") {
-      label = "High cabal tension";
-      summary =
-        "Cabal-heavy structure. One or more behaviors dominate this fingerprint.";
-      borderColor = "border-red-500";
-      bgColor = "bg-red-900 bg-opacity-20";
-      textColor = "text-red-100";
-      dotColor = "bg-red-400";
-    }
-
-    fingerprintHealthPill.className =
-      pillClasses + borderColor + " " + bgColor + " " + textColor;
-    fingerprintHealthLabel.textContent = label;
-    fingerprintHealthSummary.textContent = summary;
-
-    fingerprintHealthDot.className =
-      "w-2 h-2 rounded-full mr-1.5 " + dotColor;
-
-    // Update halo gradient color to match band
-    if (fingerprintGlowStops && fingerprintGlowStops.length >= 2) {
-      let inner = "#4ade80";
-      let mid = "#22c55e";
-      if (bucket === "excellent") {
-        inner = "#4ade80";
-        mid = "#22c55e";
-      } else if (bucket === "good") {
-        inner = "#60a5fa";
-        mid = "#3b82f6";
-      } else if (bucket === "caution") {
-        inner = "#facc15";
-        mid = "#eab308";
-      } else if (bucket === "warning") {
-        inner = "#f97373";
-        mid = "#ef4444";
-      } else {
-        inner = "#9ca3af";
-        mid = "#6b7280";
-      }
-      fingerprintGlowStops[0].setAttribute("stop-color", inner);
-      fingerprintGlowStops[1].setAttribute("stop-color", mid);
-    }
   }
 
   function sanitizeSummary(text) {
@@ -2591,7 +2335,6 @@ function renderHolders(data) {
 
     setLegend(bucket);
     setScorePillDot(bucket);
-    updateFingerprintHealth(bucket);
 
     // Show extra explainer when the scanned token is $TOO
     const tooExplainer = document.getElementById("tooExplainer");
@@ -2815,88 +2558,7 @@ function renderHolders(data) {
     setupAdvancedToggle(clustersAdvancedToggle, clustersAdvanced, "Infrastructure details");
     setupAdvancedToggle(topAdvancedToggle, topAdvanced, "Advanced breakdown");
   }
-  
-function updateCabalFingerprint(data) {
-    if (!cabalFingerprintShape) return;
-
-    const wi = data && data.walletInsights ? data.walletInsights : {};
-
-    function pickPercent(val, fallback) {
-      return (typeof val === "number" && !isNaN(val)) ? val : fallback;
-    }
-
-    function clamp01(x) {
-      if (x == null || isNaN(x)) return 0.5;
-      if (x < 0) return 0;
-      if (x > 1) return 1;
-      return x;
-    }
-
-    function pctToNorm(p) {
-      if (p == null || isNaN(p)) return 0.5;
-      return clamp01(p / 100);
-    }
-
-    const whalePercent = pickPercent(wi.whalePercent, 0);
-    const cexPercent = pickPercent(wi.cexPercent, 0);
-    const bridgePercent = pickPercent(wi.bridgePercent, 0);
-    const dexPercent = pickPercent(wi.dexPercent, 0);
-    const top10Percent = pickPercent(wi.top10Percent, 0);
-
-    const holderCountTop =
-      typeof wi.holderCountTop === "number" ? wi.holderCountTop : null;
-    const infraSum =
-      (typeof wi.cexWalletCount === "number" ? wi.cexWalletCount : 0) +
-      (typeof wi.dexWalletCount === "number" ? wi.dexWalletCount : 0) +
-      (typeof wi.projectWalletCount === "number" ? wi.projectWalletCount : 0) +
-      (typeof wi.bridgeWalletCount === "number" ? wi.bridgeWalletCount : 0);
-
-    let clusterDensity;
-    if (holderCountTop && holderCountTop > 0) {
-      clusterDensity = (infraSum / holderCountTop) * 100;
-    } else {
-      clusterDensity = infraSum > 0 ? 80 : 20;
-    }
-
-    const inferredChurn = (dexPercent + cexPercent) / 2;
-    const inferredFresh = (bridgePercent + whalePercent) / 2;
-
-    const holderChurn = pickPercent(wi.churnPercent, inferredChurn);
-    const freshVelocity = pickPercent(wi.freshWalletPercent, inferredFresh);
-
-    const vWhale = pctToNorm(whalePercent);
-    const vCex = pctToNorm(cexPercent);
-    const vBridge = pctToNorm(bridgePercent);
-    const vLpFragile = 1 - pctToNorm(dexPercent);
-    const vChurn = pctToNorm(holderChurn);
-    const vCluster = pctToNorm(clusterDensity);
-    const vTop10 = pctToNorm(top10Percent);
-    const vFresh = pctToNorm(freshVelocity);
-
-    const values = [vWhale, vCex, vBridge, vLpFragile, vChurn, vCluster, vTop10, vFresh];
-
-    const centerX = 100;
-    const centerY = 100;
-    const minR = 30;
-    const maxR = 80;
-    const step = (Math.PI * 2) / values.length;
-    const pts = [];
-
-    for (let i = 0; i < values.length; i++) {
-      const val = clamp01(values[i]);
-      const angle = -Math.PI / 2 + step * i;
-      const r = minR + (maxR - minR) * val;
-      const x = centerX + Math.cos(angle) * r;
-      const y = centerY + Math.sin(angle) * r;
-      pts.push(x.toFixed(1) + "," + y.toFixed(1));
-    }
-
-    if (pts.length) {
-      cabalFingerprintShape.setAttribute("points", pts.join(" "));
-    }
-  }
-
-async function runScan() {
+  async function runScan() {
     const rawValue = tokenInput ? tokenInput.value.trim() : "";
     if (!rawValue) {
       setStatus("Paste a token contract address first.", "error");
@@ -2973,7 +2635,6 @@ async function runScan() {
 
       renderScore(data);
       renderWalletInsights(data);
-      updateCabalFingerprint(data);
       renderClusters(data);
       renderHolders(data);
       renderTopHolderSummaryCards(data);
