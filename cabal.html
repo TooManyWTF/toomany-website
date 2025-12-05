@@ -445,6 +445,41 @@ const API_BASE = getApiBase();
                     <!-- Center node -->
                     <circle cx="100" cy="100" r="4" fill="#22c55e" />
                     <circle cx="100" cy="100" r="8" fill="none" stroke="#22c55e" stroke-width="0.8" opacity="0.6" />
+
+                    <!-- Direction labels -->
+                    <g font-size="8" fill="#9ca3af" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">
+                      <!-- Top: Whale Gravity -->
+                      <text x="100" y="14">Whale</text>
+                      <text x="100" y="24">Gravity</text>
+
+                      <!-- Upper-right: CEX Custody Heat -->
+                      <text x="164" y="40">CEX</text>
+                      <text x="164" y="50">Heat</text>
+
+                      <!-- Right: Bridge Dependency -->
+                      <text x="188" y="104">Bridge</text>
+                      <text x="188" y="114">Depend.</text>
+
+                      <!-- Lower-right: LP Stability -->
+                      <text x="164" y="166">LP</text>
+                      <text x="164" y="176">Stability</text>
+
+                      <!-- Bottom: Holder Churn -->
+                      <text x="100" y="192">Holder</text>
+                      <text x="100" y="202">Churn</text>
+
+                      <!-- Lower-left: Cluster Density -->
+                      <text x="36" y="166">Cluster</text>
+                      <text x="36" y="176">Density</text>
+
+                      <!-- Left: Top 10 Compression -->
+                      <text x="12" y="104">Top 10</text>
+                      <text x="12" y="114">Compress.</text>
+
+                      <!-- Upper-left: Fresh Wallet Velocity -->
+                      <text x="36" y="40">Fresh</text>
+                      <text x="36" y="50">Velocity</text>
+                    </g>
                   </svg>
                 </div>
               </div>
@@ -500,9 +535,18 @@ const API_BASE = getApiBase();
             <p class="text-xs md:text-sm uppercase tracking-wide text-gray-300">
               How to Read This Fingerprint
             </p>
-            <p class="text-xs md:text-sm text-gray-400">
-              Each spike shows the strength of one behavior: whales, CEX custody, bridge reliance, LP fragility, holder churn, cluster density, top‑10 compression, and fresh‑wallet velocity. 
-              Farther from center = stronger influence. A smooth, round shape = healthier distribution. A jagged, uneven shape = cabal‑heavy risk.
+            <ul class="list-disc list-inside space-y-1.5 text-xs md:text-sm text-gray-400">
+              <li><span class="font-semibold text-gray-200">Whale Gravity</span> – how much control the largest whales have; farther out = fewer wallets hold more power.</li>
+              <li><span class="font-semibold text-gray-200">CEX Custody Heat</span> – how much supply sits on exchanges; higher = more centralized exchange risk.</li>
+              <li><span class="font-semibold text-gray-200">Bridge Dependency</span> – how bridge-heavy the token is; higher = more supply locked in bridges.</li>
+              <li><span class="font-semibold text-gray-200">LP Stability</span> – how fragile the LP looks; higher = easier to nuke or manipulate liquidity.</li>
+              <li><span class="font-semibold text-gray-200">Holder Churn</span> – how fast wallets rotate; higher = degen / bot-heavy trading, less diamond hands.</li>
+              <li><span class="font-semibold text-gray-200">Cluster Density</span> – how much power sits in shared infra (CEX, LPs, bridges, project multisigs).</li>
+              <li><span class="font-semibold text-gray-200">Top 10 Compression</span> – how concentrated the top 10 wallets are; higher = more cabal tension at the top.</li>
+              <li><span class="font-semibold text-gray-200">Fresh Wallet Velocity</span> – how quickly new wallets rush in; higher = hype / momentum inflow speed.</li>
+            </ul>
+            <p class="text-[11px] md:text-xs text-gray-500">
+              Bigger spikes mean stronger influence. Smooth, rounded shapes are healthier; jagged, lopsided shapes point to cabal-heavy risk.
             </p>
           </div>
 
