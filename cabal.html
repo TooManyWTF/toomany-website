@@ -940,6 +940,7 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   const scoreRatingEl = document.getElementById("scoreRating");
   const scoreSummaryEl = document.getElementById("scoreSummary");
   const scoreExplanationEl = document.getElementById("scoreExplanation");
+  const cabalFingerprintShape = document.getElementById("cabalFingerprintShape");
   const cabalAiHeadline = document.getElementById("cabalAiHeadline");
   const cabalAiList = document.getElementById("cabalAiList");
 
@@ -2696,7 +2697,88 @@ function renderHolders(data) {
     setupAdvancedToggle(clustersAdvancedToggle, clustersAdvanced, "Infrastructure details");
     setupAdvancedToggle(topAdvancedToggle, topAdvanced, "Advanced breakdown");
   }
-  async function runScan() {
+  
+function updateCabalFingerprint(data) {
+    if (!cabalFingerprintShape) return;
+
+    const wi = data && data.walletInsights ? data.walletInsights : {};
+
+    function pickPercent(val, fallback) {
+      return (typeof val === "number" && !isNaN(val)) ? val : fallback;
+    }
+
+    function clamp01(x) {
+      if (x == null || isNaN(x)) return 0.5;
+      if (x < 0) return 0;
+      if (x > 1) return 1;
+      return x;
+    }
+
+    function pctToNorm(p) {
+      if (p == null || isNaN(p)) return 0.5;
+      return clamp01(p / 100);
+    }
+
+    const whalePercent = pickPercent(wi.whalePercent, 0);
+    const cexPercent = pickPercent(wi.cexPercent, 0);
+    const bridgePercent = pickPercent(wi.bridgePercent, 0);
+    const dexPercent = pickPercent(wi.dexPercent, 0);
+    const top10Percent = pickPercent(wi.top10Percent, 0);
+
+    const holderCountTop =
+      typeof wi.holderCountTop === "number" ? wi.holderCountTop : null;
+    const infraSum =
+      (typeof wi.cexWalletCount === "number" ? wi.cexWalletCount : 0) +
+      (typeof wi.dexWalletCount === "number" ? wi.dexWalletCount : 0) +
+      (typeof wi.projectWalletCount === "number" ? wi.projectWalletCount : 0) +
+      (typeof wi.bridgeWalletCount === "number" ? wi.bridgeWalletCount : 0);
+
+    let clusterDensity;
+    if (holderCountTop && holderCountTop > 0) {
+      clusterDensity = (infraSum / holderCountTop) * 100;
+    } else {
+      clusterDensity = infraSum > 0 ? 80 : 20;
+    }
+
+    const inferredChurn = (dexPercent + cexPercent) / 2;
+    const inferredFresh = (bridgePercent + whalePercent) / 2;
+
+    const holderChurn = pickPercent(wi.churnPercent, inferredChurn);
+    const freshVelocity = pickPercent(wi.freshWalletPercent, inferredFresh);
+
+    const vWhale = pctToNorm(whalePercent);
+    const vCex = pctToNorm(cexPercent);
+    const vBridge = pctToNorm(bridgePercent);
+    const vLpFragile = 1 - pctToNorm(dexPercent);
+    const vChurn = pctToNorm(holderChurn);
+    const vCluster = pctToNorm(clusterDensity);
+    const vTop10 = pctToNorm(top10Percent);
+    const vFresh = pctToNorm(freshVelocity);
+
+    const values = [vWhale, vCex, vBridge, vLpFragile, vChurn, vCluster, vTop10, vFresh];
+
+    const centerX = 100;
+    const centerY = 100;
+    const minR = 30;
+    const maxR = 80;
+    const step = (Math.PI * 2) / values.length;
+    const pts = [];
+
+    for (let i = 0; i < values.length; i++) {
+      const val = clamp01(values[i]);
+      const angle = -Math.PI / 2 + step * i;
+      const r = minR + (maxR - minR) * val;
+      const x = centerX + Math.cos(angle) * r;
+      const y = centerY + Math.sin(angle) * r;
+      pts.push(x.toFixed(1) + "," + y.toFixed(1));
+    }
+
+    if (pts.length) {
+      cabalFingerprintShape.setAttribute("points", pts.join(" "));
+    }
+  }
+
+async function runScan() {
     const rawValue = tokenInput ? tokenInput.value.trim() : "";
     if (!rawValue) {
       setStatus("Paste a token contract address first.", "error");
@@ -2773,6 +2855,7 @@ function renderHolders(data) {
 
       renderScore(data);
       renderWalletInsights(data);
+      updateCabalFingerprint(data);
       renderClusters(data);
       renderHolders(data);
       renderTopHolderSummaryCards(data);
