@@ -382,9 +382,9 @@ const API_BASE = getApiBase();
                     <!-- Background glow -->
                     <defs>
                       <radialGradient id="fingerprintGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#4ade80" stop-opacity="0.45" />
-                        <stop offset="55%" stop-color="#22c55e" stop-opacity="0.12" />
-                        <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+                        <stop id="fpStopInner" offset="0%" stop-color="#4ade80" stop-opacity="0.45" />
+                        <stop id="fpStopMid" offset="55%" stop-color="#22c55e" stop-opacity="0.12" />
+                        <stop id="fpStopOuter" offset="100%" stop-color="#000000" stop-opacity="0" />
                       </radialGradient>
                     </defs>
 
@@ -484,48 +484,24 @@ const API_BASE = getApiBase();
                 </div>
               </div>
 
-              <!-- Legend -->
-              <div class="space-y-2">
+                            <!-- Cabal health summary (replaces metrics legend) -->
+              <div class="space-y-3">
                 <p class="text-xs md:text-sm uppercase tracking-wide text-gray-400">
-                  Metrics in this fingerprint
+                  Cabal health summary
                 </p>
-                <ul class="space-y-1.5 text-xs md:text-sm text-gray-300">
-                  <li class="flex items-center justify-between">
-                    <span>Whale Gravity</span>
-                    <span class="font-mono text-[11px] text-green-300">low ▸ high</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>CEX Custody Heat</span>
-                    <span class="font-mono text-[11px] text-yellow-300">cold ▸ hot</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Bridge Dependency</span>
-                    <span class="font-mono text-[11px] text-yellow-300">local ▸ bridged</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>LP Stability</span>
-                    <span class="font-mono text-[11px] text-red-300">stable ▸ fragile</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Holder Churn</span>
-                    <span class="font-mono text-[11px] text-indigo-300">diamond ▸ degen</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Cluster Density</span>
-                    <span class="font-mono text-[11px] text-pink-300">distributed ▸ clustered</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Top 10 Compression</span>
-                    <span class="font-mono text-[11px] text-orange-300">loose ▸ tight</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Fresh Wallet Velocity</span>
-                    <span class="font-mono text-[11px] text-sky-300">slow ▸ hyper</span>
-                  </li>
-                </ul>
-                <p class="text-[11px] md:text-xs text-gray-400 mt-1">
-                  Future update: this shape will update live per scan, using Cabal Exposure engine data.
+                <div class="border border-gray-700 rounded-lg bg-black bg-opacity-30 px-3 py-2 space-y-1">
+                  <p class="text-[11px] md:text-xs text-gray-300">
+                    <span class="font-semibold">Stability band:</span>
+                    <span id="fingerprintStabilityLabel" class="text-green-300 font-semibold">Balanced holder ecosystem</span>
+                  </p>
+                  <p id="fingerprintRiskLine" class="text-[11px] md:text-xs text-gray-400">
+                    Smooth, rounded shapes indicate healthier supply. Sharp spikes show where cabal risk is concentrated.
+                  </p>
+                </div>
+                <p id="fingerprintHintLine" class="text-[11px] md:text-xs text-gray-500">
+                  This summary follows the main Cabal Score band (Excellent, Good, Caution, Warning).
                 </p>
+              </div>
               </div>
             </div>
           </div>
@@ -996,6 +972,10 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   const scoreSummaryEl = document.getElementById("scoreSummary");
   const scoreExplanationEl = document.getElementById("scoreExplanation");
   const cabalFingerprintShape = document.getElementById("cabalFingerprintShape");
+  const fingerprintStabilityLabel = document.getElementById("fingerprintStabilityLabel");
+  const fingerprintRiskLine = document.getElementById("fingerprintRiskLine");
+  const fpStopInner = document.getElementById("fpStopInner");
+  const fpStopMid = document.getElementById("fpStopMid");
   const cabalAiHeadline = document.getElementById("cabalAiHeadline");
   const cabalAiList = document.getElementById("cabalAiList");
 
@@ -1152,6 +1132,67 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
     else if (bucket === "caution") colorClass = "bg-yellow-400";
     else if (bucket === "warning") colorClass = "bg-red-500";
     scorePillDot.className = base + colorClass;
+  }
+
+  function updateFingerprintSummary(bucket) {
+    if (!fingerprintStabilityLabel || !fingerprintRiskLine) return;
+
+    let labelText = "Scan a token";
+    let descText =
+      "Run a scan to see how balanced this holder map looks.";
+
+    let colorClass = "text-gray-300";
+
+    if (bucket === "excellent") {
+      labelText = "Very stable · low cabal tension";
+      descText =
+        "Shape should look smooth and rounded with only small spikes.";
+      colorClass = "text-green-300";
+    } else if (bucket === "good") {
+      labelText = "Stable with mild hotspots";
+      descText =
+        "Mostly balanced, but one or two metrics stand out as pressure points.";
+      colorClass = "text-blue-300";
+    } else if (bucket === "caution") {
+      labelText = "Imbalanced · watch cabal pressure";
+      descText =
+        "Spikes highlight where whales, LPs or CEX custody dominate the holder map.";
+      colorClass = "text-yellow-300";
+    } else if (bucket === "warning") {
+      labelText = "High cabal tension";
+      descText =
+        "Lopsided, spiky shape points to heavy structural concentration and cabal risk.";
+      colorClass = "text-red-300";
+    }
+
+    fingerprintStabilityLabel.textContent = labelText;
+    fingerprintStabilityLabel.className =
+      "font-semibold " + colorClass;
+    fingerprintRiskLine.textContent = descText;
+  }
+
+  function updateFingerprintHalo(bucket) {
+    if (!fpStopInner || !fpStopMid) return;
+
+    let inner = "#4ade80";
+    let mid = "#22c55e";
+
+    if (bucket === "excellent") {
+      inner = "#4ade80";
+      mid = "#22c55e";
+    } else if (bucket === "good") {
+      inner = "#38bdf8";
+      mid = "#0ea5e9";
+    } else if (bucket === "caution") {
+      inner = "#fbbf24";
+      mid = "#eab308";
+    } else if (bucket === "warning") {
+      inner = "#fb7185";
+      mid = "#ef4444";
+    }
+
+    fpStopInner.setAttribute("stop-color", inner);
+    fpStopMid.setAttribute("stop-color", mid);
   }
 
   function sanitizeSummary(text) {
@@ -2529,6 +2570,8 @@ function renderHolders(data) {
 
     setLegend(bucket);
     setScorePillDot(bucket);
+    updateFingerprintSummary(bucket);
+    updateFingerprintHalo(bucket);
 
     // Show extra explainer when the scanned token is $TOO
     const tooExplainer = document.getElementById("tooExplainer");
