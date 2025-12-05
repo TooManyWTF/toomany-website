@@ -512,26 +512,6 @@ const API_BASE = getApiBase();
             </div>
           </div>
 
-          <!-- How to Read This Fingerprint -->
-          <div class="border border-gray-800 rounded-xl bg-gray-950 p-4 md:p-5 space-y-3">
-            <p class="text-xs md:text-sm uppercase tracking-wide text-gray-300">
-              How to Read This Fingerprint
-            </p>
-            <ul class="list-disc list-inside space-y-1.5 text-xs md:text-sm text-gray-400">
-              <li><span class="font-semibold text-gray-200">Whale Gravity</span> – how much control the largest whales have; farther out = fewer wallets hold more power.</li>
-              <li><span class="font-semibold text-gray-200">CEX Custody Heat</span> – how much supply sits on exchanges; higher = more centralized exchange risk.</li>
-              <li><span class="font-semibold text-gray-200">Bridge Dependency</span> – how bridge-heavy the token is; higher = more supply locked in bridges.</li>
-              <li><span class="font-semibold text-gray-200">LP Stability</span> – how fragile the LP looks; higher = easier to nuke or manipulate liquidity.</li>
-              <li><span class="font-semibold text-gray-200">Holder Churn</span> – how fast wallets rotate; higher = degen / bot-heavy trading, less diamond hands.</li>
-              <li><span class="font-semibold text-gray-200">Cluster Density</span> – how much power sits in shared infra (CEX, LPs, bridges, project multisigs).</li>
-              <li><span class="font-semibold text-gray-200">Top 10 Compression</span> – how concentrated the top 10 wallets are; higher = more cabal tension at the top.</li>
-              <li><span class="font-semibold text-gray-200">Fresh Wallet Velocity</span> – how quickly new wallets rush in; higher = hype / momentum inflow speed.</li>
-            </ul>
-            <p class="text-[11px] md:text-xs text-gray-500">
-              Bigger spikes mean stronger influence. Smooth, rounded shapes are healthier; jagged, lopsided shapes point to cabal-heavy risk.
-            </p>
-          </div>
-
           <!-- Supply snapshot -->
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="flex items-center justify-between">
@@ -845,11 +825,23 @@ const API_BASE = getApiBase();
           <p class="text-sm tracking-wide uppercase text-gray-500">How to read this page</p>
           <div class="space-y-2 text-sm text-gray-500">
             <p>
-              <span class="font-semibold">Cabal Score.</span></p>
+              <span class="font-semibold">Cabal Score</span></p>
               <p>A 0–100 risk score for how “caballed” the visible supply looks. Lower is better.
               The Cabal Score looks at how much supply sits in whales, exchanges, bridges, LPs and project wallets
               versus many smaller community holders. It only uses the top holders we can see on-chain.
             </p>
+			<p><span class="font-semibold">How to Read This Fingerprint</span></p>
+            <ul class="list-disc">
+			  <li>Whale Gravity – how much control the largest whales have; farther out = fewer wallets hold more power.</li>
+<li>CEX Custody Heat – how much supply sits on exchanges; higher = more centralized exchange risk.</li>
+<li>Bridge Dependency – how bridge-heavy the token is; higher = more supply locked in bridges.</li>
+<li>LP Stability – how fragile the LP looks; higher = easier to nuke or manipulate liquidity.</li>
+<li>Holder Churn – how fast wallets rotate; higher = degen / bot-heavy trading, less diamond hands.</li>
+<li>Cluster Density – how much power sits in shared infra (CEX, LPs, bridges, project multisigs).</li>
+<li>Top 10 Compression – how concentrated the top 10 wallets are; higher = more cabal tension at the top.</li>
+<li>Fresh Wallet Velocity – how quickly new wallets rush in; higher = hype / momentum inflow speed.</li></ul>
+<p>Bigger spikes mean stronger influence. Smooth, rounded shapes are healthier; jagged, lopsided shapes point to cabal-heavy risk.</p>
+			</p>
             <p>
               <span class="font-semibold">Snapshot of Supply</span></p>
               <p>Breaks the visible supply into buckets like Community, Whales, CEX custody, Bridges, DEX / LP,
