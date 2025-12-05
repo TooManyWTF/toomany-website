@@ -484,47 +484,29 @@ const API_BASE = getApiBase();
                 </div>
               </div>
 
-              <!-- Legend -->
-              <div class="space-y-2">
+              <!-- Cabal health summary (Option A) -->
+              <div class="space-y-3">
                 <p class="text-xs md:text-sm uppercase tracking-wide text-gray-400">
-                  Metrics in this fingerprint
+                  Cabal health summary
                 </p>
-                <ul class="space-y-1.5 text-xs md:text-sm text-gray-300">
-                  <li class="flex items-center justify-between">
-                    <span>Whale Gravity</span>
-                    <span class="font-mono text-[11px] text-green-300">low ▸ high</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>CEX Custody Heat</span>
-                    <span class="font-mono text-[11px] text-yellow-300">cold ▸ hot</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Bridge Dependency</span>
-                    <span class="font-mono text-[11px] text-yellow-300">local ▸ bridged</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>LP Stability</span>
-                    <span class="font-mono text-[11px] text-red-300">stable ▸ fragile</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Holder Churn</span>
-                    <span class="font-mono text-[11px] text-indigo-300">diamond ▸ degen</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Cluster Density</span>
-                    <span class="font-mono text-[11px] text-pink-300">distributed ▸ clustered</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Top 10 Compression</span>
-                    <span class="font-mono text-[11px] text-orange-300">loose ▸ tight</span>
-                  </li>
-                  <li class="flex items-center justify-between">
-                    <span>Fresh Wallet Velocity</span>
-                    <span class="font-mono text-[11px] text-sky-300">slow ▸ hyper</span>
-                  </li>
-                </ul>
-                <p class="text-[11px] md:text-xs text-gray-400 mt-1">
-                  Future update: this shape will update live per scan, using Cabal Exposure engine data.
+                <div
+                  id="fingerprintHealthPill"
+                  class="inline-flex items-center px-2.5 py-1 rounded-full border border-gray-600 bg-gray-800 text-[10px] md:text-xs font-mono uppercase tracking-wide text-gray-200"
+                >
+                  <span
+                    id="fingerprintHealthDot"
+                    class="w-2 h-2 rounded-full bg-gray-400 mr-1.5"
+                  ></span>
+                  <span id="fingerprintHealthLabel">Scan a token</span>
+                </div>
+                <p
+                  id="fingerprintHealthSummary"
+                  class="text-xs md:text-sm text-gray-300"
+                >
+                  Scan a token to see how balanced this fingerprint looks based on Cabal Score band.
+                </p>
+                <p class="text-[11px] md:text-xs text-gray-500">
+                  Rounder shapes indicate healthier holder ecosystems. Sharp, lopsided spikes show which behaviors dominate cabal risk.
                 </p>
               </div>
             </div>
@@ -998,6 +980,12 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   const cabalFingerprintShape = document.getElementById("cabalFingerprintShape");
   const cabalAiHeadline = document.getElementById("cabalAiHeadline");
   const cabalAiList = document.getElementById("cabalAiList");
+  const fingerprintHealthPill = document.getElementById("fingerprintHealthPill");
+  const fingerprintHealthDot = document.getElementById("fingerprintHealthDot");
+  const fingerprintHealthLabel = document.getElementById("fingerprintHealthLabel");
+  const fingerprintHealthSummary = document.getElementById("fingerprintHealthSummary");
+  const fingerprintGlowStops = document.querySelectorAll("#fingerprintGlow stop");
+
 
   const scoreHistoryLineEl = document.getElementById("scoreHistoryLine");
   const bestScoreLineEl = document.getElementById("bestScoreLine");
@@ -1152,6 +1140,88 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
     else if (bucket === "caution") colorClass = "bg-yellow-400";
     else if (bucket === "warning") colorClass = "bg-red-500";
     scorePillDot.className = base + colorClass;
+  }
+
+  function updateFingerprintHealth(bucket) {
+    if (!fingerprintHealthPill || !fingerprintHealthLabel || !fingerprintHealthDot) {
+      return;
+    }
+
+    let label = "Scan a token";
+    let summary =
+      "Scan a token to see how balanced this fingerprint looks based on Cabal Score band.";
+    let pillClasses =
+      "inline-flex items-center px-2.5 py-1 rounded-full border text-[10px] md:text-xs font-mono uppercase tracking-wide ";
+    let dotColor = "bg-gray-400";
+    let borderColor = "border-gray-600";
+    let bgColor = "bg-gray-800";
+    let textColor = "text-gray-200";
+
+    if (bucket === "excellent") {
+      label = "Very stable";
+      summary =
+        "Holder map looks extremely balanced with low cabal tension.";
+      borderColor = "border-green-500";
+      bgColor = "bg-green-900 bg-opacity-20";
+      textColor = "text-green-200";
+      dotColor = "bg-green-400";
+    } else if (bucket === "good") {
+      label = "Stable";
+      summary =
+        "Mostly healthy distribution with mild concentration hotspots.";
+      borderColor = "border-blue-500";
+      bgColor = "bg-blue-900 bg-opacity-20";
+      textColor = "text-blue-200";
+      dotColor = "bg-blue-400";
+    } else if (bucket === "caution") {
+      label = "Imbalanced";
+      summary =
+        "Cabal pressure starting to build — watch whales, LP and clusters.";
+      borderColor = "border-yellow-400";
+      bgColor = "bg-yellow-900 bg-opacity-20";
+      textColor = "text-yellow-100";
+      dotColor = "bg-yellow-400";
+    } else if (bucket === "warning") {
+      label = "High cabal tension";
+      summary =
+        "Cabal-heavy structure. One or more behaviors dominate this fingerprint.";
+      borderColor = "border-red-500";
+      bgColor = "bg-red-900 bg-opacity-20";
+      textColor = "text-red-100";
+      dotColor = "bg-red-400";
+    }
+
+    fingerprintHealthPill.className =
+      pillClasses + borderColor + " " + bgColor + " " + textColor;
+    fingerprintHealthLabel.textContent = label;
+    fingerprintHealthSummary.textContent = summary;
+
+    fingerprintHealthDot.className =
+      "w-2 h-2 rounded-full mr-1.5 " + dotColor;
+
+    // Update halo gradient color to match band
+    if (fingerprintGlowStops && fingerprintGlowStops.length >= 2) {
+      let inner = "#4ade80";
+      let mid = "#22c55e";
+      if (bucket === "excellent") {
+        inner = "#4ade80";
+        mid = "#22c55e";
+      } else if (bucket === "good") {
+        inner = "#60a5fa";
+        mid = "#3b82f6";
+      } else if (bucket === "caution") {
+        inner = "#facc15";
+        mid = "#eab308";
+      } else if (bucket === "warning") {
+        inner = "#f97373";
+        mid = "#ef4444";
+      } else {
+        inner = "#9ca3af";
+        mid = "#6b7280";
+      }
+      fingerprintGlowStops[0].setAttribute("stop-color", inner);
+      fingerprintGlowStops[1].setAttribute("stop-color", mid);
+    }
   }
 
   function sanitizeSummary(text) {
@@ -2529,6 +2599,7 @@ function renderHolders(data) {
 
     setLegend(bucket);
     setScorePillDot(bucket);
+    updateFingerprintHealth(bucket);
 
     // Show extra explainer when the scanned token is $TOO
     const tooExplainer = document.getElementById("tooExplainer");
