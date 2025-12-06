@@ -214,143 +214,6 @@
         animation: none;
       }
     }
-
-/* Cabal Hunter inline game */
-.home-game-shell {
-  background: #020617;
-  border-radius: 1rem;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.75);
-}
-
-.home-game-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
-}
-
-@media (min-width: 768px) {
-  .home-game-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-.home-game-cell {
-  position: relative;
-  border-radius: 0.75rem;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(148, 163, 184, 0.4);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
-}
-
-.home-game-cell:active {
-  transform: scale(0.97);
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
-}
-
-.home-game-cell-inner {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0.35rem;
-  text-align: center;
-}
-
-.home-game-cell::before {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
-}
-
-.home-game-empty {
-  opacity: 0.18;
-}
-
-.home-game-target {
-  opacity: 1;
-}
-
-.home-game-cabal-whale {
-  background: radial-gradient(circle at 30% 10%, rgba(56, 189, 248, 0.35), rgba(15, 23, 42, 0.95));
-  border-color: rgba(56, 189, 248, 0.85);
-}
-
-.home-game-cabal-cex {
-  background: radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.4), rgba(15, 23, 42, 0.95));
-  border-color: rgba(249, 115, 22, 0.9);
-}
-
-.home-game-cabal-dev {
-  background: radial-gradient(circle at 70% 0%, rgba(244, 114, 182, 0.4), rgba(15, 23, 42, 0.96));
-  border-color: rgba(244, 114, 182, 0.9);
-}
-
-.home-game-wallet-good {
-  background: radial-gradient(circle at 20% 0%, rgba(74, 222, 128, 0.4), rgba(15, 23, 42, 0.95));
-  border-color: rgba(74, 222, 128, 0.9);
-}
-
-.home-game-hit-flash {
-  animation: homeGameHitFlash 180ms ease-out;
-}
-
-@keyframes homeGameHitFlash {
-  0% {
-    transform: scale(1);
-    filter: brightness(1.3);
-  }
-  60% {
-    transform: scale(1.08);
-    filter: brightness(1.9);
-  }
-  100% {
-    transform: scale(1);
-    filter: brightness(1);
-  }
-}
-
-.home-game-pulse-ring {
-  position: absolute;
-  inset: -2px;
-  border-radius: 0.75rem;
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes homeGamePulseRing {
-  0% {
-    transform: scale(0.96);
-    opacity: 0.2;
-  }
-  50% {
-    transform: scale(1.03);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(1.08);
-    opacity: 0;
-  }
-}
-
-.home-game-pulse-ring-active {
-  animation: homeGamePulseRing 900ms ease-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-game-cell,
-  .home-game-cell:active {
-    transition: none;
-  }
-  .home-game-hit-flash,
-  .home-game-pulse-ring-active {
-    animation: none;
-  }
-}
   </style>
 </head>
 
@@ -382,7 +245,7 @@
       <a href="#how-to-buy" class="underline">How to Buy</a>
       <a href="/cabal" class="underline">Cabal Scanner</a>
       <a href="/compare" class="underline">Cabal Compare</a>
-      <a href="/leader" class="underline">Cabal Leaderboard</a>
+	  <a href="/leader" class="underline">Cabal Leaderboard</a>
       <a href="/whitepaper.html" class="underline">Whitepaper</a>
       <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
     </nav>
@@ -398,7 +261,7 @@
       <a href="#how-to-buy" class="underline">How to Buy</a>
       <a href="/cabal" class="underline">Cabal Scanner</a>
       <a href="/compare" class="underline">Cabal Compare</a>
-      <a href="/leader" class="underline">Cabal Leaderboard</a>
+	  <a href="/leader" class="underline">Cabal Leaderboard</a>
       <a href="/whitepaper.html" class="underline">Whitepaper</a>
       <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
     </div>
@@ -461,7 +324,7 @@
 
           <p class="mb-6 text-gray-800 leading-snug text-lg md:text-2xl font-light font-mono">
             Tired of KOLs, rugs, scams and shadow cabals? <br /><br />
-      Join the community-owned rebellion on Main Isle now!<br /><br />
+			Join the community-owned rebellion on Main Isle now!<br /><br />
             No insiders - No tax - No bullshit<br />
           </p>
 
@@ -527,7 +390,7 @@
           />
 
           <!-- Cabal Scanner teaser under hero image -->
-            <div class="mt-6 w-full max-w-xl mx-auto text-left bg-gray-800 rounded-xl p-5 md:p-6 space-y-4 mt-4">
+          <div class="mt-6 w-full max-w-xl mx-auto text-left">
             <p class="text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 mb-2 text-left">
               Scan any token contract on supported chains
             </p>
@@ -740,8 +603,8 @@
               buy on uniswap
             </a>
           </div>
-      
-      <!-- QUICK COMPARE (A VS B) -->
+		  
+		  <!-- QUICK COMPARE (A VS B) -->
 <div class="w-full bg-gray-800 text-white rounded-xl p-5 md:p-6 space-y-4 mt-4">
   <div>
     <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400 mb-1">
@@ -838,7 +701,7 @@
   </div>
 </div>
 
-         
+		   
         </div>
       </div>
     </section>
@@ -1005,7 +868,7 @@ And they name it <span class="font-bold">$too many</span>.
               buy on uniswap
             </a>
             <a
-              href="https://etherscan.io/token/0x95C1CFD6Ed4155b263698E2873814c128eD219b0"
+              href="https://etherscan.io/token/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
               target="_blank"
               class="inline-flex items-center justify-center px-4 py-3 rounded-lg bg-white text-gray-900 font-mono text-sm md:text-base border border-gray-300"
             >
@@ -1023,101 +886,6 @@ And they name it <span class="font-bold">$too many</span>.
       </div>
 
     </section>
-
-<!-- CABAL HUNTER GAME (INLINE) -->
-<section class="w-full" style="background: rgb(243, 231, 211);">
-  <div class="container mx-auto px-5 py-12">
-    <div class="bg-gray-900 text-white rounded-2xl p-6 md:p-8">
-      <div class="mb-5 md:mb-6">
-        <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
-          Cabal Hunter · Action Mini-Game
-        </p>
-        <h2 class="font-mono text-2xl md:text-3xl">
-          Expose whales, CEX and dev wallets before they overrun Main Isle.
-        </h2>
-        <p class="font-mono text-xs md:text-sm text-gray-200 mt-2">
-          Tap whales, CEX and dev wallets. Don’t hit community wallets. Miss too many cabals and you get rugged.
-        </p>
-      </div>
-
-      <!-- Inline game shell -->
-      <div class="home-game-shell text-white p-4 md:p-5">
-        <!-- HUD -->
-        <div class="flex items-center justify-between mb-4 md:mb-5">
-          <div class="space-y-1">
-            <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
-              Score
-            </p>
-            <p id="home-game-score" class="font-mono text-xl md:text-2xl">
-              0
-            </p>
-          </div>
-          <div class="text-center hidden md:block">
-            <p class="font-mono text-xs uppercase tracking-wide text-gray-400">
-              Threat level
-            </p>
-            <p id="home-game-threat" class="font-mono text-sm text-green-300">
-              Calm seas
-            </p>
-          </div>
-          <div class="space-y-1 text-right">
-            <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
-              Lives
-            </p>
-            <p id="home-game-lives" class="font-mono text-xl md:text-2xl text-rose-300">
-              ♥♥♥
-            </p>
-          </div>
-        </div>
-
-        <!-- Mobile threat text -->
-        <div class="md:hidden mb-3">
-          <p id="home-game-threat-mobile" class="font-mono text-xs text-green-300 text-left">
-            Calm seas
-          </p>
-        </div>
-
-        <!-- Message row -->
-        <div class="mb-4 md:mb-5">
-          <p id="home-game-status" class="font-mono text-xs md:text-sm text-gray-300">
-            Tap “READY FIGHT!” to begin. Hit cabal wallets (🐋 🏦 🧪), avoid community (🧑‍🌾).
-          </p>
-        </div>
-
-        <!-- Grid -->
-        <div id="home-game-grid" class="home-game-grid mb-4 md:mb-6 select-none"></div>
-
-        <!-- Controls -->
-        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          <button
-            id="home-game-start"
-            type="button"
-            class="w-full md:w-auto inline-flex items-center justify-center px-5 py-3 rounded-lg bg-green-500 text-gray-900 font-mono text-sm md:text-base uppercase tracking-wide"
-          >
-            READY FIGHT!
-          </button>
-          <div class="flex flex-col md:flex-row md:items-center gap-2 text-xs md:text-sm font-mono text-gray-300">
-            <button
-              id="home-game-scan-btn"
-              type="button"
-              class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-100"
-            >
-              Open Cabal Scanner
-            </button>
-            <button
-              id="home-game-compare-btn"
-              type="button"
-              class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-800 text-gray-100 border border-gray-600"
-            >
-              Open Cabal Compare
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <div style="text-align:center;">
@@ -1219,6 +987,303 @@ And they name it <span class="font-bold">$too many</span>.
   })();
 </script>
 
+
+
+<script>
+  (function () {
+    var gridEl = document.getElementById("home-game-grid");
+    var startButton = document.getElementById("home-game-start");
+    var scanButton = document.getElementById("home-game-scan-btn");
+    var compareButton = document.getElementById("home-game-compare-btn");
+    var scoreDisplay = document.getElementById("home-game-score");
+    var livesDisplay = document.getElementById("home-game-lives");
+    var statusMessage = document.getElementById("home-game-status");
+    var speedDisplay = document.getElementById("home-game-threat");
+    var speedDisplayMobile = document.getElementById("home-game-threat-mobile");
+
+    if (!gridEl || !startButton) {
+      return;
+    }
+
+    var CELL_COUNT = 12;
+    var MAX_LIVES = 3;
+
+    var score = 0;
+    var lives = MAX_LIVES;
+    var running = false;
+
+    var spawnDelayStart = 1000;
+    var spawnDelayMin = 350;
+    var spawnTimeoutId = null;
+    var activeTargets = {};
+
+    function createGrid() {
+      gridEl.innerHTML = "";
+      for (var i = 0; i < CELL_COUNT; i++) {
+        var cell = document.createElement("div");
+        cell.className = "home-game-cell home-game-empty";
+        cell.dataset.index = String(i);
+
+        var pulseRing = document.createElement("div");
+        pulseRing.className = "home-game-pulse-ring";
+        cell.appendChild(pulseRing);
+
+        var inner = document.createElement("div");
+        inner.className = "home-game-cell-inner";
+        inner.innerHTML = '<span class="font-mono text-xs md:text-xs text-gray-400">wallet</span>';
+        cell.appendChild(inner);
+
+        cell.addEventListener("click", handleCellClick, false);
+        gridEl.appendChild(cell);
+      }
+    }
+
+    function updateHUD() {
+      scoreDisplay.textContent = String(score);
+      livesDisplay.textContent = "♥".repeat(lives) + "♡".repeat(MAX_LIVES - lives);
+
+      var threatText = "Calm seas";
+      if (score >= 150) {
+        threatText = "Cabal storm";
+      } else if (score >= 90) {
+        threatText = "Rug watch";
+      } else if (score >= 40) {
+        threatText = "Choppy waters";
+      }
+
+      if (speedDisplay) speedDisplay.textContent = threatText;
+      if (speedDisplayMobile) speedDisplayMobile.textContent = threatText;
+    }
+
+    function resetGame() {
+      score = 0;
+      lives = MAX_LIVES;
+      running = false;
+      activeTargets = {};
+      if (spawnTimeoutId) {
+        clearTimeout(spawnTimeoutId);
+        spawnTimeoutId = null;
+      }
+      createGrid();
+      updateHUD();
+      statusMessage.textContent = 'Tap "READY FIGHT!" to begin. Hit cabal wallets (🐋 🏦 🧪), avoid community (🧑‍🌾).';
+      startButton.textContent = "READY FIGHT!";
+      startButton.disabled = false;
+    }
+
+    function startGame() {
+      resetGame();
+      running = true;
+      startButton.disabled = true;
+      startButton.textContent = "EXPOSE THEM!";
+      statusMessage.textContent = "Game on. Expose the cabal before they overrun Main Isle.";
+      scheduleNextSpawn();
+    }
+
+    function scheduleNextSpawn() {
+      if (!running) return;
+
+      var difficultyStep = Math.floor(score / 40);
+      var delay = spawnDelayStart - difficultyStep * 80;
+      if (delay < spawnDelayMin) delay = spawnDelayMin;
+
+      spawnTimeoutId = setTimeout(function () {
+        if (!running) return;
+        spawnTarget();
+        scheduleNextSpawn();
+      }, delay);
+    }
+
+    function spawnTarget() {
+      if (!running) return;
+
+      var emptyIndices = [];
+      for (var i = 0; i < CELL_COUNT; i++) {
+        if (!activeTargets[i]) emptyIndices.push(i);
+      }
+      if (emptyIndices.length === 0) return;
+
+      var slotIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+
+      var isCabal = Math.random() < 0.7;
+      var type;
+      var label;
+      var emoji;
+
+      if (isCabal) {
+        var r = Math.random();
+        if (r < 0.34) {
+          type = "home-game-cabal-whale";
+          label = "whale";
+          emoji = "🐋";
+        } else if (r < 0.67) {
+          type = "home-game-cabal-cex";
+          label = "CEX";
+          emoji = "🏦";
+        } else {
+          type = "home-game-cabal-dev";
+          label = "dev stash";
+          emoji = "🧪";
+        }
+      } else {
+        type = "home-game-wallet-good";
+        label = "community";
+        emoji = "🧑‍🌾";
+      }
+
+      activeTargets[slotIndex] = {
+        type: type,
+        isCabal: isCabal,
+        timeoutId: null
+      };
+
+      var cell = gridEl.querySelector('[data-index="' + slotIndex + '"]');
+      if (!cell) return;
+
+      cell.classList.remove("home-game-empty");
+      cell.classList.add("home-game-target", type);
+
+      var inner = cell.querySelector(".home-game-cell-inner");
+      if (inner) {
+        inner.innerHTML =
+          '<span class="text-xl md:text-2xl">' + emoji + '</span>' +
+          '<span class="mt-1 font-mono text-xs md:text-xs uppercase tracking-wide">' + label + "</span>";
+      }
+
+      var pulse = cell.querySelector(".home-game-pulse-ring");
+      if (pulse) {
+        pulse.classList.add("home-game-pulse-ring-active");
+      }
+
+      var lifetime = 900;
+      var timeoutId = setTimeout(function () {
+        if (!activeTargets[slotIndex]) return;
+        var t = activeTargets[slotIndex];
+        clearTarget(slotIndex, t.isCabal, true);
+      }, lifetime);
+      activeTargets[slotIndex].timeoutId = timeoutId;
+    }
+
+    function clearTarget(index, wasCabal, missed) {
+      var cell = gridEl.querySelector('[data-index="' + index + '"]');
+      if (cell) {
+        cell.classList.remove("home-game-target", "home-game-cabal-whale", "home-game-cabal-cex", "home-game-cabal-dev", "home-game-wallet-good");
+        cell.classList.add("home-game-empty");
+
+        var inner = cell.querySelector(".home-game-cell-inner");
+        if (inner) {
+          inner.innerHTML = '<span class="font-mono text-xs md:text-xs text-gray-400">wallet</span>';
+        }
+        var pulse = cell.querySelector(".home-game-pulse-ring");
+        if (pulse) {
+          pulse.classList.remove("home-game-pulse-ring-active");
+        }
+      }
+
+      if (activeTargets[index]) {
+        clearTimeout(activeTargets[index].timeoutId);
+      }
+      delete activeTargets[index];
+
+      if (missed && wasCabal && running) {
+        lives = Math.max(0, lives - 1);
+        updateHUD();
+        if (lives <= 0) {
+          endGame();
+        } else {
+          statusMessage.textContent = "You let a cabal wallet slip through. Stay sharp.";
+        }
+      }
+    }
+
+    function handleCellClick(e) {
+      if (!running) return;
+
+      var cell = e.currentTarget;
+      var index = parseInt(cell.dataset.index, 10);
+      if (isNaN(index)) return;
+
+      var target = activeTargets[index];
+      if (!target) return;
+
+      var wasCabal = !!target.isCabal;
+
+      cell.classList.add("home-game-hit-flash");
+      setTimeout(function () {
+        cell.classList.remove("home-game-hit-flash");
+      }, 180);
+
+      if (wasCabal) {
+        score += 10;
+        statusMessage.textContent = "Exposed a " + prettyType(target.type) + ". Cabal hates you.";
+      } else {
+        lives = Math.max(0, lives - 1);
+        statusMessage.textContent = "You clipped a community wallet. Easy, anon.";
+      }
+
+      clearTarget(index, wasCabal, false);
+      updateHUD();
+
+      if (lives <= 0) {
+        endGame();
+      }
+    }
+
+    function prettyType(type) {
+      if (type === "home-game-cabal-whale") return "whale";
+      if (type === "home-game-cabal-cex") return "CEX wallet";
+      if (type === "home-game-cabal-dev") return "dev stash";
+      return "community wallet";
+    }
+
+    function endGame() {
+      running = false;
+      if (spawnTimeoutId) {
+        clearTimeout(spawnTimeoutId);
+        spawnTimeoutId = null;
+      }
+
+      Object.keys(activeTargets).forEach(function (idx) {
+        clearTarget(parseInt(idx, 10), activeTargets[idx].isCabal, false);
+      });
+      activeTargets = {};
+
+      var msg;
+      if (score >= 150) {
+        msg = "You shredded the cabal. Now use the real Cabal Scanner on live tokens.";
+      } else if (score >= 80) {
+        msg = "Solid work, anon. Cabal felt that. Ready for real tokens?";
+      } else {
+        msg = "The cabal overran Main Isle this time. Scan a real token and try again.";
+      }
+      statusMessage.textContent = msg;
+
+      startButton.textContent = "Play again";
+      startButton.disabled = false;
+    }
+
+    startButton.addEventListener("click", function () {
+      if (!running) {
+        startGame();
+      }
+    });
+
+    if (scanButton) {
+      scanButton.addEventListener("click", function () {
+        window.location.href = "/cabal";
+      });
+    }
+
+    if (compareButton) {
+      compareButton.addEventListener("click", function () {
+        window.location.href = "/compare";
+      });
+    }
+
+    createGrid();
+    updateHUD();
+  })();
+</script>
 
 </body>
 </html>
