@@ -2717,7 +2717,7 @@ function renderHolders(data) {
           ? "Cabal AI could not find specific structural notes, but the score skews cabal-heavy."
           : "Scan a token to see AI flags on whales, team wallets, exchanges and bridges.";
       var p = document.createElement("p");
-      p.className = "text-sm text-gray-500";
+      p.className = "text-sm text-gray-300";
       p.textContent =
         "This view looks only at structural supply distribution — who holds the power wallets and custody buckets.";
       cabalAiList.appendChild(p);
@@ -2783,7 +2783,7 @@ function renderHolders(data) {
       dot.classList.add(dotColorClass);
 
       const text = document.createElement("p");
-      text.className = "text-sm text-gray-700";
+      text.className = "text-sm text-gray-300";
       text.textContent = b.text;
 
       row.appendChild(dot);
