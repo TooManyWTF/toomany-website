@@ -2744,7 +2744,6 @@ function renderHolders(data) {
     var blob = await captureShareImage();
     if (!blob) return;
 
-    var url = URL.createObjectURL(blob);
     var symbol = "token";
     try {
       if (lastScanData) {
@@ -2754,6 +2753,30 @@ function renderHolders(data) {
       symbol = "token";
     }
 
+    // Try Web Share API first (mobile share sheet on iOS/Android)
+    try {
+      var fileName = "cabal-" + symbol + "-" + Date.now() + ".png";
+      var file = new File([blob], fileName, { type: "image/png" });
+
+      if (
+        typeof navigator !== "undefined" &&
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare({ files: [file] })
+      ) {
+        await navigator.share({
+          files: [file],
+          title: "Cabal score snapshot",
+          text: "Cabal scan from Crypto Cabal Scanner\u2122 on TooMany.wtf",
+        });
+        return;
+      }
+    } catch (e) {
+      // If anything goes wrong, fall through to download fallback
+    }
+
+    // Fallback: regular browser download
+    var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
     a.href = url;
     a.download = "cabal-" + symbol + "-" + Date.now() + ".png";
