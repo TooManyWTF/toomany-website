@@ -299,27 +299,27 @@ const API_BASE = getApiBase();
         <!-- Score + clusters (stacked vertically on all screen sizes) -->
         <div class="grid grid-cols-1 gap-5">
           <!-- Score card -->
-          <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
+          <div class="border border-gray-300 rounded-xl bg-gray-900 p-4 md:p-5 space-y-3">
             <div class="leading-tight">
               <div class="flex items-center gap-1">
-                <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">CABAL SCORE &trade;</p>
+                <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-300">CABAL SCORE &trade;</p>
               </div>
-              <p class="text-xs uppercase font-semibold tracking-wide text-gray-500">Lower is better</p>
+              <p class="text-xs uppercase font-semibold tracking-wide text-gray-400">Lower is better</p>
             </div>
             <div class="flex items-center justify-between space-x-3">
-              <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">–</p>
+              <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-300">–</p>
               <div id="scorePill" class="inline-flex items-center px-2.5 py-1 rounded-full border border-gray-300 bg-white text-sm md:text-base uppercase tracking-wide text-gray-600">
                 <span id="scorePillDot" class="inline-block w-2 h-2 rounded-full bg-gray-400 mr-2"></span>
                 <span id="scorePillLabel">Scan a token</span>
               </div>
             </div>
-            <div class="font-mono text-sm md:text-base text-gray-800">
+            <div class="font-mono text-sm md:text-base text-gray-400">
               <span id="scoreRating"></span>
               <span id="scoreSummary">Scan a token to view concentration.</span>
             </div>
             <div
               id="tooExplainer"
-              class="mt-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg px-3 py-2 hidden"
+              class="mt-2 text-sm text-gray-300 bg-white border border-gray-200 rounded-lg px-3 py-2 hidden"
             >
               <p class="font-semibold mb-1">$TOO’s 0/100 Cabal score</p>
               <ul class="list-disc list-inside space-y-1">
@@ -328,7 +328,7 @@ const API_BASE = getApiBase();
                 <li>no whale wallets in top 100</li>
               </ul>
             </div>
-            <p id="scoreHistoryLine" class="text-sm text-gray-600 mt-1 hidden"></p>
+            <p id="scoreHistoryLine" class="text-sm text-gray-400 mt-1 hidden"></p>
             <p id="bestScoreLine" class="text-sm text-gray-500 hidden"></p>
             <p id="scanChainLine" class="text-sm text-gray-500 mt-1"></p>
             <div class="flex flex-wrap gap-2 mt-1 justify-start items-start">
@@ -352,7 +352,7 @@ const API_BASE = getApiBase();
           </div>
 		 
 		  <!-- CABAL FINGERPRINT™ (cyberpunk radial DNA) -->
-          <div class="border border-gray-800 rounded-xl bg-gray-900 p-4 md:p-5 space-y-4">
+          <div class="border border-gray-300 rounded-xl bg-gray-900 p-4 md:p-5 space-y-4">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-300">
@@ -504,17 +504,17 @@ const API_BASE = getApiBase();
           </div>
 		  
 		    <!-- Cabal AI suspicious behavior watch -->
-        <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-4">
-   <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">
+        <div class="border border-gray-300 rounded-xl bg-gray-900 p-4 md:p-5 space-y-4">
+   <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-300">
               Cabal AI &trade; <br /> 
-			  <font class="text-xs uppercase font-semibold tracking-wide text-gray-500">Suspicious behavior watch</font></p>	
+			  <font class="text-xs uppercase font-semibold tracking-wide text-gray-400">Suspicious behavior watch</font></p>	
           
-			 <p class="text-xs md:text-sm text-gray-400 mt-1">
-          <p id="cabalAiHeadline" class="text-sm text-gray-700">
+			 <p class="text-xs md:text-sm text-gray-300 mt-1">
+          <p id="cabalAiHeadline" class="text-sm text-gray-300">
             Scan a token to see AI flags on whales, team wallets, exchanges and bridges.
           </p>
           <div id="cabalAiList" class="mt-2 space-y-1">
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-400">
               No scan yet. Paste a contract and run a scan to see Cabal AI commentary here.
             </p>
           </div>
