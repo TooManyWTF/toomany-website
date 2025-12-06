@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cabal Hunter · Too Many</title>
   <meta name="description" content="Cabal Hunter — tap-to-expose cabal wallets before they overrun Main Isle. A Too Many ($TOO) mini-game." />
 
@@ -284,7 +281,7 @@
   </main>
 
   <script>
-    (function () {
+    document.addEventListener("DOMContentLoaded", function () {
       var gridEl = document.getElementById("gameGrid");
       var startButton = document.getElementById("startButton");
       var scanButton = document.getElementById("scanButton");
@@ -441,4 +438,138 @@
         if (inner) {
           inner.innerHTML =
             '<span class="text-xl md:text-2xl">' + emoji + '</span>' +
-            '<span class="mt-
+            '<span class="mt-1 font-mono text-xs md:text-xs uppercase tracking-wide">' + label + "</span>";
+        }
+
+        var pulse = cell.querySelector(".pulse-ring");
+        if (pulse) {
+          pulse.classList.add("pulse-ring-active");
+        }
+
+        var lifetime = 900;
+        var timeoutId = setTimeout(function () {
+          if (!activeTargets[slotIndex]) return;
+          var t = activeTargets[slotIndex];
+          clearTarget(slotIndex, t.isCabal, true);
+        }, lifetime);
+        activeTargets[slotIndex].timeoutId = timeoutId;
+      }
+
+      function clearTarget(index, wasCabal, missed) {
+        var cell = gridEl.querySelector('[data-index="' + index + '"]');
+        if (cell) {
+          cell.classList.remove("target", "cabal-whale", "cabal-cex", "cabal-dev", "wallet-good");
+          cell.classList.add("cell-empty");
+
+          var inner = cell.querySelector(".game-cell-inner");
+          if (inner) {
+            inner.innerHTML = '<span class="font-mono text-xs md:text-xs text-gray-400">wallet</span>';
+          }
+          var pulse = cell.querySelector(".pulse-ring");
+          if (pulse) {
+            pulse.classList.remove("pulse-ring-active");
+          }
+        }
+
+        if (activeTargets[index]) {
+          clearTimeout(activeTargets[index].timeoutId);
+        }
+        delete activeTargets[index];
+
+        if (missed && wasCabal && running) {
+          lives = Math.max(0, lives - 1);
+          updateHUD();
+          if (lives <= 0) {
+            endGame();
+          } else {
+            statusMessage.textContent = "You let a cabal wallet slip through. Stay sharp.";
+          }
+        }
+      }
+
+      function handleCellClick(e) {
+        if (!running) return;
+
+        var cell = e.currentTarget;
+        var index = parseInt(cell.dataset.index, 10);
+        if (isNaN(index)) return;
+
+        var target = activeTargets[index];
+        if (!target) return;
+
+        var wasCabal = !!target.isCabal;
+
+        cell.classList.add("hit-flash");
+        setTimeout(function () {
+          cell.classList.remove("hit-flash");
+        }, 180);
+
+        if (wasCabal) {
+          score += 10;
+          statusMessage.textContent = "Exposed a " + prettyType(target.type) + ". Cabal hates you.";
+        } else {
+          lives = Math.max(0, lives - 1);
+          statusMessage.textContent = "You clipped a community wallet. Easy, anon.";
+        }
+
+        clearTarget(index, wasCabal, false);
+        updateHUD();
+
+        if (lives <= 0) {
+          endGame();
+        }
+      }
+
+      function prettyType(type) {
+        if (type === "cabal-whale") return "whale";
+        if (type === "cabal-cex") return "CEX wallet";
+        if (type === "cabal-dev") return "dev stash";
+        return "community wallet";
+      }
+
+      function endGame() {
+        running = false;
+        if (spawnTimeoutId) {
+          clearTimeout(spawnTimeoutId);
+          spawnTimeoutId = null;
+        }
+
+        Object.keys(activeTargets).forEach(function (idx) {
+          clearTarget(parseInt(idx, 10), activeTargets[idx].isCabal, false);
+        });
+        activeTargets = {};
+
+        var msg;
+        if (score >= 150) {
+          msg = "You shredded the cabal. Now use the real Cabal Scanner on live tokens.";
+        } else if (score >= 80) {
+          msg = "Solid work, anon. Cabal felt that. Ready for real tokens?";
+        } else {
+          msg = "The cabal overran Main Isle this time. Scan a real token and try again.";
+        }
+        statusMessage.textContent = msg;
+
+        startButton.textContent = "Play again";
+        startButton.disabled = false;
+      }
+
+      startButton.addEventListener("click", function () {
+        if (!running) {
+          startGame();
+        }
+      });
+
+      scanButton.addEventListener("click", function () {
+        window.location.href = "/cabal";
+      });
+
+      compareButton.addEventListener("click", function () {
+        window.location.href = "/compare";
+      });
+
+      createGrid();
+      updateHUD();
+    });
+  </script>
+</body>
+</html>
