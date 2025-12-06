@@ -1661,14 +1661,8 @@ function buildShareText() {
     const baseUrl = "https://toomany.wtf/cabal";
 
     const token = lastScanData && lastScanData.token;
-    const score =
-      lastScanData && typeof lastScanData.cabalScore === "number"
-        ? lastScanData.cabalScore
-        : null;
     const chain =
       (lastScanData && lastScanData.chain) || "eth";
-    const symbol =
-      (lastScanData && lastScanData.symbol) || null;
 
     const toolUrl = token
       ? baseUrl +
@@ -1678,69 +1672,166 @@ function buildShareText() {
         encodeURIComponent(token)
       : baseUrl;
 
-    // No token scanned yet – generic promo for the tool
+    // If no scan yet, use a generic tool promo.
     if (!token) {
       return (
-        "Scanning tokens with the Cabal Exposure Tool by @TooManyWTF\n\n" +
-        "Scan any contract on supported chains.\n\n" +
+        "Scanning tokens with the Crypto Cabal Scanner\u2122 by @TooManyWTF\n\n" +
+        "Paste any contract and see how caballed the holder map looks.\n\n" +
         toolUrl
       );
     }
+
+    const score =
+      lastScanData && typeof lastScanData.cabalScore === "number"
+        ? lastScanData.cabalScore
+        : null;
 
     const chainLabel = getChainLabel(chain);
-    const rawSymbol = symbol || null;
-    const ticker = rawSymbol
-      ? "$" + String(rawSymbol).replace(/^\$/,"")
-      : null;
+    const rawSymbol = lastScanData && lastScanData.symbol;
+    const symbolCore = rawSymbol ? String(rawSymbol).replace(/^\$/,"") : null;
+    const ticker = symbolCore ? "$" + symbolCore.toUpperCase() : null;
     const displayName = ticker || shortenAddress(token);
 
-    // If we don't have a numeric score, fall back to a neutral message
-    if (score == null || isNaN(score)) {
-      return (
-        "Just scanned " +
-        displayName +
-        " on " +
-        chainLabel +
-        " with the Cabal Exposure Tool by @TooManyWTF\n\n" +
-        "Full report: " +
-        toolUrl
-      );
+    // Score label + alert category
+    const classified = classifyScore(score);
+    const scoreLabel = classified && classified.label ? classified.label : "";
+    const rawAlertCategory =
+      (lastScanData && lastScanData.alertCategory) || "";
+    const alertCategory = rawAlertCategory.replace(/\.+\s*$/, "");
+
+    // Fingerprint lines from DOM (current health pill + summary text)
+    let fpTitle = "";
+    let fpLine2 = "";
+    let fpLine3 = "";
+
+    if (fingerprintHealthLabel && fingerprintHealthSummary) {
+      fpTitle = (fingerprintHealthLabel.textContent || "").trim();
+      const summary = (fingerprintHealthSummary.textContent || "").trim();
+      if (summary) {
+        const parts = summary.split("—");
+        if (parts.length >= 2) {
+          fpLine2 = parts[0].trim();
+          fpLine3 = parts.slice(1).join("—").trim();
+        } else {
+          fpLine2 = summary;
+        }
+      }
     }
 
-    const s = Number(score);
-    let scoreLine = "";
+    // Cabal AI lines from DOM (headline + first bullet)
+    let aiLine1 = "";
+    let aiLine2 = "";
 
-    // Tier 1: 0–20 (clean / low risk)
-    if (s <= 20) {
-      scoreLine =
-        "Cabal score " +
-        s +
-        "/100 (low cabal risk, community-driven distribution).";
+    if (cabalAiHeadline) {
+      aiLine1 = (cabalAiHeadline.textContent || "").trim();
     }
-    // Tier 2: 20–70 (mixed distribution)
-    else if (s <= 70) {
-      scoreLine =
-        "Cabal score " +
-        s +
-        "/100 (mixed holder distribution, watch large wallets).";
-    }
-    // Tier 3: 70+ (high cabal risk / call-out)
-    else {
-      scoreLine =
-        "Cabal score " +
-        s +
-        "/100 (heavily concentrated holders, high cabal risk).";
+    if (cabalAiList) {
+      const firstRow = cabalAiList.querySelector("p");
+      if (firstRow) {
+        aiLine2 = (firstRow.textContent || "").trim();
+      }
     }
 
-    const firstLine =
-      "Just scanned " +
-      displayName +
-      " on " +
-      chainLabel +
-      " with the Cabal Exposure Tool by @TooManyWTF";
-    const thirdLine = "Full report: " + toolUrl;
+    // Wallet stats from lastScanData.walletInsights
+    const wi =
+      (lastScanData && lastScanData.walletInsights) || {};
+    const communityPct =
+      typeof wi.communityPercent === "number"
+        ? wi.communityPercent
+        : null;
+    const eoaCount =
+      typeof wi.eoaWalletCount === "number" ? wi.eoaWalletCount : null;
+    const eoaPct =
+      typeof wi.eoaPercent === "number" ? wi.eoaPercent : null;
+    const whaleCount =
+      typeof wi.whaleCount === "number" ? wi.whaleCount : null;
+    const top10Pct =
+      typeof wi.top10Percent === "number" ? wi.top10Percent : null;
 
-    return firstLine + "\n\n" + scoreLine + "\n\n" + thirdLine;
+    const communityLine =
+      communityPct != null
+        ? "Community holds " + formatPercent(communityPct)
+        : "";
+
+    let eoaLine = "";
+    if (eoaCount != null) {
+      eoaLine =
+        eoaCount +
+        " EOAs" +
+        (eoaPct != null ? " " + formatPercent(eoaPct) : "");
+    }
+
+    const whaleLine =
+      whaleCount != null
+        ? whaleCount + " total whale wallets"
+        : "";
+
+    const top10Line =
+      top10Pct != null
+        ? "Top 10 wallets hold " +
+          formatPercent(top10Pct) +
+          " supply"
+        : "";
+
+    const hashSymbol = symbolCore ? "#" + symbolCore.toUpperCase() : "";
+
+    const lines = [];
+
+    // Header & link
+    lines.push("Let's take a deeper dive into " + displayName);
+    lines.push("");
+    lines.push("- full scan analytics \u2B06\uFE0F " + toolUrl);
+
+    // Cabal Score block
+    lines.push("");
+    lines.push("CABAL SCORE\u2122");
+    if (score != null && !isNaN(score)) {
+      lines.push(score + "/100 (lower is better)");
+    } else {
+      lines.push("Score unavailable");
+    }
+    if (scoreLabel || alertCategory) {
+      const parts = [];
+      if (scoreLabel) parts.push(scoreLabel);
+      if (alertCategory) parts.push(alertCategory);
+      lines.push(parts.join(" \u00B7 "));
+    }
+
+    // Fingerprint block
+    lines.push("");
+    lines.push("CABAL FINGERPRINT\u2122");
+    if (fpTitle) lines.push(fpTitle);
+    if (fpLine2) lines.push(fpLine2);
+    if (fpLine3) lines.push(fpLine3);
+
+    // Cabal AI block
+    lines.push("");
+    lines.push("Cabal AI\u2122");
+    if (aiLine1) lines.push(aiLine1);
+    if (aiLine2) lines.push(aiLine2);
+
+    // Other stats block
+    lines.push("");
+    lines.push("Other Stats");
+    if (communityLine) lines.push(communityLine);
+    if (eoaLine) lines.push(eoaLine);
+    if (whaleLine) lines.push(whaleLine);
+    if (top10Line) lines.push(top10Line);
+
+    // Contract + tail
+    lines.push("");
+    lines.push("Contract: " + token);
+    lines.push("");
+
+    let tail = "X: @TooManyWTF";
+    if (hashSymbol) {
+      tail += " " + hashSymbol;
+    }
+    tail += " #memecoins";
+
+    lines.push(tail);
+
+    return lines.join("\n");
   }
 
 function renderClusters(data) {
@@ -2935,12 +3026,14 @@ async function runScan() {
         return;
       }
 
-      lastScanData = {
+            lastScanData = {
         token: data.token,
         cabalScore: data.cabalScore,
         chain: data.chain || chain,
         symbol: data.symbol || data.ticker || null,
         alertCategory: data.alertCategory || null,
+        walletInsights: data.walletInsights || null,
+        cabalAi: data.cabalAi || null
       };
 
       // Refresh recent scans panel (fire and forget)
