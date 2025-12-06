@@ -167,7 +167,7 @@
 </head>
 <body>
 
-  <!-- HEADER (simple, matches site vibe) -->
+  <!-- HEADER -->
   <header class="w-full bg-white border-b border-gray-200">
     <div class="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
       <a href="/" class="flex items-center space-x-2">
@@ -236,4 +236,209 @@
           </div>
 
           <!-- Message row -->
-          <div class="mb-4 md:mb
+          <div class="mb-4 md:mb-5">
+            <p id="statusMessage" class="font-mono text-xs md:text-sm text-gray-300">
+              Tap “READY FIGHT!” to begin. Hit cabal wallets (🐋 🏦 🧪), avoid community (🧑‍🌾).
+            </p>
+          </div>
+
+          <!-- Grid -->
+          <div id="gameGrid" class="game-grid mb-4 md:mb-6 select-none"></div>
+
+          <!-- Controls -->
+          <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+            <button
+              id="startButton"
+              type="button"
+              class="w-full md:w-auto inline-flex items-center justify-center px-5 py-3 rounded-lg bg-green-500 text-gray-900 font-mono text-sm md:text-base uppercase tracking-wide"
+            >
+              READY FIGHT!
+            </button>
+            <div class="flex flex-col md:flex-row md:items-center gap-2 text-xs md:text-sm font-mono text-gray-300">
+              <button
+                id="scanButton"
+                type="button"
+                class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-100"
+              >
+                Open Cabal Scanner
+              </button>
+              <button
+                id="compareButton"
+                type="button"
+                class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-800 text-gray-100 border border-gray-600"
+              >
+                Open Cabal Compare
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Helper text -->
+        <div class="mt-4 text-xs md:text-sm font-mono text-gray-700 space-y-1">
+          <p>• +10 points for each cabal wallet you expose. Miss one and you lose a life.</p>
+          <p>• Hitting a community wallet loses a life. Lose all lives and the cabal wins.</p>
+          <p>• As your score increases, threat level rises and wallets spawn faster.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var gridEl = document.getElementById("gameGrid");
+      var startButton = document.getElementById("startButton");
+      var scanButton = document.getElementById("scanButton");
+      var compareButton = document.getElementById("compareButton");
+      var scoreDisplay = document.getElementById("scoreDisplay");
+      var livesDisplay = document.getElementById("livesDisplay");
+      var statusMessage = document.getElementById("statusMessage");
+      var speedDisplay = document.getElementById("speedDisplay");
+      var speedDisplayMobile = document.getElementById("speedDisplayMobile");
+
+      if (!gridEl || !startButton) {
+        return;
+      }
+
+      var CELL_COUNT = 12;
+      var MAX_LIVES = 3;
+
+      var score = 0;
+      var lives = MAX_LIVES;
+      var running = false;
+
+      var spawnDelayStart = 1000;
+      var spawnDelayMin = 350;
+      var spawnTimeoutId = null;
+      var activeTargets = {}; // index -> { isCabal, type, timeoutId }
+
+      function createGrid() {
+        gridEl.innerHTML = "";
+        for (var i = 0; i < CELL_COUNT; i++) {
+          var cell = document.createElement("div");
+          cell.className = "game-cell cell-empty";
+          cell.dataset.index = String(i);
+
+          var pulseRing = document.createElement("div");
+          pulseRing.className = "pulse-ring";
+          cell.appendChild(pulseRing);
+
+          var inner = document.createElement("div");
+          inner.className = "game-cell-inner";
+          inner.innerHTML = '<span class="font-mono text-xs md:text-xs text-gray-400">wallet</span>';
+          cell.appendChild(inner);
+
+          cell.addEventListener("click", handleCellClick, false);
+          gridEl.appendChild(cell);
+        }
+      }
+
+      function updateHUD() {
+        scoreDisplay.textContent = String(score);
+        livesDisplay.textContent = "♥".repeat(lives) + "♡".repeat(MAX_LIVES - lives);
+
+        var threatText = "Calm seas";
+        if (score >= 150) {
+          threatText = "Cabal storm";
+        } else if (score >= 90) {
+          threatText = "Rug watch";
+        } else if (score >= 40) {
+          threatText = "Choppy waters";
+        }
+
+        if (speedDisplay) speedDisplay.textContent = threatText;
+        if (speedDisplayMobile) speedDisplayMobile.textContent = threatText;
+      }
+
+      function resetGame() {
+        score = 0;
+        lives = MAX_LIVES;
+        running = false;
+        activeTargets = {};
+        if (spawnTimeoutId) {
+          clearTimeout(spawnTimeoutId);
+          spawnTimeoutId = null;
+        }
+        createGrid();
+        updateHUD();
+        statusMessage.textContent = 'Tap "READY FIGHT!" to begin. Hit cabal wallets (🐋 🏦 🧪), avoid community (🧑‍🌾).';
+        startButton.textContent = "READY FIGHT!";
+        startButton.disabled = false;
+      }
+
+      function startGame() {
+        resetGame();
+        running = true;
+        startButton.disabled = true;
+        startButton.textContent = "EXPOSE THEM!";
+        statusMessage.textContent = "Game on. Expose the cabal before they overrun Main Isle.";
+        scheduleNextSpawn();
+      }
+
+      function scheduleNextSpawn() {
+        if (!running) return;
+
+        var difficultyStep = Math.floor(score / 40);
+        var delay = spawnDelayStart - difficultyStep * 80;
+        if (delay < spawnDelayMin) delay = spawnDelayMin;
+
+        spawnTimeoutId = setTimeout(function () {
+          if (!running) return;
+          spawnTarget();
+          scheduleNextSpawn();
+        }, delay);
+      }
+
+      function spawnTarget() {
+        if (!running) return;
+
+        var emptyIndices = [];
+        for (var i = 0; i < CELL_COUNT; i++) {
+          if (!activeTargets[i]) emptyIndices.push(i);
+        }
+        if (emptyIndices.length === 0) return;
+
+        var slotIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+
+        var isCabal = Math.random() < 0.7;
+        var type;
+        var label;
+        var emoji;
+
+        if (isCabal) {
+          var r = Math.random();
+          if (r < 0.34) {
+            type = "cabal-whale";
+            label = "whale";
+            emoji = "🐋";
+          } else if (r < 0.67) {
+            type = "cabal-cex";
+            label = "CEX";
+            emoji = "🏦";
+          } else {
+            type = "cabal-dev";
+            label = "dev stash";
+            emoji = "🧪";
+          }
+        } else {
+          type = "wallet-good";
+          label = "community";
+          emoji = "🧑‍🌾";
+        }
+
+        activeTargets[slotIndex] = {
+          type: type,
+          isCabal: isCabal,
+          timeoutId: null
+        };
+
+        var cell = gridEl.querySelector('[data-index="' + slotIndex + '"]');
+        if (!cell) return;
+
+        cell.classList.remove("cell-empty");
+        cell.classList.add("target", type);
+
+        var inner = cell.querySelector(".game-cell-inner");
+        if (inner) {
+          inner.innerHTML =
+            '<span class="text-xl md:text-2xl">' + emoji + '</span>' +
+            '<span class="mt-
