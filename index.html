@@ -214,6 +214,153 @@
         animation: none;
       }
     }
+
+/* Cabal Hunter inline game */
+.home-game-shell {
+  background: #020617;
+  border-radius: 1rem;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.75);
+}
+
+.home-game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .home-game-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Desktop: shrink game board width so squares are smaller */
+@media (min-width: 1024px) {
+  .home-game-grid {
+    max-width: 420px;   /* try 360–480px to taste */
+    margin: 0 auto;     /* center the board */
+    gap: 0.5rem;        /* optional: slightly tighter gaps */
+  }
+}
+
+
+.home-game-cell {
+  position: relative;
+  border-radius: 0.75rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
+}
+
+.home-game-cell:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+}
+
+.home-game-cell-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  text-align: center;
+}
+
+.home-game-cell::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.home-game-empty {
+  opacity: 0.18;
+}
+
+.home-game-target {
+  opacity: 1;
+}
+
+.home-game-cabal-whale {
+  background: radial-gradient(circle at 30% 10%, rgba(56, 189, 248, 0.35), rgba(15, 23, 42, 0.95));
+  border-color: rgba(56, 189, 248, 0.85);
+}
+
+.home-game-cabal-cex {
+  background: radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.4), rgba(15, 23, 42, 0.95));
+  border-color: rgba(249, 115, 22, 0.9);
+}
+
+.home-game-cabal-dev {
+  background: radial-gradient(circle at 70% 0%, rgba(244, 114, 182, 0.4), rgba(15, 23, 42, 0.96));
+  border-color: rgba(244, 114, 182, 0.9);
+}
+
+.home-game-wallet-good {
+  background: radial-gradient(circle at 20% 0%, rgba(74, 222, 128, 0.4), rgba(15, 23, 42, 0.95));
+  border-color: rgba(74, 222, 128, 0.9);
+}
+
+.home-game-hit-flash {
+  animation: homeGameHitFlash 180ms ease-out;
+}
+
+@keyframes homeGameHitFlash {
+  0% {
+    transform: scale(1);
+    filter: brightness(1.3);
+  }
+  60% {
+    transform: scale(1.08);
+    filter: brightness(1.9);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.home-game-pulse-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes homeGamePulseRing {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0;
+  }
+}
+
+.home-game-pulse-ring-active {
+  animation: homeGamePulseRing 900ms ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-game-cell,
+  .home-game-cell:active {
+    transition: none;
+  }
+  .home-game-hit-flash,
+  .home-game-pulse-ring-active {
+    animation: none;
+  }
+}
   </style>
 </head>
 
@@ -245,7 +392,7 @@
       <a href="#how-to-buy" class="underline">How to Buy</a>
       <a href="/cabal" class="underline">Cabal Scanner</a>
       <a href="/compare" class="underline">Cabal Compare</a>
-	  <a href="/leader" class="underline">Cabal Leaderboard</a>
+      <a href="/leader" class="underline">Cabal Leaderboard</a>
       <a href="/whitepaper.html" class="underline">Whitepaper</a>
       <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
     </nav>
@@ -261,7 +408,7 @@
       <a href="#how-to-buy" class="underline">How to Buy</a>
       <a href="/cabal" class="underline">Cabal Scanner</a>
       <a href="/compare" class="underline">Cabal Compare</a>
-	  <a href="/leader" class="underline">Cabal Leaderboard</a>
+      <a href="/leader" class="underline">Cabal Leaderboard</a>
       <a href="/whitepaper.html" class="underline">Whitepaper</a>
       <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
     </div>
@@ -324,7 +471,7 @@
 
           <p class="mb-6 text-gray-800 leading-snug text-lg md:text-2xl font-light font-mono">
             Tired of KOLs, rugs, scams and shadow cabals? <br /><br />
-			Join the community-owned rebellion on Main Isle now!<br /><br />
+      Join the community-owned rebellion on Main Isle now!<br /><br />
             No insiders - No tax - No bullshit<br />
           </p>
 
@@ -390,7 +537,7 @@
           />
 
           <!-- Cabal Scanner teaser under hero image -->
-          <div class="mt-6 w-full max-w-xl mx-auto text-left">
+            <div class="mt-6 w-full max-w-xl mx-auto text-left bg-gray-800 rounded-xl p-5 md:p-6 space-y-4 mt-4">
             <p class="text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 mb-2 text-left">
               Scan any token contract on supported chains
             </p>
@@ -603,8 +750,8 @@
               buy on uniswap
             </a>
           </div>
-		  
-		  <!-- QUICK COMPARE (A VS B) -->
+      
+      <!-- QUICK COMPARE (A VS B) -->
 <div class="w-full bg-gray-800 text-white rounded-xl p-5 md:p-6 space-y-4 mt-4">
   <div>
     <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400 mb-1">
@@ -701,7 +848,7 @@
   </div>
 </div>
 
-		   
+         
         </div>
       </div>
     </section>
@@ -868,7 +1015,7 @@ And they name it <span class="font-bold">$too many</span>.
               buy on uniswap
             </a>
             <a
-              href="https://etherscan.io/token/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
+              href="https://etherscan.io/token/0x95C1CFD6Ed4155b263698E2873814c128eD219b0"
               target="_blank"
               class="inline-flex items-center justify-center px-4 py-3 rounded-lg bg-white text-gray-900 font-mono text-sm md:text-base border border-gray-300"
             >
@@ -886,6 +1033,101 @@ And they name it <span class="font-bold">$too many</span>.
       </div>
 
     </section>
+
+<!-- CABAL HUNTER GAME (INLINE) -->
+<section class="w-full" style="background: rgb(243, 231, 211);">
+  <div class="container mx-auto px-5 py-12">
+    <div class="bg-gray-900 text-white rounded-2xl p-6 md:p-8">
+      <div class="mb-5 md:mb-6">
+        <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
+          Cabal Hunter · Action Mini-Game
+        </p>
+        <h2 class="font-mono text-2xl md:text-3xl">
+          Expose whales, CEX and dev wallets before they overrun Main Isle.
+        </h2>
+        <p class="font-mono text-xs md:text-sm text-gray-200 mt-2">
+          Tap whales, CEX and dev wallets. Don’t hit community wallets. Miss too many cabals and you get rugged.
+        </p>
+      </div>
+
+      <!-- Inline game shell -->
+      <div class="home-game-shell text-white p-4 md:p-5">
+        <!-- HUD -->
+        <div class="flex items-center justify-between mb-4 md:mb-5">
+          <div class="space-y-1">
+            <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
+              Score
+            </p>
+            <p id="home-game-score" class="font-mono text-xl md:text-2xl">
+              0
+            </p>
+          </div>
+          <div class="text-center hidden md:block">
+            <p class="font-mono text-xs uppercase tracking-wide text-gray-400">
+              Threat level
+            </p>
+            <p id="home-game-threat" class="font-mono text-sm text-green-300">
+              Calm seas
+            </p>
+          </div>
+          <div class="space-y-1 text-right">
+            <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
+              Lives
+            </p>
+            <p id="home-game-lives" class="font-mono text-xl md:text-2xl text-rose-300">
+              ♥♥♥
+            </p>
+          </div>
+        </div>
+
+        <!-- Mobile threat text -->
+        <div class="md:hidden mb-3">
+          <p id="home-game-threat-mobile" class="font-mono text-xs text-green-300 text-left">
+            Calm seas
+          </p>
+        </div>
+
+        <!-- Message row -->
+        <div class="mb-4 md:mb-5">
+          <p id="home-game-status" class="font-mono text-xs md:text-sm text-gray-300">
+            Tap “READY FIGHT!” to begin. Hit cabal wallets (🐋 🏦 🧪), avoid community (🧑‍🌾).
+          </p>
+        </div>
+
+        <!-- Grid -->
+        <div id="home-game-grid" class="home-game-grid mb-4 md:mb-6 select-none"></div>
+
+        <!-- Controls -->
+        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+          <button
+            id="home-game-start"
+            type="button"
+            class="w-full md:w-auto inline-flex items-center justify-center px-5 py-3 rounded-lg bg-green-500 text-gray-900 font-mono text-sm md:text-base uppercase tracking-wide"
+          >
+            READY FIGHT!
+          </button>
+          <div class="flex flex-col md:flex-row md:items-center gap-2 text-xs md:text-sm font-mono text-gray-300">
+            <button
+              id="home-game-scan-btn"
+              type="button"
+              class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-100"
+            >
+              Open Cabal Scanner
+            </button>
+            <button
+              id="home-game-compare-btn"
+              type="button"
+              class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-800 text-gray-100 border border-gray-600"
+            >
+              Open Cabal Compare
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <div style="text-align:center;">
@@ -990,6 +1232,7 @@ And they name it <span class="font-bold">$too many</span>.
 
 
 <script>
+  // /* HOME GAME LOGIC */
   (function () {
     var gridEl = document.getElementById("home-game-grid");
     var startButton = document.getElementById("home-game-start");
@@ -1001,7 +1244,7 @@ And they name it <span class="font-bold">$too many</span>.
     var speedDisplay = document.getElementById("home-game-threat");
     var speedDisplayMobile = document.getElementById("home-game-threat-mobile");
 
-    if (!gridEl || !startButton) {
+    if (!gridEl || !startButton || !scoreDisplay || !livesDisplay || !statusMessage) {
       return;
     }
 
@@ -1015,11 +1258,11 @@ And they name it <span class="font-bold">$too many</span>.
     var spawnDelayStart = 1000;
     var spawnDelayMin = 350;
     var spawnTimeoutId = null;
-    var activeTargets = {};
+    var activeTargets = {}, i;
 
     function createGrid() {
       gridEl.innerHTML = "";
-      for (var i = 0; i < CELL_COUNT; i++) {
+      for (i = 0; i < CELL_COUNT; i++) {
         var cell = document.createElement("div");
         cell.className = "home-game-cell home-game-empty";
         cell.dataset.index = String(i);
@@ -1098,7 +1341,7 @@ And they name it <span class="font-bold">$too many</span>.
       if (!running) return;
 
       var emptyIndices = [];
-      for (var i = 0; i < CELL_COUNT; i++) {
+      for (i = 0; i < CELL_COUNT; i++) {
         if (!activeTargets[i]) emptyIndices.push(i);
       }
       if (emptyIndices.length === 0) return;
@@ -1167,7 +1410,13 @@ And they name it <span class="font-bold">$too many</span>.
     function clearTarget(index, wasCabal, missed) {
       var cell = gridEl.querySelector('[data-index="' + index + '"]');
       if (cell) {
-        cell.classList.remove("home-game-target", "home-game-cabal-whale", "home-game-cabal-cex", "home-game-cabal-dev", "home-game-wallet-good");
+        cell.classList.remove(
+          "home-game-target",
+          "home-game-cabal-whale",
+          "home-game-cabal-cex",
+          "home-game-cabal-dev",
+          "home-game-wallet-good"
+        );
         cell.classList.add("home-game-empty");
 
         var inner = cell.querySelector(".home-game-cell-inner");
@@ -1244,7 +1493,9 @@ And they name it <span class="font-bold">$too many</span>.
       }
 
       Object.keys(activeTargets).forEach(function (idx) {
-        clearTarget(parseInt(idx, 10), activeTargets[idx].isCabal, false);
+        var iIdx = parseInt(idx, 10);
+        var t = activeTargets[iIdx];
+        if (t) clearTarget(iIdx, t.isCabal, false);
       });
       activeTargets = {};
 
