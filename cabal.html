@@ -927,6 +927,8 @@ Data is based on the most recent snapshot of top holders from the Crypto Cabal S
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 <script>
 (function () {
   const PUBLIC_API_KEY = "hfkdEJODJEOFKoekdoekl8763djEwrangler";
@@ -2688,6 +2690,72 @@ function renderHolders(data) {
     }
   }
 
+
+  async function captureShareImage() {
+    if (!lastScanData || !lastScanData.token) {
+      return null;
+    }
+
+    var grid = document.querySelector(".grid.grid-cols-1.gap-5");
+    if (!grid || typeof html2canvas === "undefined") return null;
+
+    var children = Array.prototype.slice.call(grid.children || []);
+    var toHide = children.slice(3);
+    var originalDisplay = [];
+
+    toHide.forEach(function (el) {
+      originalDisplay.push({ el: el, display: el.style.display });
+      el.style.display = "none";
+    });
+
+    grid.scrollIntoView({ behavior: "auto", block: "center" });
+
+    await new Promise(function (resolve) {
+      setTimeout(resolve, 200);
+    });
+
+    try {
+      var canvas = await html2canvas(grid, {
+        backgroundColor: null,
+        scale: 2
+      });
+      return new Promise(function (resolve) {
+        canvas.toBlob(function (blob) {
+          resolve(blob || null);
+        }, "image/png");
+      });
+    } catch (e) {
+      return null;
+    } finally {
+      originalDisplay.forEach(function (entry) {
+        entry.el.style.display = entry.display || "";
+      });
+    }
+  }
+
+  async function downloadShareImage() {
+    var blob = await captureShareImage();
+    if (!blob) return;
+
+    var url = URL.createObjectURL(blob);
+    var symbol = "token";
+    try {
+      if (lastScanData) {
+        symbol = (lastScanData.symbol || lastScanData.token || "token");
+      }
+    } catch (e) {
+      symbol = "token";
+    }
+
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "cabal-" + symbol + "-" + Date.now() + ".png";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   function updatePromo(data) {
     data = data || {};
     if (!buyTooBtn || !shareButtons.length || !footerNote) return;
@@ -2698,6 +2766,9 @@ function renderHolders(data) {
 
     shareButtons.forEach(function (btn) {
       btn.onclick = function () {
+        // Trigger share image download (fire-and-forget)
+        downloadShareImage();
+
         const text = buildShareText();
         const tweetUrl =
           "https://twitter.com/intent/tweet?text=" +
