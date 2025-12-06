@@ -96,7 +96,6 @@ const API_BASE = getApiBase();
       .cabal-card {
         border-radius: 0 !important;
         box-shadow: none !important;
-        margin-bottom: 24px !important; /* ensure footer sits clearly outside card on mobile */
       }
     }
   </style>
@@ -249,14 +248,19 @@ const API_BASE = getApiBase();
 </section>
 
 <!-- WHITEPAPER BODY WITH SIDEBAR -->
-<section class="w-full bg-[#F3E7D3]">
-  <div class="container mx-auto px-3 sm:px-5 py-4 md:py-5 flex cabal-shell">
+<section class="w-full background:#F3E7D3; ">
+  <div class="container mx-auto px-5 py-4 md:py-5 flex cabal-shell">
+
+    <!-- MAIN TEXT -->
     <article class="max-w-4xl font-mono text-gray-800 leading-relaxed text-lg md:text-xl w-full md:w-3/4 mx-auto cabal-article">
-      <div class="not-prose bg-gray-800 rounded-2xl shadow-xl p-4 md:p-5 space-y-8 cabal-card">
-	  
+
+      <!-- FORMATTED WHITEPAPER TEXT -->
+      <div class="not-prose bg-gray-800 rounded-2xl shadow-xl p-5 md:p-7 space-y-8 cabal-card">
         <!-- Scan row -->
         <div class="space-y-2">
-         
+          <label for="tokenInput" class="block text-xs md:text-sm tracking-wide uppercase text-gray-100">
+            Scan any token contract on supported chains
+          </label>
           <div class="flex flex-col md:flex-row md:items-center md:space-x-3 space-y-2 md:space-y-0">
             <input
               id="tokenInput"
@@ -288,11 +292,11 @@ const API_BASE = getApiBase();
             </button>
           </div>
 		   <p id="statusLine" class="text-sm mt-1"></p>
-          <p class="text-sm text-gray-100">
+          <p class="text-[10px] md:text-sm tracking-wide uppercase text-gray-100">
             About
           </p>
           <p class="text-sm text-gray-100">
-			Crypto Cabal Scanner &trade; analyzes token concentration. Lower Cabal Score &trade; means safer supply distribution.
+            Crypto Cabal Scanner &trade; analyzes token supply, where it's held and how much each entity holds. Lower Cabal scores equals better supply distribution.
           </p>
         </div>
 
@@ -302,9 +306,9 @@ const API_BASE = getApiBase();
           <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3">
             <div class="leading-tight">
               <div class="flex items-center gap-1">
-                <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">CABAL SCORE &trade;</p>
+                <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-900">Cabal score</p>
               </div>
-              <p class="text-xs uppercase font-semibold tracking-wide text-gray-500">Lower is better</p>
+              <p class="text-[10px] md:text-sm uppercase tracking-wide text-gray-500">Lower is better</p>
             </div>
             <div class="flex items-center justify-between space-x-3">
               <p id="scoreMain" class="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">–</p>
@@ -315,7 +319,7 @@ const API_BASE = getApiBase();
             </div>
             <div class="font-mono text-sm md:text-base text-gray-800">
               <span id="scoreRating"></span>
-              <span id="scoreSummary">Scan a token to view concentration.</span>
+              <span id="scoreSummary">Scan a token to see how concentrated its holder base is.</span>
             </div>
             <div
               id="tooExplainer"
@@ -332,50 +336,50 @@ const API_BASE = getApiBase();
             <p id="bestScoreLine" class="text-sm text-gray-500 hidden"></p>
             <p id="scanChainLine" class="text-sm text-gray-500 mt-1"></p>
             <div class="flex flex-wrap gap-2 mt-1 justify-start items-start">
-              <span id="legend-excellent" class="inline-flex items-center px-1 py-1 rounded-full border border-transparent text-xs md:text-base uppercase tracking-wide text-gray-500">
+              <span id="legend-excellent" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
                 <span class="w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
                 Excellent
               </span>
-              <span id="legend-good" class="inline-flex items-center px-1 py-1 rounded-full border border-transparent text-xs md:text-base uppercase tracking-wide text-gray-500">
+              <span id="legend-good" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
                 <span class="w-2 h-2 rounded-full bg-blue-400 mr-1.5"></span>
                 Good
               </span>
-              <span id="legend-caution" class="inline-flex items-center px-1 py-1 rounded-full border border-transparent text-xs md:text-base uppercase tracking-wide text-gray-500">
+              <span id="legend-caution" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
                 <span class="w-2 h-2 rounded-full bg-yellow-400 mr-1.5"></span>
                 Caution
               </span>
-              <span id="legend-warning" class="inline-flex items-center px-1 py-1 rounded-full border border-transparent text-xs md:text-base uppercase tracking-wide text-gray-500">
+              <span id="legend-warning" class="inline-flex items-center px-2.5 py-1 rounded-full border border-transparent text-sm md:text-base uppercase tracking-wide text-gray-500">
                 <span class="w-2 h-2 rounded-full bg-red-500 mr-1.5"></span>
                 Warning
               </span>
             </div>
           </div>
-		 
-		  <!-- CABAL FINGERPRINT™ (cyberpunk radial DNA) -->
+
+
+
+          <!-- CABAL FINGERPRINT™ (cyberpunk radial DNA) -->
           <div class="border border-gray-800 rounded-xl bg-gray-900 p-4 md:p-5 space-y-4">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm md:text-base font-semibold tracking-wide uppercase text-gray-300">
-                  CABAL FINGERPRINT &trade;
+                <p class="text-xs md:text-sm tracking-wide uppercase text-gray-300">
+                  CABAL FINGERPRINT&trade;
                 </p>
                 <p class="text-xs md:text-sm text-gray-400 mt-1">
-                  Behavioral DNA holder map.
+                  Behavioral DNA of this token’s holder map.
                 </p>
               </div>
-              <span class="inline-flex items-center px-2.5 py-1 rounded-full border border-yellow-400 text-xs md:text-base font-mono uppercase tracking-wide text-yellow-200 bg-black bg-opacity-60">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full border border-yellow-400 text-[10px] md:text-xs font-mono uppercase tracking-wide text-yellow-200 bg-black bg-opacity-60">
                 <span class="w-2 h-2 rounded-full bg-green-400 mr-1.5 shadow-md"></span>
                 Live scan
               </span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 items-center">
-  <!-- Radial fingerprint -->
-  <div class="md:col-span-2 flex items-center justify-center">
-    <div class="relative w-full max-w-sm">
-      <svg viewBox="0 0 200 200" class="w-full h-auto block">
-
-				  
-				    <!-- Background glow -->
+              <!-- Radial fingerprint -->
+              <div class="md:col-span-2 flex items-center justify-center">
+                <div class="relative w-full max-w-xs md:max-w-sm aspect-square">
+                  <svg viewBox="0 0 200 200" class="w-full h-full">
+                    <!-- Background glow -->
                     <defs>
                       <radialGradient id="fingerprintGlow" cx="50%" cy="50%" r="50%">
                         <stop offset="0%" stop-color="#4ade80" stop-opacity="0.45" />
@@ -444,10 +448,9 @@ const API_BASE = getApiBase();
 
                     <!-- Direction labels -->
                     <g font-size="8" fill="#9ca3af" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace">
-
                       <!-- Top: Whale Gravity -->
-                      <text x="100" y="14">Whale</text>
-                      <text x="100" y="04">Gravity</text>
+                      <text x="100" y="20">Whale</text>
+                      <text x="100" y="30">Gravity</text>
 
                       <!-- Upper-right: CEX Custody Heat -->
                       <text x="164" y="40">CEX</text>
@@ -462,8 +465,8 @@ const API_BASE = getApiBase();
                       <text x="164" y="176">Stability</text>
 
                       <!-- Bottom: Holder Churn -->
-                      <text x="100" y="196">Holder</text>
-                      <text x="100" y="206">Churn</text>
+                      <text x="100" y="188">Holder</text>
+                      <text x="100" y="198">Churn</text>
 
                       <!-- Lower-left: Cluster Density -->
                       <text x="36" y="166">Cluster</text>
@@ -496,7 +499,13 @@ const API_BASE = getApiBase();
                   ></span>
                   <span id="fingerprintHealthLabel">Scan a token</span>
                 </div>
-                <p class="text-sm text-gray-600">
+                <p
+                  id="fingerprintHealthSummary"
+                  class="text-xs md:text-sm text-gray-300"
+                >
+                  Scan a token to see how balanced this fingerprint looks based on Cabal Score band.
+                </p>
+                <p id="fingerprintHealthSummary" class="text-sm text-gray-600">
                   Rounder shapes indicate healthier holder ecosystems. Sharp, lopsided spikes show which behaviors dominate cabal risk.
                 </p>
               </div>
@@ -811,77 +820,77 @@ const API_BASE = getApiBase();
         </div>
 
 
-       <!-- How to read this page -->
+        <!-- How to read this page -->
         <div class="border border-gray-200 rounded-xl bg-gray-50 p-4 md:p-5 space-y-3 mt-4">
           <p class="text-sm tracking-wide uppercase text-gray-500">How to read this page</p>
           <div class="space-y-2 text-sm text-gray-500">
             <p>
-              <span class="font-semibold">Cabal Score.</span>
-              A 0–100 risk score for how “caballed” the visible supply looks. Lower is better.
+              <span class="font-semibold">Cabal Score</span></p>
+              <p>A 0–100 risk score for how “caballed” the visible supply looks. Lower is better.
               The Cabal Score looks at how much supply sits in whales, exchanges, bridges, LPs and project wallets
               versus many smaller community holders. It only uses the top holders we can see on-chain.
             </p>
 			<p><span class="font-semibold">How to Read This Fingerprint</span></p>
             <ul class="list-disc">
-             <li>Whale Gravity – how much control the largest whales have; farther out = fewer wallets hold more power.</li>
-             <li>CEX Custody Heat – how much supply sits on exchanges; higher = more centralized exchange risk.</li>
-             <li>Bridge Dependency – how bridge-heavy the token is; higher = more supply locked in bridges.</li>
-             <li>LP Stability – how fragile the LP looks; higher = easier to nuke or manipulate liquidity.</li>
-             <li>Holder Churn – how fast wallets rotate; higher = degen / bot-heavy trading, less diamond hands.</li>
-             <li>Cluster Density – how much power sits in shared infra (CEX, LPs, bridges, project multisigs).</li>
-             <li>Top 10 Compression – how concentrated the top 10 wallets are; higher = more cabal tension at the top.</li>
-             <li>Fresh Wallet Velocity – how quickly new wallets rush in; higher = hype / momentum inflow speed.</li></ul>
-             <p>Bigger spikes mean stronger influence. Smooth, rounded shapes are healthier; jagged, lopsided shapes point to cabal-heavy risk.</p>
+			  <li>Whale Gravity – how much control the largest whales have; farther out = fewer wallets hold more power.</li>
+<li>CEX Custody Heat – how much supply sits on exchanges; higher = more centralized exchange risk.</li>
+<li>Bridge Dependency – how bridge-heavy the token is; higher = more supply locked in bridges.</li>
+<li>LP Stability – how fragile the LP looks; higher = easier to nuke or manipulate liquidity.</li>
+<li>Holder Churn – how fast wallets rotate; higher = degen / bot-heavy trading, less diamond hands.</li>
+<li>Cluster Density – how much power sits in shared infra (CEX, LPs, bridges, project multisigs).</li>
+<li>Top 10 Compression – how concentrated the top 10 wallets are; higher = more cabal tension at the top.</li>
+<li>Fresh Wallet Velocity – how quickly new wallets rush in; higher = hype / momentum inflow speed.</li></ul>
+<p>Bigger spikes mean stronger influence. Smooth, rounded shapes are healthier; jagged, lopsided shapes point to cabal-heavy risk.</p>
+			</p>
             <p>
-              <span class="font-semibold">Snapshot of Supply</span>
-              Breaks the visible supply into buckets like Community, Whales, CEX custody, Bridges, DEX / LP,
+              <span class="font-semibold">Snapshot of Supply</span></p>
+              <p>Breaks the visible supply into buckets like Community, Whales, CEX custody, Bridges, DEX / LP,
               Project / Treasury and Burned. Percentages are based on the top holders returned by the API,
               after tagging known CEX, LP, bridge, project and burn wallets.
             </p>
             <p>
-              <span class="font-semibold">Custody Clusters</span>
-              Groups big shared wallets (centralized exchanges, LP pools, project multisigs, bridges) into clusters
+              <span class="font-semibold">Custody Clusters</span></p>
+              <p>Groups big shared wallets (centralized exchanges, LP pools, project multisigs, bridges) into clusters
               so you can see how much supply those infrastructures jointly control. A large cluster means a single
               failure or freeze could affect a big chunk of supply.
             </p>
             <p>
-              <span class="font-semibold">Top Holders Summary</span>
-              Shows how concentrated the largest wallets are: top 10 / 20 / 50 holders and whale wallets.
+              <span class="font-semibold">Top Holders Summary</span></p>
+              <p>Shows how concentrated the largest wallets are: top 10 / 20 / 50 holders and whale wallets.
               Whale wallets are non-infrastructure, non-exchange holders above our whale threshold of the supply.
               Higher percentages here mean more power in fewer hands.
             </p>
             <p>
-              <span class="font-semibold">Top Holders Table</span>
-              A wallet-by-wallet view of the largest holders we can see. Tags like Whale, CEX, DEX / LP,
+              <span class="font-semibold">Top Holders Table</span></p>
+              <p>A wallet-by-wallet view of the largest holders we can see. Tags like Whale, CEX, DEX / LP,
               Project, Bridge, Burn and Contract explain what each address looks like. “View” opens the wallet
               on a block explorer for deeper manual research.
             </p>
-            <div>
-              <p>
-                <span class="font-semibold">Cabal AI — suspicious behavior watch</span>
-                First of its kind AI that reads the same holder map you see and highlights structural cabal magnets:
-                oversized whales, team wallets with too much control, exchange or bridge dominance, or unusually
-                clean community distributions. The colored dots match the main Cabal Score band (Excellent, Good,
-                Caution, Warning).
-              </p>
-              <p>V2 auto AI behavioral detection now live.</p>
-              <ul class="list-disc list-inside">
-                <li>Whale Wakeups — dormant whales that suddenly reactivate.</li>
-                <li>Team Micro-Drain — treasury wallets dripping small transfers across multiple addresses.</li>
-                <li>Cluster Pressure — CEX / bridge custody hotspots.</li>
-                <li>Structural Concentration — top-holder power pockets.</li>
-                <li>LP Shockwave Detection — if LP decreases &gt;20% in 24h.</li>
-                <li>Bridge Scan — large bridge inflow followed by exchange outflow.</li>
-                <li>Funding Wallet Fan-Out — if a wallet sends seeds to 10+ fresh wallets, sybil / honeypot risk.</li>
-              </ul>
-            </div>
             <p>
-              <span class="font-semibold">Scanner Activity</span>
-              These four lists look at all scans run through this tool:
+              <span class="font-semibold">Cabal AI — suspicious behavior watch</span></p>
+              <p>First of its kind AI with that reads the same holder map you see and highlights structural cabal magnets:
+              oversized whales, team wallets with too much control, exchange or bridge dominance, or unusually
+              clean community distributions. The colored dots match the main Cabal Score band (Excellent, Good,
+              Caution, Warning).
+			  <p>V2 auto AI behavioral detection now live.
+			  <ul class="list-disc">
+			  <li>Whale Wakeups — dormant whales that suddenly reactivate</li>
+               <li>Team Micro-Drain — treasury wallets dripping small transfers across multiple addresses</li>
+               <li>Cluster Pressure — CEX / bridge custody hotspots</li>
+               <li>Structural Concentration — top-holder power pockets</li>
+			   <li>LP Shockwave Detection — if LP decreases >20% in 24h</li>
+               <li>Bridge Scan - large bridge inflow is followed by exchange outflow</li>
+			   <li>Funding Wallet Fan-Out - if a wallet sends seeds to 10+ fresh wallets sybil/honeypot risk.</li>
+			   </ul></p>
+            </p>
+            <p>
+              <span class="font-semibold">Scanner Activity</span></p>
+              <p>These four lists look at all scans run through this tool:
               Leaderboard shows contracts with the cleanest scores,
               Hall of Shame surfaces the most cabal-heavy ones,
               Recent Scans is the latest contracts checked,
-              and Most Scanned Contracts shows what other users keep double-checking.
+              and Most Scanned Contracts shows what other users keep
+              double-checking.
             </p>
           </div>
         </div>
