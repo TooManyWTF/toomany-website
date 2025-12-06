@@ -88,6 +88,132 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
     }
+
+    /* Glitchy anti-cabal pill */
+    .anti-cabal-glitch {
+      position: relative;
+      overflow: hidden;
+      animation: antiCabalGlitch 6s infinite steps(1, end);
+    }
+
+    .anti-cabal-glitch span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .anti-cabal-glitch::before,
+    .anti-cabal-glitch::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: screen;
+      opacity: 0.0;
+      pointer-events: none;
+    }
+
+    .anti-cabal-glitch::before {
+      background: linear-gradient(
+        90deg,
+        rgba(34, 197, 94, 0.25),
+        transparent,
+        rgba(239, 68, 68, 0.35)
+      );
+    }
+
+    .anti-cabal-glitch::after {
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0) 0px,
+        rgba(0, 0, 0, 0) 2px,
+        rgba(0, 0, 0, 0.12) 3px
+      );
+    }
+
+    @keyframes antiCabalGlitch {
+      0%, 92%, 100% {
+        transform: translate3d(0, 0, 0);
+        text-shadow: none;
+      }
+      93% {
+        transform: translate3d(-1px, 0, 0);
+        text-shadow: -1px 0 #22c55e, 1px 0 #ef4444;
+      }
+      95% {
+        transform: translate3d(1px, 0, 0);
+        text-shadow: 1px 0 #22c55e, -1px 0 #ef4444;
+      }
+      97% {
+        transform: translate3d(0, -1px, 0);
+      }
+      99% {
+        transform: translate3d(0, 1px, 0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anti-cabal-glitch {
+        animation: none;
+        text-shadow: none;
+      }
+    }
+
+    /* CTA micro-animations (hero & main buy buttons) */
+    .cta-primary {
+      position: relative;
+      transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    .cta-primary:hover,
+    .cta-primary:focus {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .cta-primary::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+      pointer-events: none;
+    }
+
+    .cta-primary:hover::after,
+    .cta-primary:focus::after {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    @keyframes ctaIdlePulse {
+      0%, 60%, 100% {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        transform: translateY(0) scale(1);
+      }
+      70% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15);
+        transform: translateY(-0.5px) scale(1.01);
+      }
+      80% {
+        box-shadow: 0 12px 18px rgba(0, 0, 0, 0.18);
+        transform: translateY(-1px) scale(1.015);
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .cta-primary {
+        animation: ctaIdlePulse 5s ease-in-out infinite;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-primary {
+        animation: none;
+      }
+    }
   </style>
 </head>
 
@@ -183,7 +309,7 @@
       <div class="container mx-auto px-5 py-8 md:py-10 flex flex-col md:flex-row items-center">
         <!-- Left: text -->
         <div class="w-full md:w-7/12 lg:w-1/2 px-3 md:text-left mb-10 md:mb-0">
-         <div class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 space-x-1">
+         <div class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 space-x-1 anti-cabal-glitch">
   <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
   <span>Anti-cabal</span>&nbsp;
   <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
@@ -214,7 +340,7 @@
             <a
               href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0?inputCurrency=NATIVE"
               target="_blank"
-              class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-black text-white font-mono text-sm md:text-base uppercase tracking-wide"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-black text-white font-mono text-sm md:text-base uppercase tracking-wide cta-primary"
             >
               buy on uniswap
             </a>
@@ -471,7 +597,7 @@
             <a
               href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0?inputCurrency=NATIVE"
               target="_blank"
-              class="px-6 py-4 outline-none focus:outline-none mx-1 my-1 whitespace-pre-line font-mono rounded-lg shadow-lg uppercase text-xl md:text-2xl font-normal bg-p-lime-700 text-p-white"
+              class="px-6 py-4 outline-none focus:outline-none mx-1 my-1 whitespace-pre-line font-mono rounded-lg shadow-lg uppercase text-xl md:text-2xl font-normal bg-p-lime-700 text-p-white cta-primary"
               style="transition: all .15s ease; white-space: nowrap;"
             >
               buy on uniswap
