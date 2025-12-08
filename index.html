@@ -1047,80 +1047,95 @@ And they name it <span class="font-bold">$too many</span>.
         </p>
       </div>
 
-      <!-- Inline game shell -->
-      <div class="home-game-shell text-white p-4 md:p-5">
-        <!-- HUD -->
-        <div class="flex items-center justify-between mb-4 md:mb-5">
-          <div class="space-y-1">
-            <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
-              Score
-            </p>
-            <p id="home-game-score" class="font-mono text-xl md:text-2xl">
-              0
-            </p>
-          </div>
-          <div class="text-center hidden md:block">
-            <p class="font-mono text-xs uppercase tracking-wide text-gray-400">
-              Threat level
-            </p>
-            <p id="home-game-threat" class="font-mono text-sm text-green-300">
-              Calm seas
-            </p>
-          </div>
-          <div class="space-y-1 text-right">
-            <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
-              Lives
-            </p>
-            <p id="home-game-lives" class="font-mono text-xl md:text-2xl text-rose-300">
-              ♥♥♥
-            </p>
+      <!-- Two-column layout: video (left) and game (right) on desktop -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+        <!-- Left: YouTube video -->
+        <div class="w-full">
+          <div class="relative w-full overflow-hidden rounded-xl bg-black">
+            <div class="relative" style="padding-bottom: 56.25%; height: 0;">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/ZbRJgYsE7yQ?si=jFJK9aec5frVizE-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="absolute top-0 left-0 w-full h-full"></iframe>
+            </div>
           </div>
         </div>
 
-        <!-- Mobile threat text -->
-        <div class="md:hidden mb-3">
-          <p id="home-game-threat-mobile" class="font-mono text-xs text-green-300 text-left">
-            Calm seas
-          </p>
-        </div>
+        <!-- Right: Inline game shell -->
+        <div class="w-full">
+          <div class="home-game-shell text-white p-4 md:p-5">
+            <!-- HUD -->
+            <div class="flex items-center justify-between mb-4 md:mb-5">
+              <div class="space-y-1">
+                <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
+                  Score
+                </p>
+                <p id="home-game-score" class="font-mono text-xl md:text-2xl">
+                  0
+                </p>
+              </div>
+              <div class="text-center hidden md:block">
+                <p class="font-mono text-xs uppercase tracking-wide text-gray-400">
+                  Threat level
+                </p>
+                <p id="home-game-threat" class="font-mono text-sm text-green-300">
+                  Calm seas
+                </p>
+              </div>
+              <div class="space-y-1 text-right">
+                <p class="font-mono text-xs md:text-sm uppercase tracking-wide text-gray-400">
+                  Lives
+                </p>
+                <p id="home-game-lives" class="font-mono text-xl md:text-2xl text-rose-300">
+                  ♥♥♥
+                </p>
+              </div>
+            </div>
 
-        <!-- Message row -->
-        <div class="mb-4 md:mb-5">
-          <p id="home-game-status" class="font-mono text-xs md:text-sm text-gray-300">
-            Tap “READY FIGHT!” to begin. Hit cabal wallets (🐋 🏦 🧪), avoid community (🧑‍🌾).
-          </p>
-        </div>
+            <!-- Mobile threat text -->
+            <div class="md:hidden mb-3">
+              <p id="home-game-threat-mobile" class="font-mono text-xs text-green-300 text-left">
+                Calm seas
+              </p>
+            </div>
 
-        <!-- Grid -->
-        <div id="home-game-grid" class="home-game-grid mb-4 md:mb-6 select-none"></div>
+            <!-- Message row -->
+            <div class="mb-4 md:mb-5">
+              <p id="home-game-status" class="font-mono text-xs md:text-sm text-gray-300">
+                Tap “READY FIGHT!” to begin. Hit cabal wallets (🐋 🏦 🧪), avoid community (🧑‍🌾).
+              </p>
+            </div>
 
-        <!-- Controls -->
-        <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          <button
-            id="home-game-start"
-            type="button"
-            class="w-full md:w-auto inline-flex items-center justify-center px-5 py-3 rounded-lg bg-green-500 text-gray-900 font-mono text-sm md:text-base uppercase tracking-wide"
-          >
-            READY FIGHT!
-          </button>
-          <div class="flex flex-col md:flex-row md:items-center gap-2 text-xs md:text-sm font-mono text-gray-300">
-            <button
-              id="home-game-scan-btn"
-              type="button"
-              class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-100"
-            >
-              Open Cabal Scanner
-            </button>
-            <button
-              id="home-game-compare-btn"
-              type="button"
-              class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-800 text-gray-100 border border-gray-600"
-            >
-              Open Cabal Compare
-            </button>
+            <!-- Grid -->
+            <div id="home-game-grid" class="home-game-grid mb-4 md:mb-6 select-none"></div>
+
+            <!-- Controls -->
+            <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+              <button
+                id="home-game-start"
+                type="button"
+                class="w-full md:w-auto inline-flex items-center justify-center px-5 py-3 rounded-lg bg-green-500 text-gray-900 font-mono text-sm md:text-base uppercase tracking-wide"
+              >
+                READY FIGHT!
+              </button>
+              <div class="flex flex-col md:flex-row md:items-center gap-2 text-xs md:text-sm font-mono text-gray-300">
+                <button
+                  id="home-game-scan-btn"
+                  type="button"
+                  class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-100"
+                >
+                  Open Cabal Scanner
+                </button>
+                <button
+                  id="home-game-compare-btn"
+                  type="button"
+                  class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-800 text-gray-100 border border-gray-600"
+                >
+                  Open Cabal Compare
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
