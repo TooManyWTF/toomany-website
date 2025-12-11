@@ -1,94 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>TooMany Meme Armory – Download Anti-Cabal Memes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Download anti-cabal, crypto and memecoin memes from TooMany.wtf to use on X, TikTok, Telegram and more."
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6VQN64SEKQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6VQN64SEKQ');
+</script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Too Many | Meme Library | $TOO</title>
+  <meta name="description" content="Download $TOO anti-cabal memes from TooMany.wtf to use on X, Telegram, and more." />
+  <meta property="og:title" content="Too Many | Meme Library | $TOO" />
+  <meta property="og:description" content="Download anti-cabal memes from TooMany.wtf and arm your feed against cabal tokens." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://toomany.wtf/memes" />
+  <meta property="og:image" content="https://toomany.wtf/images/transparentlogo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Too Many | Meme Library | $TOO" />
+  <meta name="twitter:description" content="Download $TOO anti-cabal memes ready-made for X and more." />
+  <meta name="twitter:image" content="https://toomany.wtf/images/transparentlogo.png" />
+
+  <!-- Tailwind -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
   />
-  <!-- Tailwind (match how you include it elsewhere) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Pazly Colors -->
+  <link rel="stylesheet" href="https://pazly.dev/colors/gradients.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/backgrounds.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/text.css" />
+  <link rel="stylesheet" href="https://pazly.dev/colors/border.css" />
+
+  <style>
+    body {
+      background: #f3e7d3;
+      overflow-x: hidden;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    h1, h2, h3 { line-height: 1.25 !important; }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+    }
+    .toc-link {
+      display: block;
+      padding: 6px 0;
+      color: #444;
+    }
+    .toc-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
-<body class="bg-black text-gray-100 min-h-screen">
-  <div class="min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-950 to-black">
 
-    <!-- HEADER / NAV – matched to your site structure -->
-    <header class="border-b border-slate-800/80 bg-black/80 backdrop-blur">
-      <div class="max-w-5xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
-        <!-- Left: Logo / Home link -->
-        <a href="/" class="flex items-baseline gap-2">
-          <span class="text-xs md:text-sm uppercase tracking-[0.2em] text-emerald-400">
-            too many
-          </span>
-          <span class="hidden md:inline text-[11px] text-gray-400">
-            the anti-cabal meme coin
-          </span>
+<body>
+
+<!-- NAVBAR -->
+<header class="w-full bg-white border-b border-gray-200">
+  <div class="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center space-x-2">
+      <img src="images/transparentlogo.png" class="h-10 md:h-12" alt="Too Many logo" />
+    </a>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="mobile-menu-toggle"
+      class="md:hidden text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 p-2"
+      aria-label="Toggle navigation"
+    >
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center space-x-4 md:space-x-6 font-mono">
+      <a href="/" class="underline">Home</a>
+      <a href="/cabal" class="underline">Cabal Scanner</a>
+	  <a href="/compare" class="underline">Cabal Compare</a>
+	  <a href="/leader" class="underline">Cabal Leaderboard</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
+    </nav>
+  </div>
+
+  <!-- MOBILE DROPDOWN -->
+  <nav
+    id="mobile-menu"
+    class="md:hidden overflow-hidden bg-white border-t border-gray-200 font-mono transition-all duration-300"
+    style="max-height: 0;"
+  >
+    <div class="flex flex-col px-4 py-2 space-y-3">
+      <a href="/" class="underline">Home</a>
+      <a href="/cabal" class="underline">Cabal Scanner</a>
+	  <a href="/compare" class="underline">Cabal Compare</a>
+	  <a href="/leader" class="underline">Cabal Leaderboard</a>
+      <a href="https://x.com/toomanywtf" target="_blank" class="underline">X</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  (function () {
+    var toggle = document.getElementById("mobile-menu-toggle");
+    var menu = document.getElementById("mobile-menu");
+
+    if (!toggle || !menu) return;
+
+    var isOpen = false;
+
+    toggle.addEventListener("click", function () {
+      isOpen = !isOpen;
+
+      if (isOpen) {
+        // Measure content height & animate open
+        var contentHeight = menu.scrollHeight;
+        menu.style.maxHeight = contentHeight + "px";
+      } else {
+        // Collapse
+        menu.style.maxHeight = "0px";
+      }
+    });
+
+    // Close on link tap
+    menu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        menu.style.maxHeight = "0px";
+        isOpen = false;
+      });
+    });
+
+  })();
+</script>
+
+<!-- HERO HEADER -->
+<section class="text-gray-800" style="background:#F3E7D3;">
+  <div class="container mx-auto px-5 py-8 md:py-10 flex flex-col md:flex-row items-center">
+    <div class="w-full md:w-7/12 lg:w-1/2 px-3 mb-10 md:mb-0">
+           <div class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs md:text-sm font-mono uppercase tracking-wide text-gray-600 space-x-1">
+  <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  <span>Anti-cabal</span>&nbsp;
+  <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  &nbsp;<span>Rug-proof</span>&nbsp;
+   <span class="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
+  &nbsp;<span>No tax</span>
+</div>
+     <h1 class="font-mono font-bold text-3xl md:text-5xl mt-4 mb-6 text-gray-900">
+  $TOO <span class="bg-black text-white px-2">Whitepaper</span>
+</h1>
+
+      <p class="text-gray-800 text-lg md:text-2xl font-light font-mono">
+        The philosophy, mission, and mechanics behind the rebellion.
+      </p>
+
+      <!-- CTA ROW -->
+      <div class="flex flex-wrap items-center gap-3 mt-6">
+        <a href="https://app.uniswap.org/explore/tokens/ethereum/0x95c1cfd6ed4155b263698e2873814c128ed219b0"
+           target="_blank"
+           class="px-6 py-3 rounded-lg bg-black text-white font-mono uppercase tracking-wide">
+          buy on uniswap
         </a>
-
-        <!-- Right: Nav links (same destinations as your header) -->
-        <nav class="flex items-center gap-3 md:gap-5 text-[11px] md:text-sm">
-          <a href="/" class="text-gray-300 hover:text-emerald-400 transition">Home</a>
-          <a href="/cabal" class="text-gray-300 hover:text-emerald-400 transition">Cabal Scanner</a>
-          <a href="/compare" class="text-gray-300 hover:text-emerald-400 transition">Cabal Compare</a>
-          <a href="/leaderboard" class="text-gray-300 hover:text-emerald-400 transition">Leaderboard</a>
-          <a href="/whitepaper" class="text-gray-400 hover:text-emerald-300 transition">Whitepaper</a>
-          <a href="https://x.com/toomanywtf" target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-1 rounded-full border border-slate-700 px-2.5 py-1 text-[11px] md:text-xs text-gray-200 hover:border-emerald-400 hover:text-emerald-200 transition">
-            <span>X</span>
-          </a>
-        </nav>
+        <a href="https://x.com/toomanywtf"
+           target="_blank"
+           class="underline font-mono px-4 py-3">
+          follow on X
+        </a>
       </div>
-    </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1">
-      <!-- Hero / Intro – same vibe as whitepaper intro -->
-      <section class="border-b border-slate-800/60">
-        <div class="max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-10">
-          <div class="space-y-4 md:space-y-5">
-            <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[10px] md:text-xs uppercase tracking-wide text-emerald-300">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Meme armory · community tools</span>
-            </div>
+      <div class="mt-6">
+        <code class="font-mono text-xs md:text-sm bg-white px-3 py-2 rounded-lg break-all">
+          0x95C1CFD6Ed4155b263698E2873814c128eD219b0
+        </code>
+      </div>
+    </div>
 
-            <div class="space-y-2">
-              <h1 class="text-2xl md:text-4xl font-semibold">
-                Download <span class="text-emerald-400">$TOO</span>-style
-                anti-cabal memes.
-              </h1>
-              <p class="text-sm md:text-base text-gray-300 max-w-2xl">
-                Save any meme, slap it on X, Telegram, TikTok, wherever. No permission
-                needed – just don’t pretend you built the scanner.
-              </p>
-            </div>
-
-            <div class="grid gap-3 md:grid-cols-3 text-[11px] md:text-sm text-gray-300">
-              <div class="flex items-start gap-2">
-                <span class="mt-1 text-emerald-400">①</span>
-                <p><strong>Pick a meme</strong> that fits the cabal level, whale stack, or narrative.</p>
-              </div>
-              <div class="flex items-start gap-2">
-                <span class="mt-1 text-emerald-400">②</span>
-                <p><strong>Download</strong> it with one click (right-click / long-press works too).</p>
-              </div>
-              <div class="flex items-start gap-2">
-                <span class="mt-1 text-emerald-400">③</span>
-                <p><strong>Copy caption</strong> and post straight to your feed.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+   <div class="w-full md:w-5/12 lg:w-1/2 text-center hidden md:block">
+  <img src="images/transparentlogo.png"
+       class="mx-auto max-w-xs md:max-w-sm lg:max-w-md object-contain"
+       alt="TOO Logo" />
+</div>
+  </div>
+</section>
 
       <!-- Meme Grid -->
       <section class="py-8 md:py-10">
         <div class="max-w-5xl mx-auto px-4 md:px-6">
           <div class="flex items-center justify-between gap-4 mb-4 md:mb-6">
             <div>
-              <h2 class="text-lg md:text-2xl font-semibold">Meme Library</h2>
-              <p class="text-xs md:text-sm text-gray-400">
+              <h2 class="text-lg md:text-2xl font-semibold text-gray-900">Meme Library</h2>
+              <p class="text-xs md:text-sm text-gray-700">
                 New memes will be dropped over time. Bookmark this page and check back after big cabal scans.
               </p>
             </div>
@@ -106,23 +217,6 @@
         </div>
       </section>
     </main>
-
-    <!-- FOOTER – matched to the whitepaper/footer vibe -->
-    <footer class="border-t border-slate-800 bg-black">
-      <div class="max-w-5xl mx-auto px-4 md:px-6 py-5 text-[11px] md:text-xs text-gray-500 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-        <div class="flex items-center gap-2">
-          <span class="uppercase tracking-[0.2em] text-gray-400">toomany.wtf</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span>toomanywtf (at) gmail</span>
-          <span class="hidden md:inline text-gray-600">|</span>
-          <a href="https://x.com/toomanywtf" target="_blank" rel="noopener noreferrer"
-             class="text-gray-400 hover:text-emerald-300 transition">
-            shitpost with us on X
-          </a>
-        </div>
-      </div>
-    </footer>
   </div>
 
   <!-- PAGE SCRIPT -->
@@ -165,39 +259,37 @@
     function createMemeCard(meme) {
       const article = document.createElement("article");
       article.className =
-        "bg-slate-900/80 border border-slate-700/80 rounded-2xl shadow-lg overflow-hidden flex flex-col";
+        "bg-white border border-gray-300 rounded-xl shadow-lg overflow-hidden flex flex-col";
 
       article.innerHTML = `
-        <div class="relative group">
+        <div>
           <img
             src="${meme.src}"
             alt="${meme.title}"
             loading="lazy"
-            class="w-full aspect-[4/5] object-cover transform transition-transform duration-200 group-hover:scale-[1.02]"
+            class="w-full h-64 object-cover"
           />
-          <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/40 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-          <div class="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 border border-white/15 px-2.5 py-1 text-[10px] uppercase tracking-wide">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            <span class="text-gray-200 font-semibold">${meme.tag || "Meme"}</span>
-          </div>
         </div>
 
-        <div class="p-4 md:p-5 flex flex-col gap-3 flex-1">
-          <div>
-            <h3 class="text-sm md:text-base font-semibold">${meme.title}</h3>
-            <p class="mt-1 text-xs md:text-sm text-gray-400">
+        <div class="p-4 md:p-5 flex flex-col justify-between flex-1">
+          <div class="mb-3">
+            <span class="inline-block mb-2 px-2 py-1 rounded-full bg-gray-900 text-white text-xs uppercase tracking-wide">
+              ${meme.tag || "Meme"}
+            </span>
+            <h3 class="text-sm md:text-base font-semibold text-gray-900">${meme.title}</h3>
+            <p class="mt-1 text-xs md:text-sm text-gray-700">
               ${meme.description || ""}
             </p>
           </div>
 
-          <div class="mt-auto flex items-center justify-between gap-2 pt-3 border-t border-white/5">
+          <div class="flex items-center justify-between gap-2 pt-3 border-t border-gray-200">
             <a
               href="${meme.src}"
               download="${meme.downloadName || ""}"
-              class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs md:text-sm font-medium bg-emerald-400 text-black hover:bg-emerald-300 transition"
+              class="inline-flex items-center px-3 py-1.5 text-xs md:text-sm font-semibold rounded-full bg-black text-white hover:bg-gray-900 transition"
             >
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+              <span class="mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none">
                   <path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
                   <path d="M5 17v1.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
                 </svg>
@@ -210,10 +302,10 @@
               data-share="true"
               data-meme-name="${meme.title.replace(/"/g, '&quot;')}"
               data-hashtags="${meme.hashtags || "#Crypto #TooManyWTF"}"
-              class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] md:text-xs border border-slate-500/70 text-gray-200 hover:border-emerald-400 hover:text-emerald-200 transition"
+              class="inline-flex items-center px-3 py-1.5 text-xs rounded-full border border-gray-400 text-gray-800 hover:border-gray-700 transition"
             >
-              <span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+              <span class="mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none">
                   <path d="M8.5 11 12 8l3.5 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
                   <path d="M12 8v7.5a3.5 3.5 0 0 1-3.5 3.5H7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
                 </svg>
@@ -269,5 +361,19 @@
       });
     }
   </script>
+
+<div style="text-align:center;">
+    <center><img src="images/transparentlogo.png" alt="Too Many Rugs Meme" width="400"></center>
+</div>
+
+<!-- FOOTER -->
+<footer class="w-full bg-gray-800">
+  <div class="container mx-auto flex justify-center text-center py-4 px-4">
+    <h1 class="font-mono text-white text-base md:text-xl">
+      toomany.wtf | toomanywtf (at) gmail
+    </h1>
+  </div>
+</footer>
+
 </body>
 </html>
