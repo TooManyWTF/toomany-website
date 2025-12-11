@@ -2,94 +2,139 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>TooMany Meme Armory – Download Crypto Cabal Memes</title>
+  <title>TooMany Meme Armory – Download Anti-Cabal Memes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Download anti-cabal, crypto and memecoin memes from TooMany.wtf to use on X, TikTok, and more."
+    content="Download anti-cabal, crypto and memecoin memes from TooMany.wtf to use on X, TikTok, Telegram and more."
   />
-  <!-- Tailwind CDN (match whatever you’re already using) -->
+  <!-- Tailwind (match how you include it elsewhere) -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-950 text-gray-100 min-h-screen flex flex-col">
+<body class="bg-black text-gray-100 min-h-screen">
+  <div class="min-h-screen flex flex-col bg-gradient-to-b from-slate-950 via-slate-950 to-black">
 
-  <!-- TODO: copy your existing site header/nav here so it matches the rest of the site -->
+    <!-- HEADER / NAV – matched to your site structure -->
+    <header class="border-b border-slate-800/80 bg-black/80 backdrop-blur">
+      <div class="max-w-5xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
+        <!-- Left: Logo / Home link -->
+        <a href="/" class="flex items-baseline gap-2">
+          <span class="text-xs md:text-sm uppercase tracking-[0.2em] text-emerald-400">
+            too many
+          </span>
+          <span class="hidden md:inline text-[11px] text-gray-400">
+            the anti-cabal meme coin
+          </span>
+        </a>
 
-  <main class="flex-1">
-    <!-- Hero / Intro -->
-    <section class="border-b border-slate-800 bg-gradient-to-b from-slate-950 to-slate-900/70">
-      <div class="max-w-5xl mx-auto px-4 md:px-6 py-10 md:py-14">
-        <div class="space-y-4 md:space-y-6">
-          <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs uppercase tracking-wide text-emerald-300">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>TooMany • Meme Armory</span>
+        <!-- Right: Nav links (same destinations as your header) -->
+        <nav class="flex items-center gap-3 md:gap-5 text-[11px] md:text-sm">
+          <a href="/" class="text-gray-300 hover:text-emerald-400 transition">Home</a>
+          <a href="/cabal" class="text-gray-300 hover:text-emerald-400 transition">Cabal Scanner</a>
+          <a href="/compare" class="text-gray-300 hover:text-emerald-400 transition">Cabal Compare</a>
+          <a href="/leaderboard" class="text-gray-300 hover:text-emerald-400 transition">Leaderboard</a>
+          <a href="/whitepaper" class="text-gray-400 hover:text-emerald-300 transition">Whitepaper</a>
+          <a href="https://x.com/toomanywtf" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1 rounded-full border border-slate-700 px-2.5 py-1 text-[11px] md:text-xs text-gray-200 hover:border-emerald-400 hover:text-emerald-200 transition">
+            <span>X</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1">
+      <!-- Hero / Intro – same vibe as whitepaper intro -->
+      <section class="border-b border-slate-800/60">
+        <div class="max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-10">
+          <div class="space-y-4 md:space-y-5">
+            <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-[10px] md:text-xs uppercase tracking-wide text-emerald-300">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Meme armory · community tools</span>
+            </div>
+
+            <div class="space-y-2">
+              <h1 class="text-2xl md:text-4xl font-semibold">
+                Download <span class="text-emerald-400">$TOO</span>-style
+                anti-cabal memes.
+              </h1>
+              <p class="text-sm md:text-base text-gray-300 max-w-2xl">
+                Save any meme, slap it on X, Telegram, TikTok, wherever. No permission
+                needed – just don’t pretend you built the scanner.
+              </p>
+            </div>
+
+            <div class="grid gap-3 md:grid-cols-3 text-[11px] md:text-sm text-gray-300">
+              <div class="flex items-start gap-2">
+                <span class="mt-1 text-emerald-400">①</span>
+                <p><strong>Pick a meme</strong> that fits the cabal level, whale stack, or narrative.</p>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="mt-1 text-emerald-400">②</span>
+                <p><strong>Download</strong> it with one click (right-click / long-press works too).</p>
+              </div>
+              <div class="flex items-start gap-2">
+                <span class="mt-1 text-emerald-400">③</span>
+                <p><strong>Copy caption</strong> and post straight to your feed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Meme Grid -->
+      <section class="py-8 md:py-10">
+        <div class="max-w-5xl mx-auto px-4 md:px-6">
+          <div class="flex items-center justify-between gap-4 mb-4 md:mb-6">
+            <div>
+              <h2 class="text-lg md:text-2xl font-semibold">Meme Library</h2>
+              <p class="text-xs md:text-sm text-gray-400">
+                New memes will be dropped over time. Bookmark this page and check back after big cabal scans.
+              </p>
+            </div>
           </div>
 
-          <div class="space-y-3 md:space-y-4">
-            <h1 class="text-2xl md:text-4xl lg:text-5xl font-semibold">
-              Download <span class="text-emerald-400">anti-cabal memes</span> and flood your feed.
-            </h1>
-            <p class="text-sm md:text-base text-gray-300 max-w-2xl">
-              Save any meme, post it on X, TikTok, Telegram, or wherever you like.
-              No permission needed – just don’t pretend you built the scanner. 😉
+          <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            <!-- Cards injected via JS -->
+          </div>
+
+          <noscript>
+            <p class="mt-6 text-sm text-gray-400">
+              JavaScript is disabled. Turn it on to see and download the full meme gallery.
             </p>
-          </div>
+          </noscript>
+        </div>
+      </section>
+    </main>
 
-          <div class="grid gap-3 md:grid-cols-3 text-xs md:text-sm text-gray-300">
-            <div class="flex items-start gap-2">
-              <span class="mt-1 text-emerald-400">①</span>
-              <p><strong>Pick a meme</strong> that fits the token, narrative, or copium level.</p>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="mt-1 text-emerald-400">②</span>
-              <p><strong>Download</strong> the image with one click.</p>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="mt-1 text-emerald-400">③</span>
-              <p><strong>Copy caption</strong> and post it to your feed.</p>
-            </div>
-          </div>
+    <!-- FOOTER – matched to the whitepaper/footer vibe -->
+    <footer class="border-t border-slate-800 bg-black">
+      <div class="max-w-5xl mx-auto px-4 md:px-6 py-5 text-[11px] md:text-xs text-gray-500 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="uppercase tracking-[0.2em] text-gray-400">toomany.wtf</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span>toomanywtf (at) gmail</span>
+          <span class="hidden md:inline text-gray-600">|</span>
+          <a href="https://x.com/toomanywtf" target="_blank" rel="noopener noreferrer"
+             class="text-gray-400 hover:text-emerald-300 transition">
+            shitpost with us on X
+          </a>
         </div>
       </div>
-    </section>
+    </footer>
+  </div>
 
-    <!-- Meme Grid -->
-    <section class="py-8 md:py-12">
-      <div class="max-w-5xl mx-auto px-4 md:px-6">
-        <div class="flex items-center justify-between gap-4 mb-4 md:mb-6">
-          <div>
-            <h2 class="text-lg md:text-2xl font-semibold">Meme Library</h2>
-            <p class="text-xs md:text-sm text-gray-400">
-              New memes are added over time. Right-click / long-press also works if you’re old school.
-            </p>
-          </div>
-        </div>
-
-        <div id="memeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          <!-- Cards injected via JS -->
-        </div>
-
-        <!-- Fallback if JS fails -->
-        <noscript>
-          <p class="mt-6 text-sm text-gray-400">
-            JavaScript is disabled. Turn it on to see the full meme gallery.
-          </p>
-        </noscript>
-      </div>
-    </section>
-  </main>
-
-  <!-- TODO: copy your existing footer here so it matches the rest of the site -->
-
+  <!-- PAGE SCRIPT -->
   <script>
-    // 1) Define your memes here.
-    // Put the image files somewhere like /assets/memes/ and update the src paths.
+    // 1) Define memes here.
+    // Put images under something like /assets/memes/ and update src paths.
     const memes = [
       {
-        id: "cabal-scan-alert",
+        id: "cabal-score-panic",
         title: "When Cabal Score Says RUN",
-        description: "Perfect for that token with 4 wallets holding half the supply.",
-        src: "/assets/memes/cabal-score-run.png",    // <-- change to your actual path
+        description: "For that chart that looks good until you open top holders.",
+        src: "/assets/memes/cabal-score-run.png",   // TODO: update path/filename
         downloadName: "too-cabal-score-run.png",
         tag: "Cabal Risk",
         hashtags: "#Crypto #Memecoins #TooManyWTF #Onchain"
@@ -97,25 +142,24 @@
       {
         id: "too-many-whales",
         title: "Too Many Whales, Not Enough Exit Liquidity",
-        description: "Use this when the top 10 wallets look like a private Telegram chat.",
+        description: "Use when 10 wallets basically *are* the market.",
         src: "/assets/memes/too-many-whales.png",
         downloadName: "too-many-whales.png",
         tag: "Whales",
-        hashtags: "#Whales #DeFi #Risk #TooManyWTF"
+        hashtags: "#Whales #ExitLiquidity #TooManyWTF"
       },
       {
-        id: "cex-custody",
+        id: "cex-custody-enjoyer",
         title: "CEX Custody Enjoyers",
-        description: "For when half the supply lives on one exchange wallet.",
+        description: "For tokens where ‘decentralized’ means ‘one exchange wallet’.",
         src: "/assets/memes/cex-custody-enjoyer.png",
         downloadName: "cex-custody-enjoyer.png",
         tag: "CEX",
         hashtags: "#CEX #NotYourKeys #TooManyWTF"
       }
-      // Add more objects here as you create new memes
+      // Add more meme objects here as you create new images
     ];
 
-    // 2) Render meme cards
     const grid = document.getElementById("memeGrid");
 
     function createMemeCard(meme) {
@@ -140,9 +184,7 @@
 
         <div class="p-4 md:p-5 flex flex-col gap-3 flex-1">
           <div>
-            <h3 class="text-sm md:text-base font-semibold">
-              ${meme.title}
-            </h3>
+            <h3 class="text-sm md:text-base font-semibold">${meme.title}</h3>
             <p class="mt-1 text-xs md:text-sm text-gray-400">
               ${meme.description || ""}
             </p>
@@ -155,10 +197,9 @@
               class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs md:text-sm font-medium bg-emerald-400 text-black hover:bg-emerald-300 transition"
             >
               <span>
-                <!-- download icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M5 17v1.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                  <path d="M12 3v12m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M5 17v1.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
                 </svg>
               </span>
               <span>Download</span>
@@ -172,10 +213,9 @@
               class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] md:text-xs border border-slate-500/70 text-gray-200 hover:border-emerald-400 hover:text-emerald-200 transition"
             >
               <span>
-                <!-- share icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-                  <path d="M8.5 11 12 8l3.5 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                  <path d="M12 8v7.5a3.5 3.5 0 0 1-3.5 3.5H7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                  <path d="M8.5 11 12 8l3.5 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M12 8v7.5a3.5 3.5 0 0 1-3.5 3.5H7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
                 </svg>
               </span>
               <span data-label>Copy caption</span>
@@ -194,39 +234,40 @@
     }
 
     // 3) Copy caption logic
-    grid.addEventListener("click", async (event) => {
-      const button = event.target.closest("button[data-share]");
-      if (!button) return;
+    if (grid) {
+      grid.addEventListener("click", async (event) => {
+        const button = event.target.closest("button[data-share]");
+        if (!button) return;
 
-      const memeName = button.getAttribute("data-meme-name") || "this meme";
-      const hashtags = button.getAttribute("data-hashtags") || "#Crypto #TooManyWTF";
-      const pageUrl = window.location.origin + "/memes";
+        const memeName = button.getAttribute("data-meme-name") || "this meme";
+        const hashtags = button.getAttribute("data-hashtags") || "#Crypto #TooManyWTF";
+        const pageUrl = window.location.origin + "/memes";
 
-      const caption =
-        `Found this meme on TooMany.wtf: "${memeName}"\n${pageUrl}\n${hashtags}`;
+        const caption =
+          `Found this meme on TooMany.wtf: "${memeName}"\n${pageUrl}\n${hashtags}`;
 
-      const labelEl = button.querySelector("[data-label]");
-      const originalLabel = labelEl ? labelEl.textContent : "Copy caption";
+        const labelEl = button.querySelector("[data-label]");
+        const originalLabel = labelEl ? labelEl.textContent : "Copy caption";
 
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(caption);
-        } else {
-          // fallback
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(caption);
+          } else {
+            window.prompt("Copy this caption:", caption);
+          }
+
+          if (labelEl) {
+            labelEl.textContent = "Copied!";
+            setTimeout(() => {
+              labelEl.textContent = originalLabel;
+            }, 1500);
+          }
+        } catch (err) {
+          console.error("Clipboard error:", err);
           window.prompt("Copy this caption:", caption);
         }
-
-        if (labelEl) {
-          labelEl.textContent = "Copied!";
-          setTimeout(() => {
-            labelEl.textContent = originalLabel;
-          }, 1500);
-        }
-      } catch (err) {
-        console.error("Clipboard error:", err);
-        window.prompt("Copy this caption:", caption);
-      }
-    });
+      });
+    }
   </script>
 </body>
 </html>
